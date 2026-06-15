@@ -1,0 +1,19 @@
+{
+  "name": "bnu",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "bnu": "./bin/bnu.js"
+  },
+  "scripts": {
+    "link-commands": "bun scripts/link-commands.js",
+    "test": "bun scripts/run-bun-tests-bounded.js",
+    "test:gnu": "bun scripts/run-gnu-tests.js",
+    "qemu:setup": "scripts/setup-qemu-environments.sh",
+    "test:qemu": "scripts/run-gnu-qemu-matrix.sh",
+    "test:all": "scripts/run-all-tests.sh"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+  }
+}
