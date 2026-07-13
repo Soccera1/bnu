@@ -1,0 +1,88 @@
+name: Bug report
+description: Report incorrect or unexpected BNU behavior
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve BNU. Please include a small reproduction and remove any sensitive information from command output.
+
+  - type: input
+    id: command
+    attributes:
+      label: Affected command
+      description: Which BNU command is affected?
+      placeholder: e.g. cp, sort, or tail
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem description
+      description: What happened, and what did you expect instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest command sequence or test case that reproduces the problem.
+      placeholder: |
+        printf 'example\n' > input.txt
+        bun ./bin/bnu.js COMMAND ...
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Actual output
+      description: Include the complete output and exit status, if applicable.
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected output
+      description: Describe or show the expected behavior.
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include the BNU revision, Bun version, operating system, and any relevant filesystem or locale details.
+      placeholder: |
+        BNU revision: git rev-parse --short HEAD
+        Bun version: bun --version
+        OS: uname -a
+        Filesystem/locale: if relevant
+    validations:
+      required: true
+
+  - type: textarea
+    id: gnu-comparison
+    attributes:
+      label: GNU coreutils reproduction
+      description: Run the same reproduction with GNU coreutils 9.11 and show its output and exit status so the difference is clear.
+      render: shell
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I searched existing issues for the same problem.
+          required: true
+        - label: I verified the problem with the current BNU revision.
+          required: true
+        - label: I ran the same reproduction with GNU coreutils 9.11 and confirmed that its behavior differs from BNU.
+          required: true
