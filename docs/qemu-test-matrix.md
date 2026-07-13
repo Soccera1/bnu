@@ -42,6 +42,9 @@ scripts/setup-qemu-environments.sh --dry-run
 scripts/run-gnu-qemu-matrix.sh --dry-run
 ```
 
+The matrix payload also requires `coreutils-9.11.tar.xz` in the repository
+root. Follow the download instructions in [Testing](testing.md#gnu-command-tests).
+
 There is no software-emulation fallback. The scripts require KVM and use
 `-cpu host`.
 

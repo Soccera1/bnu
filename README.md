@@ -26,6 +26,10 @@ bun ./bin/bnu.js --help
 bun ./bin/bnu.js COMMAND --help
 ```
 
+The GNU compatibility harness also needs the coreutils 9.11 source tarball,
+which is not stored in Git. See [Testing](docs/testing.md#gnu-command-tests) for
+the download command.
+
 ## Command wrappers
 
 The CLI can generate command-name wrappers for use in a separate directory:

@@ -31,8 +31,16 @@ BNU_FACTOR_WORKERS=2 \
 
 ## GNU command tests
 
-The repository includes `coreutils-9.11.tar.xz` and a harness that extracts
-and adapts its command tests to invoke BNU.
+The source tarball is ignored by Git. Download
+[GNU coreutils 9.11](https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz)
+into the repository root before using the harness:
+
+```sh
+curl -fL https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz \
+  -o coreutils-9.11.tar.xz
+```
+
+The harness extracts the tarball and adapts its command tests to invoke BNU.
 
 With no paths, the harness runs a maintained default selection:
 
