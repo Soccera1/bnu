@@ -1548,6 +1548,7 @@ function testEnvironment(dir, test) {
     // factor data itself. Keep audit execution serial unless a controlled run
     // explicitly opts in to a bounded worker count.
     BNU_FACTOR_WORKERS: process.env.BNU_FACTOR_WORKERS || "1",
+    GNULY_CORRECT: "1",
     built_programs: process.env.BNU_GNU_BUILT_PROGRAMS || [...commandNames, "ginstall"].join(" "),
     CC: process.env.CC || "cc",
     CONFIG_HEADER: join(dir, "config.h"),

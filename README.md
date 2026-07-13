@@ -48,6 +48,23 @@ The top-level `--help` output lists the available commands. Use
 
 ## Compatibility
 
+BNU keeps the familiar GNU diagnostic as the first line of an error, then adds
+an actionable `Hint:`. Command-aware remedies cover option syntax, operands,
+formats, ranges, modes, filesystems, processes, and uncommon platform failures;
+a general next step remains as a final fallback. Set `GNULY_CORRECT` to
+a truthy value such as `1` or `true` to emit GNU-compatible diagnostics exactly.
+Boolean names are case-insensitive, so `True` and `TRUE` work too:
+
+```sh
+GNULY_CORRECT=1 bnu cat missing-file
+```
+
+An empty value, `0`, or any capitalization of `false` disables GNU-compatible
+wording and leaves friendly hints enabled.
+
+This switch affects diagnostic wording only; it does not change command
+semantics. It is enabled automatically by BNU's GNU compatibility test harness.
+
 The compatibility target is the observable command-line behavior of GNU
 coreutils 9.11. The upstream package contains 733 command-test scripts; BNU has
 passing test results for 727 of them. The other six cannot start the Bun runtime

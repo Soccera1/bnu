@@ -5,12 +5,33 @@ import { join } from "node:path";
 import { availableParallelism, hostname as osHostname, tmpdir } from "node:os";
 import { pathToFileURL } from "node:url";
 
+// Most of this suite is an exact GNU compatibility suite. Friendly diagnostics
+// have focused tests below and GNU text is selected explicitly everywhere else.
+process.env.GNULY_CORRECT ??= "1";
+
 let dir;
 
 async function run(args, input = "", options = {}) {
   const proc = Bun.spawn([process.execPath, join(import.meta.dir, "../bin/bnu.js"), ...args], {
     cwd: options.cwd ?? dir,
     env: options.env ? { ...process.env, ...options.env } : process.env,
+    stdin: new Blob([input]),
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  return {
+    code: await proc.exited,
+    stdout: await new Response(proc.stdout).text(),
+    stderr: await new Response(proc.stderr).text(),
+  };
+}
+
+async function runWithFriendlyDiagnostics(args, input = "", options = {}) {
+  const env = { ...process.env, ...options.env };
+  delete env.GNULY_CORRECT;
+  const proc = Bun.spawn([process.execPath, join(import.meta.dir, "../bin/bnu.js"), ...args], {
+    cwd: options.cwd ?? dir,
+    env,
     stdin: new Blob([input]),
     stdout: "pipe",
     stderr: "pipe",
@@ -78,6 +99,109 @@ beforeEach(async () => {
 
 afterEach(async () => {
   await rm(dir, { recursive: true, force: true });
+});
+
+test("friendly diagnostics and GNULY_CORRECT compatibility", async () => {
+  const missing = await runWithFriendlyDiagnostics(["cat", "does-not-exist"]);
+  expect(missing).toMatchObject({ code: 1, stdout: "" });
+  expect(missing.stderr).toBe(
+    "cat: does-not-exist: No such file or directory\n" +
+    "Hint: Check that the path exists and is spelled correctly.\n",
+  );
+
+  const typo = await runWithFriendlyDiagnostics(["ls", "--colr"]);
+  expect(typo).toMatchObject({ code: 2, stdout: "" });
+  expect(typo.stderr).toBe(
+    "ls: unrecognized option '--colr'\n" +
+    "Hint: Did you mean '--color'? Run 'ls --help' to see all options.\n" +
+    "Try 'ls --help' for more information.\n",
+  );
+
+  expect(await runWithFriendlyDiagnostics(["lss"])).toMatchObject({
+    code: 1,
+    stderr:
+      "bnu: unknown command 'lss'\n" +
+      "Hint: Did you mean 'ls'? Run 'bnu --help' to list commands.\n",
+  });
+
+  const offset = await runWithFriendlyDiagnostics(["od", "-j", "10"], "abc");
+  expect(offset.stderr).toContain("Hint: Reduce the requested offset so it falls within the available input.\n");
+
+  const cycle = await runWithFriendlyDiagnostics(["tsort"], "a b\nb a\n");
+  expect(cycle.stderr).toContain("Hint: Remove a dependency cycle from the input graph and try again.\n");
+
+  const uncommon = await runWithFriendlyDiagnostics(["rm", "--preserve-root=bad"]);
+  expect(uncommon.stderr).toContain(
+    "Hint: Use the full option '--no-preserve-root', or use '--preserve-root=all'.\n",
+  );
+
+  await mkdir(join(dir, "friendly-source-dir"));
+  const targetedCases = [
+    { args: ["cut", "-f", "0"], input: "a\n", hint: "Use a position of 1 or greater" },
+    { args: ["date", "--date=not-a-date"], hint: "Use a recognized date" },
+    { args: ["chmod", "bogus", "file"], hint: "Use an octal mode such as '755'" },
+    { args: ["mktemp", "XX"], hint: "Use a template ending in at least three X characters" },
+    { args: ["expr", "1", "/", "0"], hint: "Use a nonzero divisor" },
+    { args: ["timeout", "not-a-duration", "true"], hint: "Use a nonnegative duration" },
+    { args: ["join", "-1", "0", "left", "right"], hint: "Use file number 1 or 2 and field numbers starting at 1" },
+    { args: ["tr", "z-a", "x"], hint: "Put the lower position first" },
+    { args: ["od", "--address-radix=q"], hint: "Use a supported type string" },
+    { args: ["dd", "bs=not-a-size"], hint: "Use NAME=VALUE operands" },
+    { args: ["split", "--bytes=not-a-size"], hint: "Use a positive chunk size/count" },
+    { args: ["numfmt", "--from=unknown"], hint: "Choose one of the valid values listed above" },
+    { args: ["csplit", "-", "/[/"], input: "a\n", hint: "Use a non-empty, valid regular expression" },
+    { args: ["seq", "--format=%d", "1"], hint: "Use finite numeric operands" },
+    { args: ["stdbuf", "--output=wat", "true"], hint: "Use buffering mode 'L', '0'" },
+    { args: ["comm", "-", "-"], input: "a\n", hint: "Use standard input for only one input file" },
+    { args: ["stat", "--file-system", "-"], hint: "Name a filesystem path instead of '-'" },
+    { args: ["tsort"], input: "unpaired\n", hint: "Provide dependency tokens in pairs" },
+    { args: ["cp", "friendly-source-dir", "friendly-copy"], hint: "Add the recursive option" },
+    { args: ["chroot", "--skip-chdir", "/tmp", "true"], hint: "Use --skip-chdir only with NEWROOT '/'" },
+  ];
+  const targetedResults = await Promise.all(targetedCases.map((entry) => runWithFriendlyDiagnostics(entry.args, entry.input ?? "")));
+  for (let index = 0; index < targetedCases.length; index++) {
+    expect(targetedResults[index].code).not.toBe(0);
+    expect(targetedResults[index].stderr).toContain(`Hint: ${targetedCases[index].hint}`);
+    expect(targetedResults[index].stderr).not.toContain("Hint: Review the arguments and current system state");
+  }
+
+  const missingCommand = await runWithFriendlyDiagnostics(["timeout"]);
+  expect(missingCommand).toMatchObject({ code: 125 });
+  expect(missingCommand.stderr).toContain("Hint: Add the required command or argument. Expected form: timeout");
+
+  const missingValue = await runWithFriendlyDiagnostics(["head", "--lines"]);
+  expect(missingValue.stderr).toContain("Hint: Provide the missing value as '--lines=VALUE' or '--lines VALUE'.");
+
+  const flagValue = await runWithFriendlyDiagnostics(["basename", "--zero=1", "file"]);
+  expect(flagValue.stderr).toContain("Hint: Use '--zero' by itself; this flag does not take a value.");
+
+  const debug = await runWithFriendlyDiagnostics(["sort", "--debug"], "b\na\n");
+  expect(debug).toMatchObject({ code: 0 });
+  expect(debug.stderr).not.toContain("Hint:");
+
+  const dateDebug = await runWithFriendlyDiagnostics(["date", "--debug", "--date=@0", "+%s"]);
+  expect(dateDebug).toMatchObject({ code: 0, stdout: "0\n" });
+  expect(dateDebug.stderr).not.toContain("Hint:");
+
+  const ignoredOperand = await runWithFriendlyDiagnostics(["pwd", "ignored"]);
+  expect(ignoredOperand).toMatchObject({ code: 0 });
+  expect(ignoredOperand.stderr).toContain("Hint: Remove the operands; 'pwd' does not use positional arguments.");
+
+  for (const value of ["1", "true", "True", "TRUE"]) {
+    expect(await run(["cat", "does-not-exist"], "", { env: { GNULY_CORRECT: value } })).toMatchObject({
+      code: 1,
+      stderr: "cat: does-not-exist: No such file or directory\n",
+    });
+  }
+
+  for (const value of ["", "0", "false", "False", "FALSE"]) {
+    expect(await run(["cat", "does-not-exist"], "", { env: { GNULY_CORRECT: value } })).toMatchObject({
+      code: 1,
+      stderr:
+        "cat: does-not-exist: No such file or directory\n" +
+        "Hint: Check that the path exists and is spelled correctly.\n",
+    });
+  }
 });
 
 test("echo, basename, dirname, pwd", async () => {

@@ -31,7 +31,11 @@ for (let index = 0; index < names.length; index++) {
     "--max-concurrency", "1",
   ], {
     cwd: root,
-    env: { ...process.env, BNU_FACTOR_WORKERS: process.env.BNU_FACTOR_WORKERS ?? "1" },
+    env: {
+      ...process.env,
+      BNU_FACTOR_WORKERS: process.env.BNU_FACTOR_WORKERS ?? "1",
+      GNULY_CORRECT: "1",
+    },
     stdin: "ignore",
     stdout: "inherit",
     stderr: "inherit",
