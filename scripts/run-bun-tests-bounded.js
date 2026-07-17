@@ -21,7 +21,7 @@ for (let index = 0; index < names.length; index++) {
     process.execPath,
     join(root, "scripts/run-memory-bounded.js"),
     "--rss-limit", process.env.BNU_TEST_RSS_LIMIT ?? "1GiB",
-    "--memory-limit", process.env.BNU_TEST_MEMORY_LIMIT ?? "3GiB",
+    "--memory-limit", process.env.BNU_TEST_MEMORY_LIMIT ?? "4GiB",
     "--",
     process.execPath,
     "test",

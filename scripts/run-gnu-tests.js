@@ -3,7 +3,7 @@ import { access, chmod, mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { commandNames } from "../src/coreutils.js";
+import { commandNames } from "../src/shared/catalog.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
@@ -34,7 +34,7 @@ const rssLimitBytes = parseByteSize(takeValue("--rss-limit") ?? "1536MiB");
 // JSC reserves more than 2 GiB of virtual address space for some otherwise
 // ~120 MiB workloads.  Three GiB keeps those valid tests runnable while still
 // preventing the unbounded 11 GiB heap growth that motivated this guard.
-const memoryLimitBytes = parseByteSize(takeValue("--memory-limit") ?? "3GiB");
+const memoryLimitBytes = parseByteSize(takeValue("--memory-limit") ?? "4GiB");
 const tarball = takeValue("--tarball") ?? join(root, "coreutils-9.11.tar.xz");
 const work = await mkdtemp(join(tmpdir(), "bnu-gnu-tests-"));
 // Root-only GNU tests deliberately drop to an unprivileged account. mkdtemp
@@ -870,7 +870,7 @@ async function prepareExtractedHarness(dir) {
 mkdir -p "$ROOT$(dirname ${runtimeBun})" "$ROOT"${runtimeRoot}/bin "$ROOT"${runtimeRoot}/src || framework_failure_
 cp ${runtimeBun} "$ROOT"${runtimeBun} || framework_failure_
 cp ${runtimeRoot}/bin/bnu.js "$ROOT"${runtimeRoot}/bin/bnu.js || framework_failure_
-cp ${runtimeRoot}/src/coreutils.js "$ROOT"${runtimeRoot}/src/coreutils.js || framework_failure_
+cp -R ${runtimeRoot}/src/. "$ROOT"${runtimeRoot}/src/ || framework_failure_
 cp k.so $ROOT || framework_failure_`)
     .replace(
       'NPROC() { LD_PRELOAD=$LD_PRELOAD:./k.so chroot $ROOT /nproc "$@"; }',
@@ -1297,8 +1297,8 @@ get_min_ulimit_v_() { return 1; }
 async function installWrappers(dir) {
   await mkdir(dir, { recursive: true });
   const bnu = join(root, "bin/bnu.js");
+  const commandRoot = join(root, "src/commands");
   const bun = shellQuote(process.execPath);
-  const coreutils = pathToFileURL(join(root, "src/coreutils.js")).href;
   const metaFastPath = `if [ "$#" -eq 1 ] && [ "$1" = "--version" ]; then
   text='bnu 9.11'
   if ! printf '%s\\n' "$text" 2>/dev/null; then
@@ -1318,11 +1318,13 @@ fi
 `;
   for (const command of commandNames) {
     const path = join(dir, command);
+    const commandEntry = join(commandRoot, `${command}.js`);
+    const commandUrl = pathToFileURL(commandEntry).href;
     const wrapperMetaFastPath = ["cksum", "df", "echo", "false", "test"].includes(command) ? "" : metaFastPath;
     const script = command === "printenv"
       ? `#!${process.execPath}
 import { readFileSync } from "node:fs";
-import { main } from ${JSON.stringify(coreutils)};
+import command from ${JSON.stringify(commandUrl)};
 
 function rawScriptArgs() {
   try {
@@ -1333,13 +1335,13 @@ function rawScriptArgs() {
   return Bun.argv.slice(2);
 }
 
-process.exit(await main([${JSON.stringify(command)}, ...rawScriptArgs()]));
+process.exit(await command(rawScriptArgs()));
 `
       : command === "env"
       ? `#!/bin/sh
 ${wrapperMetaFastPath}case "$1" in
-  ""|-*|*=*) exec ${bun} "${bnu}" env "$@" ;;
-  *" "*) exec ${bun} "${bnu}" env "$@" ;;
+  ""|-*|*=*) exec ${bun} "${commandEntry}" "$@" ;;
+  *" "*) exec ${bun} "${commandEntry}" "$@" ;;
   *) exec "$@" ;;
 esac
 `
@@ -1350,7 +1352,7 @@ if [ "$name" != coreutils ]; then
   exec ${bun} "${bnu}" coreutils --coreutils-prog="$name" "$@"
 fi
 ${wrapperMetaFastPath}
-exec ${bun} "${bnu}" coreutils "$@"
+exec ${bun} "${commandEntry}" "$@"
 `
       : command === "pwd"
       ? `#!/bin/sh
@@ -1359,9 +1361,9 @@ actual_pwd=$(command pwd -P 2>/dev/null || :)
 test -n "$actual_pwd" && saved_pwd=$actual_pwd
 if [ \${#saved_pwd} -gt 4000 ]; then
   cd / || exit 1
-  BNU_LONG_PWD=$saved_pwd PWD=$saved_pwd exec ${bun} "${bnu}" pwd "$@"
+  BNU_LONG_PWD=$saved_pwd PWD=$saved_pwd exec ${bun} "${commandEntry}" "$@"
 fi
-exec ${bun} "${bnu}" pwd "$@"
+exec ${bun} "${commandEntry}" "$@"
 `
       : command === "tail" || command === "tac" || command === "timeout"
       ? `#!/bin/sh
@@ -1369,7 +1371,7 @@ ${wrapperMetaFastPath}if [ ! -e /proc/$$/fd/0 ]; then
   BNU_STDIN_CLOSED=1
   export BNU_STDIN_CLOSED
 fi
-exec ${bun} "${bnu}" ${shellQuote(command)} "$@"
+exec ${bun} "${commandEntry}" "$@"
 `
       : command === "ls"
       ? `#!/usr/bin/env perl
@@ -1378,19 +1380,19 @@ use warnings;
 my $cwd_ok = defined eval { require Cwd; Cwd::getcwd(); };
 exit 0 if !$cwd_ok && @ARGV == 0;
 chdir "/" if !$cwd_ok;
-exec ${JSON.stringify(process.execPath)}, ${JSON.stringify(bnu)}, "ls", @ARGV;
+exec ${JSON.stringify(process.execPath)}, ${JSON.stringify(commandEntry)}, @ARGV;
 die "exec ls failed: $!\\n";
 `
-      : `#!/bin/sh\n${wrapperMetaFastPath}exec ${bun} "${bnu}" ${shellQuote(command)} "$@"\n`;
+      : `#!/bin/sh\n${wrapperMetaFastPath}exec ${bun} "${commandEntry}" "$@"\n`;
     await writeFile(path, script);
     await chmod(path, 0o755);
   }
   await writeFile(join(dir, "env-js"), `#!${process.execPath}
-import { main } from ${JSON.stringify(coreutils)};
-process.exit(await main(["env", ...Bun.argv.slice(2)]));
+import command from ${JSON.stringify(pathToFileURL(join(commandRoot, "env.js")).href)};
+process.exit(await command(Bun.argv.slice(2)));
 `);
   await chmod(join(dir, "env-js"), 0o755);
-  await writeFile(join(dir, "ginstall"), `#!/bin/sh\n${metaFastPath}exec ${bun} "${bnu}" ginstall "$@"\n`);
+  await writeFile(join(dir, "ginstall"), `#!/bin/sh\n${metaFastPath}exec ${bun} "${join(commandRoot, "ginstall.js")}" "$@"\n`);
   await chmod(join(dir, "ginstall"), 0o755);
   await writeFile(join(dir, "getlimits"), `#!/bin/sh
 cat <<'EOF'

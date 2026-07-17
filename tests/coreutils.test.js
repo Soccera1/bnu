@@ -4,6 +4,7 @@ import { chmod, link, lstat, lutimes, mkdir, mkdtemp, open, readFile, readdir, r
 import { join } from "node:path";
 import { availableParallelism, hostname as osHostname, tmpdir } from "node:os";
 import { pathToFileURL } from "node:url";
+import { commandNames } from "../src/shared/catalog.js";
 
 // Most of this suite is an exact GNU compatibility suite. Friendly diagnostics
 // have focused tests below and GNU text is selected explicitly everywhere else.
@@ -3391,6 +3392,47 @@ test("launcher exposes the multi-call command surface", async () => {
   expect(nohupInvalid).toMatchObject({ code: 125 });
   expect(nohupInvalid.stderr).toContain("nohup: invalid option -- '/'");
   expect(nohupInvalid.stderr).toContain("Try 'nohup --help' for more information.");
+});
+
+test("every utility exposes an independently runnable single-call module", async () => {
+  const entries = (await readdir(join(import.meta.dir, "../src/commands")))
+    .filter((name) => name.endsWith(".js"))
+    .map((name) => name.slice(0, -3))
+    .sort();
+  expect(entries).toEqual(commandNames);
+  expect(await stat(join(import.meta.dir, "../src/shared/implementations.js")).catch(() => null)).toBeNull();
+
+  const sharedModules = (await readdir(join(import.meta.dir, "../src/shared")))
+    .filter((name) => name.endsWith(".js"));
+  expect(sharedModules.sort()).toEqual([
+    "catalog.js", "checksum.js", "command.js", "common.js", "copy.js", "diagnostics.js",
+    "filesystem.js", "hash.js", "head-tail.js", "help-options.js", "help.js", "install.js",
+    "listing.js", "ownership.js", "paths.js", "process.js", "runtime.js", "system.js", "tabs.js",
+    "test-expression.js", "text.js", "time.js",
+  ]);
+  const sharedModuleSizes = await Promise.all(sharedModules.map(async (name) => ({
+    name,
+    lines: (await readFile(join(import.meta.dir, `../src/shared/${name}`), "utf8")).split("\n").length - 1,
+  })));
+  expect(sharedModuleSizes.filter(({ lines }) => lines > 1_600)).toEqual([]);
+  const commandSources = await Promise.all(entries.map((name) => readFile(join(import.meta.dir, `../src/commands/${name}.js`), "utf8")));
+  expect(commandSources.every((source) => !source.includes("implementations.js"))).toBe(true);
+
+  const echo = Bun.spawn([process.execPath, join(import.meta.dir, "../src/commands/echo.js"), "direct", "entry"], {
+    cwd: dir,
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  expect(await echo.exited).toBe(0);
+  expect(await new Response(echo.stdout).text()).toBe("direct entry\n");
+  expect(await new Response(echo.stderr).text()).toBe("");
+
+  const bracket = Bun.spawn([process.execPath, join(import.meta.dir, "../src/commands/[.js"), "1", "=", "1", "]"], {
+    cwd: dir,
+    stdout: "pipe",
+    stderr: "pipe",
+  });
+  expect(await bracket.exited).toBe(0);
 });
 
 test("GNU upstream test harness exposes selectable tests", async () => {

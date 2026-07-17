@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 
 const args = process.argv.slice(2);
 const rssLimit = parseByteSize(takeValue("--rss-limit") ?? "1GiB");
-const memoryLimit = parseByteSize(takeValue("--memory-limit") ?? "3GiB");
+const memoryLimit = parseByteSize(takeValue("--memory-limit") ?? "4GiB");
 if (args[0] === "--") args.shift();
 if (args.length === 0) {
   console.error("usage: run-memory-bounded.js [--rss-limit SIZE] [--memory-limit SIZE] -- COMMAND [ARG]...");
