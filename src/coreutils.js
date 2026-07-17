@@ -14836,7 +14836,7 @@ function lsResolvedQuotingStyle(opts) {
   if (opts.N) return "literal";
   if (opts.Q || opts["quote-name"]) return "c";
   const style = opts.quoting ?? opts["quoting-style"];
-  return resolveLsQuotingStyle(style) ?? (opts.q ? "question" : "literal");
+  return resolveLsQuotingStyle(style) ?? (opts.q ? "question" : process.stdout.isTTY ? "shell-escape" : "literal");
 }
 
 function lsQuestionName(name) {
@@ -14883,22 +14883,31 @@ function shellEscapeLsName(name, always = false) {
   if (!/[\x00-\x1f\x7f]/.test(text)) return shellQuoteLsName(text, always);
   const parts = [];
   let plain = "";
-  const flush = () => {
+  let escaped = "";
+  const flushPlain = () => {
     if (plain) {
       parts.push(`'${plain.replaceAll("'", "'\\''")}'`);
       plain = "";
     }
   };
+  const flushEscaped = () => {
+    if (escaped) {
+      parts.push(`$'${escaped}'`);
+      escaped = "";
+    }
+  };
   for (const ch of text) {
     const code = ch.codePointAt(0);
     if (code < 32 || code === 127) {
-      flush();
-      parts.push(`$'${lsEscapedName(ch)}'`);
+      flushPlain();
+      escaped += lsEscapedName(ch);
     } else {
+      flushEscaped();
       plain += ch;
     }
   }
-  flush();
+  flushPlain();
+  flushEscaped();
   if (!parts.length) return "''";
   if (always && parts.length === 1 && !parts[0].startsWith("$")) return parts[0];
   return parts.join("");

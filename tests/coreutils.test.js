@@ -5823,6 +5823,11 @@ test("ls supports common listing modes", async () => {
   await writeFile(join(dir, "quote/line\nbreak"), "x");
   await writeFile(join(dir, "quote/q\x07"), "x");
   await writeFile(join(dir, "quote/plain"), "x");
+  await mkdir(join(dir, "tty-quote"));
+  await writeFile(join(dir, "tty-quote/line\n\nbreak"), "x");
+  const ttyQuoted = await shell(`script -qefc '"$BUN" "$BNU" ls -1 tty-quote' /dev/null`);
+  expect(ttyQuoted).toMatchObject({ code: 0, stderr: "" });
+  expect(ttyQuoted.stdout.replaceAll("\r\n", "\n")).toBe("'line'$'\\n\\n''break'\n");
   expect((await run(["ls", "-1", "--quoting-style=shell", "quote/name with spaces", "quote/plain"])).stdout).toBe("'quote/name with spaces'\nquote/plain\n");
   expect((await run(["ls", "-1", "--quoting-style=shell", "quote/name'with-quote"])).stdout).toBe("\"quote/name'with-quote\"\n");
   expect((await run(["ls", "-1", "--quoting-style=shell-always", "quote/plain"])).stdout).toBe("'quote/plain'\n");
