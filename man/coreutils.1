@@ -1,7 +1,7 @@
 .\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
 .TH COREUTILS "1" "2026-07-28" "BNU 9.11" "BNU Commands"
 .SH NAME
-coreutils \- single binary for coreutils programs
+coreutils \- dispatch to a BNU command module
 .SH SYNOPSIS
 .B coreutils
 \fI\,--coreutils-prog=PROGRAM_NAME \/\fR[\fI\,PARAMETERS\/\fR]...
@@ -10,7 +10,7 @@ coreutils \- single binary for coreutils programs
 This page documents BNU, an independent Bun implementation compatible with
 GNU Coreutils 9.11.
 .PP
-Execute the PROGRAM_NAME built\-in program with the given PARAMETERS.
+Load and execute the PROGRAM_NAME single\-call module with the given PARAMETERS.
 .TP
 \X'tty: link https://www.gnu.org/software/coreutils/coreutils#coreutils--help'\fB\-\-help\fP\X'tty: link'
 display this help and exit

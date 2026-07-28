@@ -10,9 +10,12 @@ The inventory contains 692 non-root tests and 41 tests GNU marks as root-only.
 The QEMU matrix routes those groups, plus security-module cases, to suitable
 guests.
 
-The accepted matrix result is 727 passing tests and the six boundaries below.
-In each case, the environment prevents a normal BNU command from beginning; it
-is not a skipped command behavior.
+The last complete accepted matrix result, recorded before the July 2026
+single-call source refactor, is 727 passing tests and the six boundaries below.
+The refactored layout passes the local bounded suite, but these matrix results
+should remain identified as historical until the complete matrix is rerun. In
+each boundary case, the environment prevents a normal BNU command from
+beginning; it is not a skipped command behavior.
 
 ## Boundaries
 

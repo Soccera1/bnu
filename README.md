@@ -38,9 +38,8 @@ bun ./src/commands/echo.js --help
 bun ./bin/bnu.js --help
 ```
 
-The GNU compatibility harness also needs the coreutils 9.11 source tarball,
-which is not stored in Git. See [Testing](docs/testing.md#gnu-command-tests) for
-the download command.
+The GNU compatibility harness uses the Coreutils 9.11 source tarball tracked
+through Git LFS. See [Testing](docs/testing.md#gnu-command-tests) for details.
 
 ## Command wrappers
 
@@ -93,9 +92,13 @@ This switch affects diagnostic wording only; it does not change command
 semantics. It is enabled automatically by BNU's GNU compatibility test harness.
 
 The compatibility target is the observable command-line behavior of GNU
-coreutils 9.11. The upstream package contains 733 command-test scripts; BNU has
-passing test results for 727 of them. The other six cannot start the Bun runtime
-in the environment constructed by the test.
+Coreutils 9.11. The upstream package contains 733 command-test scripts. The
+last complete host/QEMU matrix, recorded before the July 2026 single-call
+source refactor, passed 727 of them; the other six could not start the Bun
+runtime in the environment constructed by the test. The refactored command
+layout passes the current local bounded suite, including independent module
+coverage, but a fresh complete matrix has not yet been recorded in this
+checkout.
 
 That result is useful test coverage, not a claim of complete equivalence.
 Individual scripts contain many cases, and the inventory does not cover every

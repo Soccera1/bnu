@@ -31,14 +31,15 @@ BNU_FACTOR_WORKERS=2 \
 
 ## GNU command tests
 
-The source tarball is ignored by Git. Download
-[GNU coreutils 9.11](https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz)
-into the repository root before using the harness:
+The [GNU Coreutils 9.11](https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz)
+source tarball is tracked at the repository root through Git LFS. Ensure the
+LFS object is materialized before using the harness:
 
 ```sh
-curl -fL https://ftp.gnu.org/gnu/coreutils/coreutils-9.11.tar.xz \
-  -o coreutils-9.11.tar.xz
+git lfs pull --include=coreutils-9.11.tar.xz
 ```
+
+Use `--tarball PATH` to test against a separately downloaded archive.
 
 The harness extracts the tarball and adapts its command tests to invoke BNU.
 

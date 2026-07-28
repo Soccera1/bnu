@@ -27,7 +27,7 @@
 @dircategory Basics
 @direntry
 * BNU: (bnu).             Core file, text, and shell utilities for Bun.
-* BNU invocation: (bnu)Multi-call invocation.  Invoke BNU and its command wrappers.
+* BNU invocation: (bnu)Multi-call invocation.  Invoke single-call commands and compatibility dispatchers.
 * Common options: (bnu)Common options.
 * File permissions: (bnu)File permissions.  Access modes.
 * Date input formats: (bnu)Date input formats.
@@ -246,7 +246,7 @@ Common Options
 * Traversing symlinks::          Traversing symlinks to directories
 * Treating / specially::         Treating / specially
 * Standards conformance::        Standards conformance
-* Multi-call invocation::        Multi-call program invocation
+* Multi-call invocation::        Single-call commands and compatibility dispatch
 
 Output of entire files
 
@@ -833,7 +833,7 @@ Items applicable to all programs:
 * Floating point::               Floating point number representation.
 * Hardware Acceleration::        Hardware acceleration configuration
 * Standards conformance::        Conformance to the POSIX standard.
-* Multi-call invocation::        Multi-call program invocation.
+* Multi-call invocation::        Single-call commands and compatibility dispatch.
 @end menu
 
 
@@ -1695,22 +1695,35 @@ you can work around the compatibility problems by setting
 
 @c This node keeps the upstream name so command nodes remain easy to find.
 @node Multi-call invocation
-@section @command{bnu}: Multi-call program
+@section Invoking BNU commands
 
 @pindex bnu
 @pindex coreutils
-@cindex combined
+@cindex single-call command
 @cindex calling combined multi-call program
 
-BNU is normally invoked through its top-level dispatcher.  Synopsis:
+Each BNU utility has an independently runnable single-call module.  From a
+source checkout, invoke one with Bun:
+
+@example
+bun ./src/commands/@var{command}.js [@var{argument}]@dots{}
+@end example
+
+The repository command @samp{bun run link-commands -- @var{directory}} creates
+command-name wrappers that invoke those modules directly.  After deliberately
+adding that directory to @env{PATH}, the usual form is:
+
+@example
+@var{command} [@var{argument}]@dots{}
+@end example
+
+The @command{bnu} multi-call launcher remains available for compatibility and
+command discovery:
 
 @example
 bnu @var{command} [@var{argument}]@dots{}
+bnu @option{--help}
 @end example
-
-Run @samp{bnu --help} to list available commands.  A command can also be
-selected by invoking a generated command-name wrapper, for example
-@samp{cat @var{file}} after adding the wrapper directory to @env{PATH}.
 
 For compatibility with the GNU Coreutils multi-call interface, BNU also
 provides:
@@ -1719,8 +1732,8 @@ provides:
 coreutils @option{--coreutils-prog=@var{program}} [@var{argument}]@dots{}
 @end example
 
-The repository command @samp{bun run link-commands -- @var{directory}} creates
-the wrappers.  Running from a source checkout requires the Bun runtime.
+The source entries, generated wrappers, and compatibility launchers require the
+Bun runtime.
 
 @node Output of entire files
 @chapter Output of entire files
@@ -13164,8 +13177,8 @@ command, not the one documented here.
 
 @command{false} honors the @option{--help} and @option{--version} options.
 
-BNU implements @command{false} in its Bun multi-call program.  Do not use
-the source-checkout launcher as a login shell.
+BNU implements @command{false} as a Bun single-call command module.  Do not
+use the source-checkout entry as a login shell.
 
 Unlike all other programs mentioned in this manual, @command{false}
 always exits unsuccessfully, even when invoked with
@@ -13208,8 +13221,8 @@ $ ./true --version > /dev/full
 ./true: write error: No space left on device
 @end example
 
-BNU implements @command{true} in its Bun multi-call program.  Do not use
-the source-checkout launcher as a login shell.
+BNU implements @command{true} as a Bun single-call command module.  Do not
+use the source-checkout entry as a login shell.
 
 @node test invocation
 @section @command{test}: Check file types and compare values

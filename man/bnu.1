@@ -11,15 +11,21 @@ bnu \- run a BNU core utility
 BNU is an independent implementation of the GNU Coreutils 9.11
 command\-line interface for the Bun runtime.
 .PP
-The first operand selects a utility.  The remaining operands are passed to
-that utility.  Run
+Each utility has an independently runnable entry under
+.IR src/commands/ .
+The
+.B bnu
+launcher is retained as a compatibility and discovery surface: its first
+operand selects a utility, which is loaded on demand, and the remaining
+operands are passed to that utility.  Run
 .B bnu \-\-help
 to list the implemented commands, or run
 .I COMMAND
 .B \-\-help
 to see command-specific help.
 .PP
-Utilities may also be invoked through command-name wrappers generated with:
+Command-name wrappers that invoke the single-call entries directly can be
+generated with:
 .PP
 .RS
 bun run link\-commands \-\- DIRECTORY
@@ -52,10 +58,19 @@ semantics.
 .SH FILES
 .TP
 .I bin/bnu.js
-multi-call entry point in a source checkout
+compatibility multi-call launcher in a source checkout
 .TP
-.I src/coreutils.js
-command implementations in a source checkout
+.I src/commands/*.js
+independently runnable command entries
+.TP
+.I src/shared/catalog.js
+command inventory and lazy module loader
+.TP
+.I src/shared/command.js
+shared single-call entry behavior
+.TP
+.I src/shared/runtime.js
+compatibility multi-call dispatch
 .SH "REPORTING BUGS"
 Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
 .SH COPYRIGHT

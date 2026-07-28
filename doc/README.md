@@ -16,7 +16,7 @@ The BNU edition is marked as modified. Its substantive adaptations are:
 
 - BNU naming, version headers, bug-reporting URL, and local Info references
 - an explicit compatibility caveat for this independent Bun implementation
-- BNU's top-level and GNU-compatible multi-call invocation forms
+- BNU's primary single-call entries and compatibility dispatcher forms
 - standalone documentation for BNU's `sm3sum` extension
 - alias pages for `[` and `ginstall`, plus the local `bnu(1)` page
 - replacement of upstream C-implementation claims that do not apply to BNU
@@ -29,12 +29,17 @@ Most command and option descriptions remain upstream text because matching that
 observable interface is BNU's compatibility target. Platform-dependent behavior
 can still differ; command `--help` output and actual BNU behavior take precedence.
 
-To refresh the imported files from the release archive, install `tar`, Bun, and
-GNU Texinfo, place `coreutils-9.11.tar.xz` at the repository root, and run:
+The GNU Coreutils release archive is tracked at the repository root through Git
+LFS. To refresh the imported files, first ensure the LFS object is present, then
+install `tar`, Bun, and GNU Texinfo and run:
 
 ```sh
+git lfs pull --include=coreutils-9.11.tar.xz
 bun run docs:import
 ```
+
+An alternate archive can be passed directly to
+`bun scripts/import-gnu-docs.js PATH`.
 
 The importer overwrites upstream-derived section-1 pages and regenerates the
 Texinfo and Info files. The locally authored `man/bnu.1` page is preserved.

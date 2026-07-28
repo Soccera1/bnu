@@ -19,7 +19,7 @@ original authorship and copyright are retained below.
 INFO-DIR-SECTION Basics
 START-INFO-DIR-ENTRY
 * BNU: (bnu).             Core file, text, and shell utilities for Bun.
-* BNU invocation: (bnu)Multi-call invocation.  Invoke BNU and its command wrappers.
+* BNU invocation: (bnu)Multi-call invocation.  Invoke single-call commands and compatibility dispatchers.
 * Common options: (bnu)Common options.
 * File permissions: (bnu)File permissions.  Access modes.
 * Date input formats: (bnu)Date input formats.
@@ -212,7 +212,7 @@ Common Options
 * Traversing symlinks::          Traversing symlinks to directories
 * Treating / specially::         Treating / specially
 * Standards conformance::        Standards conformance
-* Multi-call invocation::        Multi-call program invocation
+* Multi-call invocation::        Single-call commands and compatibility dispatch
 
 Output of entire files
 
@@ -620,7 +620,7 @@ Items applicable to all programs:
 * Floating point::               Floating point number representation.
 * Hardware Acceleration::        Hardware acceleration configuration
 * Standards conformance::        Conformance to the POSIX standard.
-* Multi-call invocation::        Multi-call program invocation.
+* Multi-call invocation::        Single-call commands and compatibility dispatch.
 
 
 File: bnu.info,  Node: Backup options,  Next: Block size,  Up: Common options
@@ -1325,24 +1325,33 @@ environment.
 
 File: bnu.info,  Node: Multi-call invocation,  Prev: Standards conformance,  Up: Common options
 
-2.15 ‘bnu’: Multi-call program
-==============================
+2.15 Invoking BNU commands
+==========================
 
-BNU is normally invoked through its top-level dispatcher.  Synopsis:
+Each BNU utility has an independently runnable single-call module.  From
+a source checkout, invoke one with Bun:
+
+     bun ./src/commands/COMMAND.js [ARGUMENT]...
+
+   The repository command ‘bun run link-commands -- DIRECTORY’ creates
+command-name wrappers that invoke those modules directly.  After
+deliberately adding that directory to ‘PATH’, the usual form is:
+
+     COMMAND [ARGUMENT]...
+
+   The ‘bnu’ multi-call launcher remains available for compatibility and
+command discovery:
 
      bnu COMMAND [ARGUMENT]...
-
-   Run ‘bnu --help’ to list available commands.  A command can also be
-selected by invoking a generated command-name wrapper, for example ‘cat
-FILE’ after adding the wrapper directory to ‘PATH’.
+     bnu --help
 
    For compatibility with the GNU Coreutils multi-call interface, BNU
 also provides:
 
      coreutils --coreutils-prog=PROGRAM [ARGUMENT]...
 
-   The repository command ‘bun run link-commands -- DIRECTORY’ creates
-the wrappers.  Running from a source checkout requires the Bun runtime.
+   The source entries, generated wrappers, and compatibility launchers
+require the Bun runtime.
 
 
 File: bnu.info,  Node: Output of entire files,  Next: Formatting file contents,  Prev: Common options,  Up: Top
@@ -11300,8 +11309,8 @@ using the built-in command, not the one documented here.
 
    ‘false’ honors the ‘--help’ and ‘--version’ options.
 
-   BNU implements ‘false’ in its Bun multi-call program.  Do not use the
-source-checkout launcher as a login shell.
+   BNU implements ‘false’ as a Bun single-call command module.  Do not
+use the source-checkout entry as a login shell.
 
    Unlike all other programs mentioned in this manual, ‘false’ always
 exits unsuccessfully, even when invoked with ‘--help’ or ‘--version’.
@@ -11334,8 +11343,8 @@ example, using a Bourne-compatible shell:
      $ ./true --version > /dev/full
      ./true: write error: No space left on device
 
-   BNU implements ‘true’ in its Bun multi-call program.  Do not use the
-source-checkout launcher as a login shell.
+   BNU implements ‘true’ as a Bun single-call command module.  Do not
+use the source-checkout entry as a login shell.
 
 
 File: bnu.info,  Node: test invocation,  Next: expr invocation,  Prev: true invocation,  Up: Conditions
@@ -20831,8 +20840,6 @@ Index
 * COLUMNS <1>:                           Special.             (line  42)
 * columns:                               Special.             (line  28)
 * combination settings:                  Combination.         (line   6)
-* combined:                              Multi-call invocation.
-                                                              (line   6)
 * combined date and time of day item:    Combined date and time of day items.
                                                               (line   6)
 * comm:                                  comm invocation.     (line   6)
@@ -22039,6 +22046,8 @@ Index
 * simple backup method:                  Backup options.      (line  44)
 * SIMPLE_BACKUP_SUFFIX:                  Backup options.      (line  49)
 * single quotes, and env -S:             env invocation.      (line 273)
+* single-call command:                   Multi-call invocation.
+                                                              (line   6)
 * single-column output of files:         General output formatting.
                                                               (line   9)
 * size:                                  Special.             (line  42)
@@ -22417,1490 +22426,1490 @@ Index
 
 
 Tag Table:
-Node: Top8495
-Node: Introduction23766
-Node: Common options25781
-Node: Backup options29494
-Node: Block size31453
-Node: Signal specifications37120
-Node: Disambiguating names and IDs39600
-Node: Random sources41236
-Node: Target directory43239
-Node: Trailing slashes46875
-Node: Traversing symlinks47906
-Ref: -option-H48658
-Ref: -option-L48799
-Ref: -option-P48910
-Node: Treating / specially49044
-Node: Special built-in utilities50658
-Node: Exit status51841
-Node: Floating point52708
-Node: Hardware Acceleration54562
-Node: Standards conformance57123
-Node: Multi-call invocation58856
-Node: Output of entire files59621
-Node: cat invocation60352
-Ref: cat-option-A60769
-Ref: cat-option--show-all60778
-Ref: cat-option-b60827
-Ref: cat-option--number-nonblank60836
-Ref: cat-option-e60917
-Ref: cat-option-E60957
-Ref: cat-option--show-ends60966
-Ref: cat-option-n61092
-Ref: cat-option--number61101
-Ref: cat-option-s61219
-Ref: cat-option--squeeze-blank61228
-Ref: cat-option-t61348
-Ref: cat-option-T61388
-Ref: cat-option--show-tabs61397
-Ref: cat-option-u61457
-Ref: cat-option-v61506
-Ref: cat-option--show-nonprinting61515
-Node: tac invocation62347
-Ref: tac-option-b63049
-Ref: tac-option--before63058
-Ref: tac-option-r63171
-Ref: tac-option--regex63180
-Ref: tac-option-s63252
-Ref: tac-option--separator63271
-Node: nl invocation63939
-Ref: nl-option-b65544
-Ref: nl-option--body-numbering65559
-Ref: nl-option-d66217
-Ref: nl-option--section-delimiter66229
-Ref: nl-option-f66650
-Ref: nl-option--footer-numbering66665
-Ref: nl-option-h66739
-Ref: nl-option--header-numbering66754
-Ref: nl-option-i66828
-Ref: nl-option--line-increment66844
-Ref: nl-option-l66969
-Ref: nl-option--join-blank-lines66985
-Ref: nl-option-n67315
-Ref: nl-option--number-format67331
-Ref: nl-option-p67596
-Ref: nl-option--no-renumber67605
-Ref: nl-option-s67692
-Ref: nl-option--number-separator67708
-Ref: nl-option-v67853
-Ref: nl-option--starting-line-number67869
-Ref: nl-option-w68026
-Ref: nl-option--number-width68042
-Node: od invocation68213
-Ref: od-option-A69798
-Ref: od-option--address-radix69813
-Ref: od-option--endian70118
-Ref: od-option-j70449
-Ref: od-option--skip-bytes70464
-Ref: od-option-N71340
-Ref: od-option--read-bytes71355
-Ref: od-option-S71514
-Ref: od-option--strings71529
-Ref: od-option-t71964
-Ref: od-option--format71978
-Ref: od-option-v74184
-Ref: od-option--output-duplicates74193
-Ref: od-option-w74471
-Ref: od-option--width74482
-Ref: od-option-a74953
-Ref: od-option-b75023
-Ref: od-option-c75089
-Ref: od-option-d75228
-Ref: od-option-f75314
-Ref: od-option-i75375
-Ref: od-option-l75442
-Ref: od-option-o75514
-Ref: od-option-s75589
-Ref: od-option-x75666
-Ref: od-option--traditional75747
-Node: base32 invocation76355
-Node: base64 invocation76948
-Ref: base32-option-w77815
-Ref: base32-option--wrap77815
-Ref: basenc-option-w77815
-Ref: basenc-option--wrap77815
-Ref: base64-option-w77815
-Ref: base64-option--wrap77829
-Ref: base32-option-d78051
-Ref: base32-option--decode78051
-Ref: basenc-option-d78051
-Ref: basenc-option--decode78051
-Ref: base64-option-d78051
-Ref: base64-option--decode78060
-Ref: base32-option-i78262
-Ref: base32-option--ignore-garbage78262
-Ref: basenc-option-i78262
-Ref: basenc-option--ignore-garbage78262
-Ref: base64-option-i78262
-Ref: base64-option--ignore-garbage78271
-Node: basenc invocation78520
-Ref: basenc-option--base6479306
-Ref: basenc-option--base64url79541
-Ref: basenc-option--base5879816
-Ref: basenc-option--base3280291
-Ref: basenc-option--base32hex80610
-Ref: basenc-option--base1680914
-Ref: basenc-option--base2lsbf81185
-Ref: basenc-option--base2msbf81361
-Ref: basenc-option--z8581536
-Node: Formatting file contents82710
-Node: fmt invocation83155
-Ref: fmt-option-c84531
-Ref: fmt-option--crown-margin84540
-Ref: fmt-option-t84750
-Ref: fmt-option--tagged-paragraph84759
-Ref: fmt-option-s85015
-Ref: fmt-option--split-only85024
-Ref: fmt-option-u85219
-Ref: fmt-option--uniform-spacing85228
-Ref: fmt-option-WIDTH85369
-Ref: fmt-option-w85382
-Ref: fmt-option--width85397
-Ref: fmt-option-g85520
-Ref: fmt-option--goal85534
-Ref: fmt-option-p85669
-Ref: fmt-option--prefix85685
-Node: pr invocation86128
-Ref: pr-option--pages87916
-Ref: pr-option-COLS88432
-Ref: pr-option-COLUMN88432
-Ref: pr-option--columns88446
-Ref: pr-option-a89377
-Ref: pr-option--across89386
-Ref: pr-option-c89609
-Ref: pr-option--show-control-chars89618
-Ref: pr-option-d89840
-Ref: pr-option--double-space89849
-Ref: pr-option-D89901
-Ref: pr-option--date-format89917
-Ref: pr-option-e90884
-Ref: pr-option--expand-tabs90918
-Ref: pr-option-f91195
-Ref: pr-option-F91204
-Ref: pr-option--form-feed91213
-Ref: pr-option-h91362
-Ref: pr-option--header91378
-Ref: pr-option-i91582
-Ref: pr-option--output-tabs91619
-Ref: pr-option-J91906
-Ref: pr-option--join-lines91915
-Ref: pr-option-l92375
-Ref: pr-option--length92396
-Ref: pr-option-m92673
-Ref: pr-option--merge92682
-Ref: pr-option-n93372
-Ref: pr-option--number-lines93407
-Ref: pr-option-N94702
-Ref: pr-option--first-line-number94723
-Ref: pr-option-o94915
-Ref: pr-option--indent94931
-Ref: pr-option-r95236
-Ref: pr-option--no-file-warnings95245
-Ref: pr-option-s95403
-Ref: pr-option--separator95417
-Ref: pr-option-S95849
-Ref: pr-option--sep-string95866
-Ref: pr-option-t96352
-Ref: pr-option--omit-header96361
-Ref: pr-option-T96884
-Ref: pr-option--omit-pagination96893
-Ref: pr-option-v97024
-Ref: pr-option--show-nonprinting97033
-Ref: pr-option-w97122
-Ref: pr-option--width97142
-Ref: pr-option-W97648
-Ref: pr-option--page-width97668
-Node: fold invocation98551
-Ref: fold-option-b99318
-Ref: fold-option--bytes99327
-Ref: fold-option-c99507
-Ref: fold-option--characters99516
-Ref: fold-option-s99672
-Ref: fold-option--spaces99681
-Ref: fold-option-w99904
-Ref: fold-option--width99919
-Node: Output of parts of files100225
-Node: head invocation100716
-Ref: head-option-c101332
-Ref: head-option--bytes101348
-Ref: head-option-n102156
-Ref: head-option--lines102172
-Ref: head-option-q102397
-Ref: head-option--quiet102406
-Ref: head-option--silent102420
-Ref: head-option-v102472
-Ref: head-option--verbose102481
-Ref: head-option-z102535
-Ref: head-option--zero-terminated102544
-Node: tail invocation103656
-Ref: tail-option-c104997
-Ref: tail-option--bytes105013
-Ref: tail-option--debug105946
-Ref: tail-option-f106059
-Ref: tail-option--follow106068
-Ref: tail-option-F108888
-Ref: tail-option--max-unchanged-stats109110
-Ref: tail-option-n109757
-Ref: tail-option--lines109773
-Ref: tail-option--pid110124
-Ref: tail-option-q111227
-Ref: tail-option--quiet111236
-Ref: tail-option--silent111250
-Ref: tail-option--retry111302
-Ref: tail-option-s111989
-Ref: tail-option--sleep-interval112005
-Ref: tail-option-v112572
-Ref: tail-option--verbose112581
-Ref: tail-option-z112635
-Ref: tail-option--zero-terminated112644
-Node: split invocation114990
-Ref: split-option-l116422
-Ref: split-option--lines116437
-Ref: split-option-b116740
-Ref: split-option--bytes116754
-Ref: split-option-C117458
-Ref: split-option--line-bytes117472
-Ref: split-option--filter117846
-Ref: split-option-n118669
-Ref: split-option--number118685
-Ref: split-option-a120428
-Ref: split-option--suffix-length120444
-Ref: split-option-d120819
-Ref: split-option--numeric-suffixes120828
-Ref: split-option-x121541
-Ref: split-option--hex-suffixes121550
-Ref: split-option--additional-suffix121665
-Ref: split-option-e121791
-Ref: split-option--elide-empty-files121800
-Ref: split-option-t122170
-Ref: split-option--separator122189
-Ref: split-option-u122444
-Ref: split-option--unbuffered122453
-Ref: split-option--verbose122588
-Node: csplit invocation123618
-Ref: csplit-option-f126382
-Ref: csplit-option--prefix126398
-Ref: csplit-option-b126469
-Ref: csplit-option--suffix-format126485
-Ref: csplit-option-n127312
-Ref: csplit-option--digits127328
-Ref: csplit-option-k127456
-Ref: csplit-option--keep-files127465
-Ref: csplit-option--suppress-matched127546
-Ref: csplit-option-z127725
-Ref: csplit-option--elide-empty-files127734
-Ref: csplit-option-s128164
-Ref: csplit-option-q128173
-Ref: csplit-option--silent128182
-Ref: csplit-option--quiet128197
-Node: Summarizing files129091
-Node: wc invocation129858
-Ref: wc-option-c131891
-Ref: wc-option--bytes131900
-Ref: wc-option-m131948
-Ref: wc-option--chars131957
-Ref: wc-option-w132075
-Ref: wc-option--words132084
-Ref: wc-option-l132670
-Ref: wc-option--lines132679
-Ref: wc-option--debug132831
-Ref: wc-option-L132973
-Ref: wc-option--max-line-length132982
-Ref: wc-option--total133191
-Ref: wc-option--files0-from133850
-Node: sum invocation134889
-Ref: sum-option-r135655
-Ref: sum-option-s135847
-Ref: sum-option--sysv135856
-Node: cksum invocation136221
-Node: cksum output modes137368
-Node: cksum general options139351
-Ref: cksum-option-a139535
-Ref: cksum-option--algorithm139549
-Ref: cksum-option--base64140627
-Ref: cksum-option--debug141188
-Ref: cksum-option-l141302
-Ref: cksum-option--length141316
-Ref: cksum-option--raw141778
-Ref: cksum-option--untagged142186
-Node: cksum common options142664
-Ref: cksum-option-b142819
-Ref: cksum-option--binary142828
-Ref: cksum-option-c143537
-Ref: cksum-option--check143546
-Ref: cksum-option--ignore-missing145909
-Ref: cksum-option--quiet146178
-Ref: cksum-option--status146549
-Ref: cksum-option--tag147046
-Ref: cksum-option-t147721
-Ref: cksum-option--text147730
-Ref: cksum-option-w148365
-Ref: cksum-option--warn148374
-Ref: cksum-option--strict148560
-Ref: cksum-option-z148700
-Ref: cksum-option--zero148709
-Node: md5sum invocation148980
-Node: b2sum invocation150603
-Ref: b2sum-option-l151491
-Ref: b2sum-option--length151505
-Node: sha1sum invocation151833
-Node: sha2 utilities153342
-Node: sm3sum invocation154330
-Node: Operating on sorted files155238
-Node: sort invocation155819
-Ref: sort-option-c157679
-Ref: sort-option--check157688
-Ref: sort-option-C157981
-Ref: sort-option-m158236
-Ref: sort-option--merge158245
-Ref: sort-option-b159349
-Ref: sort-option--ignore-leading-blanks159358
-Ref: sort-option-d159735
-Ref: sort-option--dictionary-order159744
-Ref: sort-option-f160027
-Ref: sort-option--ignore-case160036
-Ref: sort-option-g160534
-Ref: sort-option--general-numeric-sort160543
-Ref: sort-option--sort160572
-Ref: sort-option-h161709
-Ref: sort-option--human-numeric-sort161718
-Ref: sort-option-i162739
-Ref: sort-option--ignore-nonprinting162748
-Ref: sort-option-M162978
-Ref: sort-option--month-sort162987
-Ref: sort-option-n163439
-Ref: sort-option--numeric-sort163448
-Ref: sort-option-V164396
-Ref: sort-option--version-sort164405
-Ref: sort-option-r164659
-Ref: sort-option--reverse164668
-Ref: sort-option-R164814
-Ref: sort-option--random-sort164823
-Ref: sort-option--compress-program165544
-Ref: sort-option--files0-from166133
-Ref: sort-option-k166878
-Ref: sort-option--key166899
-Ref: sort-option--debug168307
-Ref: sort-option--batch-size168450
-Ref: sort-option-o169656
-Ref: sort-option--output169677
-Ref: sort-option--random-source170634
-Ref: sort-option-s170811
-Ref: sort-option--stable170820
-Ref: sort-option-S171036
-Ref: sort-option--buffer-size171050
-Ref: sort-option-t171868
-Ref: sort-option--field-separator171887
-Ref: sort-option-T172897
-Ref: sort-option--temporary-directory172914
-Ref: sort-option--parallel173336
-Ref: sort-option-u173650
-Ref: sort-option--unique173659
-Ref: sort-option-z174301
-Ref: sort-option--zero-terminated174310
-Ref: sort invocation-Footnote-1182705
-Node: shuf invocation183304
-Ref: shuf-option-e183910
-Ref: shuf-option--echo183919
-Ref: shuf-option-i183988
-Ref: shuf-option--input-range184003
-Ref: shuf-option-n184225
-Ref: shuf-option--head-count184240
-Ref: shuf-option-o184345
-Ref: shuf-option--output184366
-Ref: shuf-option--random-source184639
-Ref: shuf-option-r184787
-Ref: shuf-option--repeat184796
-Ref: shuf-option-z185152
-Ref: shuf-option--zero-terminated185161
-Node: uniq invocation186497
-Ref: uniq-option-f187565
-Ref: uniq-option--skip-fields187576
-Ref: uniq-option-s188075
-Ref: uniq-option--skip-chars188086
-Ref: uniq-option-c188794
-Ref: uniq-option--count188803
-Ref: uniq-option-i188889
-Ref: uniq-option--ignore-case188898
-Ref: uniq-option-d188973
-Ref: uniq-option--repeated188982
-Ref: uniq-option-D189169
-Ref: uniq-option--all-repeated189178
-Ref: uniq-option--group190597
-Ref: uniq-option-u191573
-Ref: uniq-option--unique191582
-Ref: uniq-option-w191777
-Ref: uniq-option--check-chars191788
-Ref: uniq-option-z191977
-Ref: uniq-option--zero-terminated191986
-Node: comm invocation192587
-Ref: comm-option-1193583
-Ref: comm-option-2193583
-Ref: comm-option-3193583
-Ref: comm-option--check-order194705
-Ref: comm-option--nocheck-order194799
-Ref: comm-option--output-delimiter194908
-Ref: comm-option--total195158
-Ref: comm-option-z196233
-Ref: comm-option--zero-terminated196242
-Node: ptx invocation196683
-Node: General options in ptx199486
-Ref: ptx-option-G199634
-Ref: ptx-option--traditional199643
-Node: Charset selection in ptx200080
-Ref: ptx-option-f200892
-Ref: ptx-option--ignore-case200901
-Node: Input processing in ptx200978
-Ref: ptx-option-b201200
-Ref: ptx-option--break-file201214
-Ref: ptx-option-i202071
-Ref: ptx-option--ignore-file202085
-Ref: ptx-option-o202434
-Ref: ptx-option--only-file202448
-Ref: ptx-option-r203042
-Ref: ptx-option--references203051
-Ref: ptx-option-S203834
-Ref: ptx-option--sentence-regexp203850
-Ref: ptx-option-W205789
-Ref: ptx-option--word-regexp205805
-Node: Output formatting in ptx206512
-Ref: ptx-option-g207823
-Ref: ptx-option--gap-size207839
-Ref: ptx-option-t207960
-Ref: ptx-option--typeset-mode207969
-Ref: ptx-option-w208153
-Ref: ptx-option--width208169
-Ref: ptx-option-A208797
-Ref: ptx-option--auto-reference208806
-Ref: ptx-option-R209279
-Ref: ptx-option--right-side-refs209288
-Ref: ptx-option-F209988
-Ref: ptx-option--flag-truncation210004
-Ref: ptx-option-M211134
-Ref: ptx-option--macro-name211150
-Ref: ptx-option-O211311
-Ref: ptx-option--format211320
-Ref: ptx-option-T212078
-Node: Compatibility in ptx213518
-Node: tsort invocation216895
-Node: tsort background220169
-Node: Operating on fields221867
-Node: cut invocation222223
-Ref: cut-option-b223205
-Ref: cut-option--bytes223224
-Ref: cut-option-c223570
-Ref: cut-option--characters223594
-Ref: cut-option--complement224036
-Ref: cut-option-d224425
-Ref: cut-option--delimiter224444
-Ref: cut-option-f224950
-Ref: cut-option--fields224970
-Ref: cut-option-F226155
-Ref: cut-option-n226394
-Ref: cut-option--no-partial226403
-Ref: cut-option-O226580
-Ref: cut-option--output-delimiter226596
-Ref: cut-option-s226996
-Ref: cut-option--only-delimited227005
-Ref: cut-option-w227300
-Ref: cut-option--whitespace-delimited227309
-Ref: cut-option-z227581
-Ref: cut-option--zero-terminated227590
-Node: paste invocation228116
-Ref: paste-option-s229407
-Ref: paste-option--serial229416
-Ref: paste-option-d229745
-Ref: paste-option--delimiters229765
-Ref: paste-option-z230643
-Ref: paste-option--zero-terminated230652
-Node: join invocation231178
-Node: General options in join232632
-Ref: join-option-a232858
-Ref: join-option--check-order233011
-Ref: join-option--nocheck-order233105
-Ref: join-option-e233216
-Ref: join-option--header233376
-Ref: join-option-i233869
-Ref: join-option--ignore-case233878
-Ref: join-option-1234088
-Ref: join-option-2234161
-Ref: join-option-j234234
-Ref: join-option-o234294
-Ref: join-option-t235832
-Ref: join-option-v236297
-Ref: join-option-z236446
-Ref: join-option--zero-terminated236455
-Node: Sorting files for join237825
-Node: Working with fields239529
-Ref: Working with fields-Footnote-1241105
-Node: Paired and unpaired lines241203
-Node: Header lines244131
-Node: Set operations245036
-Node: Operating on characters246550
-Node: tr invocation246967
-Ref: tr-option-c247909
-Ref: tr-option-C247918
-Ref: tr-option--complement247927
-Ref: tr-option-d248200
-Ref: tr-option--delete248209
-Ref: tr-option-s248277
-Ref: tr-option--squeeze-repeats248286
-Ref: tr-option-t248455
-Ref: tr-option--truncate-set1248464
-Node: Character arrays248819
-Node: Translating255212
-Node: Squeezing and deleting257363
-Node: expand invocation260337
-Ref: expand-option-t261108
-Ref: expand-option--tabs261132
-Ref: expand-option-i262271
-Ref: expand-option--initial262280
-Node: unexpand invocation262499
-Ref: unexpand-option-t263429
-Ref: unexpand-option--tabs263453
-Ref: unexpand-option-a264767
-Ref: unexpand-option--all264776
-Ref: unexpand-option--first-only264929
-Node: Directory listing265102
-Node: ls invocation265594
-Ref: ls invocation-Footnote-1267773
-Node: Which files are listed268015
-Ref: ls-option-a268416
-Ref: ls-option--all268425
-Ref: ls-option-A268509
-Ref: ls-option--almost-all268518
-Ref: ls-option-B268715
-Ref: ls-option--ignore-backups268724
-Ref: ls-option-d268876
-Ref: ls-option--directory268885
-Ref: ls-option-H269250
-Ref: ls-option--dereference-command-line269259
-Ref: ls-option--dereference-command-line-symlink-to-dir269445
-Ref: ls-option--hide269983
-Ref: ls-option-I270604
-Ref: ls-option--ignore270621
-Ref: ls-option-L271236
-Ref: ls-option--dereference271245
-Ref: ls-option-R271549
-Ref: ls-option--recursive271558
-Node: What information is listed271632
-Ref: ls-option--author271934
-Ref: ls-option-D272116
-Ref: ls-option--dired272125
-Ref: ls-option--full-time275444
-Ref: ls-option-g275652
-Ref: ls-option-G275716
-Ref: ls-option--no-group275725
-Ref: ls-option--block-size275917
-Ref: ls-option-h276116
-Ref: ls-option--human-readable276125
-Ref: ls-option-i276427
-Ref: ls-option--inode276436
-Ref: ls-option-l276669
-Ref: ls-option--format276678
-Ref: ls-option-n280578
-Ref: ls-option--numeric-uid-gid280587
-Ref: ls-option-o280747
-Ref: ls-option-s280908
-Ref: ls-option--size280917
-Ref: ls-option--si281647
-Ref: ls-option-Z281966
-Ref: ls-option--context281975
-Node: Sorting the output282149
-Ref: ls-option-c282632
-Ref: ls-option-f282888
-Ref: ls-option--group-directories-first283022
-Ref: ls-option-r283426
-Ref: ls-option--reverse283435
-Ref: ls-option-S283681
-Ref: ls-option--sort283690
-Ref: ls-option-t283748
-Ref: ls-option-u283952
-Ref: ls-option--time283961
-Ref: ls-option-U284806
-Ref: ls-option-v285089
-Ref: ls-option-X285722
-Node: General output formatting285906
-Ref: ls-option-1286525
-Ref: ls-option-C286675
-Ref: ls-option--color287024
-Ref: ls-option-F288337
-Ref: ls-option--classify288346
-Ref: ls-option--file-type289248
-Ref: ls-option--hyperlink289460
-Ref: ls-option--indicator-style289906
-Ref: ls-option-k290646
-Ref: ls-option--kibibytes290655
-Ref: ls-option-m291306
-Ref: ls-option-p291493
-Ref: ls-option-x291575
-Ref: ls-option-T291686
-Ref: ls-option--tabsize291700
-Ref: ls-option-w292735
-Ref: ls-option--width292749
-Ref: ls-option--zero293153
-Node: Formatting file timestamps293609
-Ref: ls-option--time-style294746
-Node: Formatting the file names299202
-Ref: ls-option-b299704
-Ref: ls-option--escape299713
-Ref: ls-option-N299879
-Ref: ls-option--literal299888
-Ref: ls-option-q300147
-Ref: ls-option--hide-control-chars300156
-Ref: ls-option-Q300346
-Ref: ls-option--quote-name300355
-Ref: ls-option--quoting-style300486
-Ref: ls-option--show-control-chars303163
-Node: dir invocation303332
-Node: vdir invocation303753
-Node: dircolors invocation304172
-Ref: dircolors-option-b305337
-Ref: dircolors-option--sh305346
-Ref: dircolors-option--bourne-shell305357
-Ref: dircolors-option-c305534
-Ref: dircolors-option--csh305543
-Ref: dircolors-option--c-shell305555
-Ref: dircolors-option-p305678
-Ref: dircolors-option--print-database305687
-Ref: dircolors-option--print-ls-colors305887
-Node: Basic operations306100
-Node: cp invocation306714
-Ref: cp-option-a309675
-Ref: cp-option--archive309684
-Ref: cp-option--attributes-only310195
-Ref: cp-option-b310452
-Ref: cp-option--backup310461
-Ref: cp-option--copy-contents311141
-Ref: cp-option-d311937
-Ref: cp-option--debug312166
-Ref: cp-option-f312317
-Ref: cp-option--force312326
-Ref: cp-option-i313220
-Ref: cp-option--interactive313229
-Ref: cp-option-H313471
-Ref: cp-option-L313727
-Ref: cp-option--dereference313736
-Ref: cp-option-P314001
-Ref: cp-option--no-dereference314010
-Ref: cp-option--keep-directory-symlink314265
-Ref: cp-option-l314558
-Ref: cp-option--link314567
-Ref: cp-option-n314640
-Ref: cp-option--no-clobber314649
-Ref: cp-option-p315137
-Ref: cp-option--preserve315146
-Ref: cp-option--no-preserve318924
-Ref: cp-option--parents319075
-Ref: cp-option-r319504
-Ref: cp-option-R319513
-Ref: cp-option--recursive319522
-Ref: cp-option--reflink320378
-Ref: cp-option--remove-destination321535
-Ref: cp-option--sparse321672
-Ref: cp-option--strip-trailing-slashes323611
-Ref: cp-option-s323735
-Ref: cp-option--symbolic-link323744
-Ref: cp-option-S324068
-Ref: cp-option--suffix324084
-Ref: cp-option-t324196
-Ref: cp-option--target-directory324215
-Ref: cp-option-T324318
-Ref: cp-option--no-target-directory324327
-Ref: cp-option-u324491
-Ref: cp-option--update324500
-Ref: cp-option-v326343
-Ref: cp-option--verbose326352
-Ref: cp-option-x326421
-Ref: cp-option--one-file-system326430
-Ref: cp-option-Z326612
-Ref: cp-option--context326621
-Node: dd invocation327283
-Ref: dd-optionif329023
-Ref: dd-optionof329085
-Ref: dd-optionibs329222
-Ref: dd-optionobs329354
-Ref: dd-optionbs329488
-Ref: dd-optioncbs329845
-Ref: dd-optionskip330073
-Ref: dd-optioniseek330086
-Ref: dd-optionseek330343
-Ref: dd-optionoseek330356
-Ref: dd-optioncount330628
-Ref: dd-optionstatus331189
-Ref: dd-optionconv332729
-Ref: dd-optioniflag337943
-Ref: dd-optionoflag338088
-Node: install invocation347169
-Ref: install-option-b348837
-Ref: install-option--backup348846
-Ref: install-option-C348981
-Ref: install-option--compare348990
-Ref: install-option-c349635
-Ref: install-option-D349718
-Ref: install-option-d349963
-Ref: install-option--directory349972
-Ref: install-option--debug350201
-Ref: install-option-g350352
-Ref: install-option--group350367
-Ref: install-option-m350572
-Ref: install-option--mode350586
-Ref: install-option-o351235
-Ref: install-option--owner351250
-Ref: install-option--preserve-context351493
-Ref: install-option-p351774
-Ref: install-option--preserve-timestamps351783
-Ref: install-option-s352304
-Ref: install-option--strip352313
-Ref: install-option--strip-program352392
-Ref: install-option-S352460
-Ref: install-option--suffix352476
-Ref: install-option-t352588
-Ref: install-option--target-directory352607
-Ref: install-option-T352790
-Ref: install-option--no-target-directory352799
-Ref: install-option-v352963
-Ref: install-option--verbose352972
-Ref: install-option-Z353041
-Ref: install-option--context353050
-Node: mv invocation353646
-Ref: mv-option-b356226
-Ref: mv-option--backup356235
-Ref: mv-option--debug356370
-Ref: mv-option-f356521
-Ref: mv-option--force356530
-Ref: mv-option-i356728
-Ref: mv-option--interactive356737
-Ref: mv-option-n357022
-Ref: mv-option--no-clobber357031
-Ref: mv-option--no-copy357403
-Ref: mv-option--exchange357578
-Ref: mv-option-u358469
-Ref: mv-option--update358478
-Ref: mv-option-v360024
-Ref: mv-option--verbose360033
-Ref: mv-option--strip-trailing-slashes360101
-Ref: mv-option-S360225
-Ref: mv-option--suffix360241
-Ref: mv-option-t360353
-Ref: mv-option--target-directory360372
-Ref: mv-option-T360475
-Ref: mv-option--no-target-directory360484
-Ref: mv-option-Z360648
-Ref: mv-option--context360657
-Node: rm invocation360968
-Ref: rm-option-d362330
-Ref: rm-option--dir362339
-Ref: rm-option-f362406
-Ref: rm-option--force362415
-Ref: rm-option-i362574
-Ref: rm-option-I362814
-Ref: rm-option--interactive363063
-Ref: rm-option--one-file-system363543
-Ref: rm-option--preserve-root364519
-Ref: rm-option--no-preserve-root364854
-Ref: rm-option-r365081
-Ref: rm-option-R365090
-Ref: rm-option--recursive365099
-Ref: rm-option-v365185
-Ref: rm-option--verbose365194
-Node: shred invocation365867
-Ref: shred-option-f371943
-Ref: shred-option--force371952
-Ref: shred-option-n372033
-Ref: shred-option--iterations372049
-Ref: shred-option--random-source372319
-Ref: shred-option-s372465
-Ref: shred-option--size372480
-Ref: shred-option-u372722
-Ref: shred-option--remove372731
-Ref: shred-option-v373612
-Ref: shred-option--verbose373621
-Ref: shred-option-x373792
-Ref: shred-option--exact373801
-Ref: shred-option-z374371
-Ref: shred-option--zero374380
-Node: Special file types376257
-Node: link invocation377774
-Node: ln invocation379025
-Ref: ln-option-b383287
-Ref: ln-option--backup383296
-Ref: ln-option-d383431
-Ref: ln-option-F383440
-Ref: ln-option--directory383449
-Ref: ln-option-f383656
-Ref: ln-option--force383665
-Ref: ln-option-i383720
-Ref: ln-option--interactive383729
-Ref: ln-option-L383858
-Ref: ln-option--logical383867
-Ref: ln-option-n384074
-Ref: ln-option--no-dereference384083
-Ref: ln-option-P385056
-Ref: ln-option--physical385065
-Ref: ln-option-r385506
-Ref: ln-option--relative385515
-Ref: ln-option-s386416
-Ref: ln-option--symbolic386425
-Ref: ln-option-S386594
-Ref: ln-option--suffix386610
-Ref: ln-option-t386722
-Ref: ln-option--target-directory386741
-Ref: ln-option-T386844
-Ref: ln-option--no-target-directory386853
-Ref: ln-option-v387017
-Ref: ln-option--verbose387026
-Node: mkdir invocation388157
-Ref: mkdir-option-m388693
-Ref: mkdir-option--mode388707
-Ref: mkdir-option-p389577
-Ref: mkdir-option--parents389586
-Ref: mkdir-option-v390556
-Ref: mkdir-option--verbose390565
-Ref: mkdir-option-Z390679
-Ref: mkdir-option--context390688
-Node: mkfifo invocation391202
-Ref: mkfifo-option-m391862
-Ref: mkfifo-option--mode391876
-Ref: mkfifo-option-Z392151
-Ref: mkfifo-option--context392160
-Node: mknod invocation392674
-Ref: mknod-option-m394441
-Ref: mknod-option--mode394455
-Ref: mknod-option-Z394686
-Ref: mknod-option--context394695
-Node: readlink invocation395209
-Ref: readlink-option-f396265
-Ref: readlink-option--canonicalize396274
-Ref: readlink-option-e396526
-Ref: readlink-option--canonicalize-existing396535
-Ref: readlink-option-m396794
-Ref: readlink-option--canonicalize-missing396803
-Ref: readlink-option-n396957
-Ref: readlink-option--no-newline396966
-Ref: readlink-option-q397120
-Ref: readlink-option-s397129
-Ref: readlink-option--quiet397138
-Ref: readlink-option--silent397152
-Ref: readlink-option-v397305
-Ref: readlink-option--verbose397314
-Ref: readlink-option-z397457
-Ref: readlink-option--zero397466
-Node: rmdir invocation397941
-Ref: rmdir-option--ignore-fail-on-non-empty398408
-Ref: rmdir-option-p398508
-Ref: rmdir-option--parents398517
-Ref: rmdir-option-v398942
-Ref: rmdir-option--verbose398951
-Node: unlink invocation399555
-Node: Changing file attributes400543
-Node: chown invocation401361
-Ref: chown-option-c404324
-Ref: chown-option--changes404333
-Ref: chown-option-f404438
-Ref: chown-option--silent404447
-Ref: chown-option--quiet404462
-Ref: chown-option--from404562
-Ref: chown-option--dereference405608
-Ref: chown-option-h406156
-Ref: chown-option--no-dereference406165
-Ref: chown-option--preserve-root406435
-Ref: chown-option--no-preserve-root406632
-Ref: chown-option--reference406764
-Ref: chown-option-v407016
-Ref: chown-option--verbose407025
-Ref: chown-option-R407360
-Ref: chown-option--recursive407369
-Ref: chown-option-H407457
-Ref: chown-option-L407633
-Ref: chown-option-P408169
-Node: chgrp invocation408652
-Ref: chgrp-option-c409539
-Ref: chgrp-option--changes409548
-Ref: chgrp-option-f409649
-Ref: chgrp-option--silent409658
-Ref: chgrp-option--quiet409673
-Ref: chgrp-option--from409769
-Ref: chgrp-option--dereference410815
-Ref: chgrp-option-h411363
-Ref: chgrp-option--no-dereference411372
-Ref: chgrp-option--preserve-root411642
-Ref: chgrp-option--no-preserve-root411839
-Ref: chgrp-option--reference411971
-Ref: chgrp-option-v412197
-Ref: chgrp-option--verbose412206
-Ref: chgrp-option-R412541
-Ref: chgrp-option--recursive412550
-Ref: chgrp-option-H412653
-Ref: chgrp-option-L412829
-Ref: chgrp-option-P413365
-Node: chmod invocation413771
-Ref: chmod-option-c415751
-Ref: chmod-option--changes415760
-Ref: chmod-option--dereference415866
-Ref: chmod-option-h416470
-Ref: chmod-option--no-dereference416479
-Ref: chmod-option-f416670
-Ref: chmod-option--silent416679
-Ref: chmod-option--quiet416694
-Ref: chmod-option--preserve-root416796
-Ref: chmod-option--no-preserve-root416993
-Ref: chmod-option-v417125
-Ref: chmod-option--verbose417134
-Ref: chmod-option--reference417222
-Ref: chmod-option-R417478
-Ref: chmod-option--recursive417487
-Ref: chmod-option-H417577
-Ref: chmod-option-L417836
-Ref: chmod-option-P418372
-Node: touch invocation419005
-Ref: touch-option-a420948
-Ref: touch-option--time420957
-Ref: touch-option-c421079
-Ref: touch-option--no-create421088
-Ref: touch-option-d421165
-Ref: touch-option--date421179
-Ref: touch-option-f421715
-Ref: touch-option-h421791
-Ref: touch-option--no-dereference421800
-Ref: touch-option-m422569
-Ref: touch-option-r422663
-Ref: touch-option--reference422677
-Ref: touch-option-t423247
-Node: File space usage424700
-Node: df invocation425398
-Ref: df-option-a427098
-Ref: df-option--all427107
-Ref: df-option-B427729
-Ref: df-option--block-size427743
-Ref: df-option-h427911
-Ref: df-option--human-readable427920
-Ref: df-option-H428222
-Ref: df-option-i428263
-Ref: df-option--inodes428272
-Ref: df-option-k428505
-Ref: df-option-l428672
-Ref: df-option--local428681
-Ref: df-option--no-sync428797
-Ref: df-option--output429090
-Ref: df-option-P430923
-Ref: df-option--portability430932
-Ref: df-option--si431807
-Ref: df-option--sync432126
-Ref: df-option--total432417
-Ref: df-option-t433053
-Ref: df-option--type433069
-Ref: df-option-T433270
-Ref: df-option--print-type433279
-Ref: df-option-x434189
-Ref: df-option--exclude-type434205
-Ref: df-option-v434433
-Node: du invocation435204
-Ref: du-option-0436102
-Ref: du-option--null436111
-Ref: du-option-a436340
-Ref: du-option--all436349
-Ref: du-option-A436416
-Ref: du-option--apparent-size436425
-Ref: du-option-B437346
-Ref: du-option--block-size437360
-Ref: du-option-b437528
-Ref: du-option--bytes437537
-Ref: du-option-c437609
-Ref: du-option--total437618
-Ref: du-option-D437824
-Ref: du-option--dereference-args437833
-Ref: du-option-d438105
-Ref: du-option--max-depth438120
-Ref: du-option--files0-from438371
-Ref: du-option-H439143
-Ref: du-option-h439209
-Ref: du-option--human-readable439218
-Ref: du-option--inodes439520
-Ref: du-option-k440051
-Ref: du-option-L440218
-Ref: du-option--dereference440227
-Ref: du-option-l440412
-Ref: du-option--count-links440421
-Ref: du-option-m440534
-Ref: du-option-P440706
-Ref: du-option--no-dereference440715
-Ref: du-option-S440862
-Ref: du-option--separate-dirs440871
-Ref: du-option--si441238
-Ref: du-option-s441557
-Ref: du-option--summarize441566
-Ref: du-option-t441630
-Ref: du-option--threshold441644
-Ref: du-option--time443209
-Ref: du-option--time-style443769
-Ref: du-option-X445614
-Ref: du-option--exclude-from445628
-Ref: du-option--exclude445813
-Ref: du-option-x445999
-Ref: du-option--one-file-system446008
-Node: stat invocation447456
-Ref: stat-option-L448321
-Ref: stat-option--dereference448330
-Ref: stat-option-f448569
-Ref: stat-option--file-system448578
-Ref: stat-option--cached448783
-Ref: stat-option-c449366
-Ref: stat-option--format449375
-Ref: stat-option--printf449694
-Ref: stat-option-t450126
-Ref: stat-option--terse450135
-Node: sync invocation457821
-Ref: sync-option-d459110
-Ref: sync-option--data459119
-Ref: sync-option-f459259
-Ref: sync-option--file-system459268
-Node: truncate invocation459987
-Ref: truncate-option-c460611
-Ref: truncate-option--no-create460620
-Ref: truncate-option-o460683
-Ref: truncate-option--io-blocks460692
-Ref: truncate-option-r460782
-Ref: truncate-option--reference460797
-Ref: truncate-option-s460876
-Ref: truncate-option--size460890
-Node: Printing text462039
-Node: echo invocation462413
-Ref: echo-option-n463626
-Ref: echo-option-e463677
-Ref: echo-option-E464628
-Node: printf invocation465653
-Node: yes invocation472331
-Node: Conditions472977
-Node: false invocation473566
-Node: true invocation474558
-Node: test invocation475780
-Node: File type tests477951
-Ref: test-option-b478201
-Ref: test-option-c478272
-Ref: test-option-d478347
-Ref: test-option-f478407
-Ref: test-option-h478470
-Ref: test-option-L478484
-Ref: test-option-p478658
-Ref: test-option-S478719
-Ref: test-option-t478776
-Node: Access permission tests478862
-Ref: test-option-g479110
-Ref: test-option-k479184
-Ref: test-option-r479258
-Ref: test-option-u479328
-Ref: test-option-w479401
-Ref: test-option-x479472
-Ref: test-option-O479595
-Ref: test-option-G479682
-Node: File characteristic tests479770
-Ref: test-option-e480012
-Ref: test-option-s480053
-Ref: test-option-nt480127
-Ref: test-option-ot480267
-Ref: test-option-ef480407
-Ref: test-option-N480548
-Node: String tests480655
-Ref: test-option-z481078
-Ref: test-option-n481138
-Node: Numeric tests481672
-Ref: test-option-eq482003
-Ref: test-option-ne482003
-Ref: test-option-lt482003
-Ref: test-option-le482003
-Ref: test-option-gt482003
-Ref: test-option-ge482003
-Node: Connectives for test482501
-Ref: test-option-a483407
-Ref: test-option-o483552
-Node: expr invocation483649
-Node: String expressions486106
-Node: Numeric expressions488767
-Node: Relations for expr489469
-Node: Examples of expr490692
-Node: Redirection491435
-Node: tee invocation491892
-Ref: tee-option-a492862
-Ref: tee-option--append492871
-Ref: tee-option-i492968
-Ref: tee-option--ignore-interrupts492977
-Ref: tee-option-p493035
-Ref: tee-option--output-error493044
-Node: File name manipulation499085
-Node: basename invocation499654
-Ref: basename-option-a500958
-Ref: basename-option--multiple500967
-Ref: basename-option-s501140
-Ref: basename-option--suffix501156
-Ref: basename-option-z501252
-Ref: basename-option--zero501261
-Node: dirname invocation501857
-Ref: dirname-option-z503137
-Ref: dirname-option--zero503146
-Node: pathchk invocation503668
-Ref: pathchk-option-p504618
-Ref: pathchk-option-P505112
-Ref: pathchk-option--portability505236
-Node: mktemp invocation505474
-Ref: mktemp-option-d509118
-Ref: mktemp-option--directory509127
-Ref: mktemp-option-q509404
-Ref: mktemp-option--quiet509413
-Ref: mktemp-option-u509567
-Ref: mktemp-option--dry-run509576
-Ref: mktemp-option-p509932
-Ref: mktemp-option--tmpdir509945
-Ref: mktemp-option--suffix510367
-Ref: mktemp-option-t510771
-Node: realpath invocation511265
-Ref: realpath-option-E512245
-Ref: realpath-option--canonicalize512254
-Ref: realpath-option-e512511
-Ref: realpath-option--canonicalize-existing512520
-Ref: realpath-option-m512665
-Ref: realpath-option--canonicalize-missing512674
-Ref: realpath-option-L512808
-Ref: realpath-option--logical512817
-Ref: realpath-option-P512979
-Ref: realpath-option--physical512988
-Ref: realpath-option-q513196
-Ref: realpath-option--quiet513205
-Ref: realpath-option--relative-to513280
-Ref: realpath-option--relative-base513470
-Ref: realpath-option-s513851
-Ref: realpath-option--strip513860
-Ref: realpath-option--no-symlinks513874
-Ref: realpath-option-z514151
-Ref: realpath-option--zero514160
-Node: Realpath usage examples514554
-Node: Working context516351
-Node: pwd invocation516989
-Ref: pwd-option-L517320
-Ref: pwd-option--logical517329
-Ref: pwd-option-P517624
-Ref: pwd-option--physical517633
-Node: stty invocation518402
-Ref: stty-option-a519322
-Ref: stty-option--all519331
-Ref: stty-option-F519473
-Ref: stty-option--file519489
-Ref: stty-option-g519962
-Ref: stty-option--save519971
-Node: Control521540
-Node: Input522610
-Node: Output524360
-Node: Local525756
-Node: Combination527836
-Node: Characters530242
-Node: Special532069
-Node: printenv invocation534213
-Ref: printenv-option-0534828
-Ref: printenv-option--null534837
-Node: tty invocation535218
-Ref: tty-option-s535687
-Ref: tty-option--silent535696
-Ref: tty-option--quiet535711
-Node: User information536134
-Node: id invocation536826
-Ref: id-option-a537902
-Ref: id-option-g537977
-Ref: id-option--group537986
-Ref: id-option-G538031
-Ref: id-option--groups538040
-Ref: id-option-n538115
-Ref: id-option--name538124
-Ref: id-option-r538246
-Ref: id-option--real538255
-Ref: id-option-u538378
-Ref: id-option--user538387
-Ref: id-option-Z538430
-Ref: id-option--context538439
-Ref: id-option-z538697
-Ref: id-option--zero538706
-Node: logname invocation539606
-Node: whoami invocation540255
-Node: groups invocation540760
-Node: users invocation541987
-Node: who invocation543159
-Ref: who-option-a544542
-Ref: who-option--all544551
-Ref: who-option-b544613
-Ref: who-option--boot544622
-Ref: who-option-d544686
-Ref: who-option--dead544695
-Ref: who-option-H544765
-Ref: who-option--heading544774
-Ref: who-option-l544829
-Ref: who-option--login544838
-Ref: who-option--lookup545010
-Ref: who-option-m545160
-Ref: who-option-p545199
-Ref: who-option--process545208
-Ref: who-option-q545269
-Ref: who-option--count545278
-Ref: who-option-r545394
-Ref: who-option--runlevel545403
-Ref: who-option-s545501
-Ref: who-option--short545510
-Ref: who-option-t545591
-Ref: who-option--time545600
-Ref: who-option-u545651
-Ref: who-option--users545660
-Ref: who-option-w545898
-Ref: who-option-T545907
-Ref: who-option--mesg545916
-Ref: who-option--message545929
-Ref: who-option--writable545945
-Node: pinky invocation546475
-Ref: pinky-option-l546860
-Ref: pinky-option-b547097
-Ref: pinky-option-h547188
-Ref: pinky-option-p547262
-Ref: pinky-option-s547333
-Ref: pinky-option-f547439
-Ref: pinky-option-w547510
-Ref: pinky-option-i547582
-Ref: pinky-option-q547675
-Ref: pinky-option--lookup547780
-Node: System context548015
-Node: date invocation548674
-Node: Date format specifiers550081
-Node: Time conversion specifiers550847
-Node: Date conversion specifiers553582
-Node: Literal conversion specifiers557377
-Node: Padding and other flags557754
-Node: Calendars561370
-Node: Setting the time563688
-Node: Options for date564826
-Ref: date-option-d565291
-Ref: date-option--date565308
-Ref: date-option--debug566022
-Ref: date-option-f566139
-Ref: date-option--file566157
-Ref: date-option-I566490
-Ref: date-option--iso-8601566509
-Ref: date-option-r567740
-Ref: date-option--reference567754
-Ref: date-option--resolution567886
-Ref: date-option-R568241
-Ref: date-option--rfc-email568250
-Ref: date-option--rfc-3339568888
-Ref: date-option-s570159
-Ref: date-option--set570176
-Ref: date-option-u570298
-Ref: date-option--utc570307
-Ref: date-option--universal570319
-Node: Examples of date570728
-Ref: %s-examples572224
-Node: arch invocation575484
-Node: nproc invocation576037
-Ref: nproc-option--all576887
-Ref: nproc-option--ignore577185
-Node: uname invocation577352
-Ref: uname-option-a578365
-Ref: uname-option--all578374
-Ref: uname-option-i578516
-Ref: uname-option--hardware-platform578525
-Ref: uname-option-m578772
-Ref: uname-option--machine578781
-Ref: uname-option-n578896
-Ref: uname-option--nodename578905
-Ref: uname-option-p578961
-Ref: uname-option--processor578970
-Ref: uname-option-o579212
-Ref: uname-option--operating-system579221
-Ref: uname-option-r579292
-Ref: uname-option--kernel-release579301
-Ref: uname-option-s579356
-Ref: uname-option--kernel-name579365
-Ref: uname-option-v579905
-Ref: uname-option--kernel-version579914
-Node: hostname invocation580054
-Node: hostid invocation580878
-Node: uptime invocation581739
-Node: SELinux context583211
-Node: chcon invocation583580
-Ref: chcon-option--dereference584240
-Ref: chcon-option-h584345
-Ref: chcon-option--no-dereference584354
-Ref: chcon-option--reference584457
-Ref: chcon-option-R584561
-Ref: chcon-option--recursive584570
-Ref: chcon-option--preserve-root584640
-Ref: chcon-option--no-preserve-root584825
-Ref: chcon-option-H584993
-Ref: chcon-option-L585169
-Ref: chcon-option-P585310
-Ref: chcon-option-v585391
-Ref: chcon-option--verbose585400
-Ref: chcon-option-u585468
-Ref: chcon-option--user585482
-Ref: chcon-option-r585552
-Ref: chcon-option--role585566
-Ref: chcon-option-t585636
-Ref: chcon-option--type585650
-Ref: chcon-option-l585720
-Ref: chcon-option--range585735
-Node: runcon invocation585894
-Ref: runcon-option-c587047
-Ref: runcon-option--compute587056
-Ref: runcon-option-u587131
-Ref: runcon-option--user587145
-Ref: runcon-option-r587215
-Ref: runcon-option--role587229
-Ref: runcon-option-t587299
-Ref: runcon-option--type587313
-Ref: runcon-option-l587383
-Ref: runcon-option--range587398
-Node: Modified command invocation587657
-Node: chroot invocation588343
-Ref: chroot-option--groups589382
-Ref: chroot-option--userspec589691
-Ref: chroot-option--skip-chdir590075
-Ref: chroot invocation-Footnote-1592213
-Node: env invocation592730
-Ref: env-option-0596698
-Ref: env-option--null596707
-Ref: env-option-a596936
-Ref: env-option--argv0596949
-Ref: env-option-u597101
-Ref: env-option--unset597115
-Ref: env-option-597218
-Ref: env-option-i597226
-Ref: env-option--ignore-environment597235
-Ref: env-option-C597342
-Ref: env-option--chdir597355
-Ref: env-option--default-signal598050
-Ref: env-option--ignore-signal599093
-Ref: env-option--block-signal600107
-Ref: env-option--list-signal-handling600320
-Ref: env-option-v600439
-Ref: env-option--debug600448
-Ref: env-option-S600815
-Ref: env-option--split-string600831
-Node: nice invocation609720
-Ref: nice-option-n612026
-Ref: nice-option--adjustment612046
-Node: nohup invocation613834
-Node: stdbuf invocation616326
-Ref: stdbuf-option-i617231
-Ref: stdbuf-option--input617245
-Ref: stdbuf-option-o617314
-Ref: stdbuf-option--output617328
-Ref: stdbuf-option-e617399
-Ref: stdbuf-option--error617413
-Node: timeout invocation619291
-Ref: timeout-option-f619871
-Ref: timeout-option--foreground619880
-Ref: timeout-option-k620695
-Ref: timeout-option--kill-after620713
-Ref: timeout-option-p621411
-Ref: timeout-option--preserve-status621420
-Ref: timeout-option-s621673
-Ref: timeout-option--signal621689
-Ref: timeout-option-v621892
-Ref: timeout-option--verbose621901
-Node: Process control624213
-Node: kill invocation624430
-Ref: kill-option-SIGNAL626728
-Ref: kill-option-s626728
-Ref: kill-option--signal626737
-Ref: kill-option-l626811
-Ref: kill-option--list626820
-Ref: kill-option-t627032
-Ref: kill-option--table627041
-Node: Delaying627628
-Node: sleep invocation627819
-Node: Numeric operations629366
-Node: factor invocation629745
-Ref: factor-option-h630219
-Ref: factor-option--exponents630228
-Node: numfmt invocation632252
-Ref: numfmt-option--debug633248
-Ref: numfmt-option-d633348
-Ref: numfmt-option--delimiter633357
-Ref: numfmt-option--field633520
-Ref: numfmt-option--format633873
-Ref: numfmt-option--from634568
-Ref: numfmt-option--from-unit634758
-Ref: numfmt-option--grouping635064
-Ref: numfmt-option--header635314
-Ref: numfmt-option--invalid635400
-Ref: numfmt-option--padding635850
-Ref: numfmt-option--round636183
-Ref: numfmt-option--suffix636399
-Ref: numfmt-option--to636523
-Ref: numfmt-option--to-unit636698
-Ref: numfmt-option--unit-separator637001
-Ref: numfmt-option-z637666
-Ref: numfmt-option--zero-terminated637675
-Node: seq invocation645296
-Ref: seq-option-f646523
-Ref: seq-option--format646539
-Ref: seq-option-s647479
-Ref: seq-option--separator647495
-Ref: seq-option-w647629
-Ref: seq-option--equal-width647638
-Node: File permissions649678
-Node: Mode Structure650365
-Node: Symbolic Modes654022
-Node: Setting Permissions655130
-Node: Copying Permissions657778
-Node: Changing Special Mode Bits658638
-Node: Conditional Executability660510
-Node: Multiple Changes661056
-Node: Umask and Protection662717
-Node: Numeric Modes663852
-Node: Operator Numeric Modes666188
-Node: Directory Setuid and Setgid667234
-Node: File timestamps670079
-Node: Date input formats673358
-Node: General date syntax675840
-Node: Calendar date items679146
-Node: Time of day items681311
-Node: Time zone items683609
-Node: Combined date and time of day items685002
-Node: Day of week items685867
-Node: Relative items in date strings686945
-Node: Pure numbers in date strings689857
-Node: Seconds since the Epoch690840
-Node: Specifying time zone rules692560
-Node: Authors of parse_datetime696157
-Ref: Authors of get_date696342
-Node: Version sort ordering697341
-Node: Version sort overview697656
-Node: Using version sort in GNU Coreutils698662
-Node: Version sort and natural sort700172
-Node: Variations in version sort order701032
-Node: Version sort implementation701798
-Node: Version-sort ordering rules702597
-Node: Version sort is not the same as numeric sort705388
-Node: Version sort punctuation707412
-Node: Punctuation vs letters709033
-Node: The tilde ~709864
-Node: Version sort ignores locale711213
-Node: Differences from Debian version sort712303
-Node: Hyphen-minus and colon712878
-Node: Special priority in GNU Coreutils version sort714501
-Node: Special handling of file extensions715671
-Node: Comparing two strings using Debian's algorithm720732
-Node: Advanced version sort topics722642
-Node: Reporting version sort bugs722926
-Node: Other version/natural sort implementations724117
-Node: Related source code726251
-Node: Opening the software toolbox727007
-Node: Toolbox introduction727766
-Node: I/O redirection730487
-Node: The who command733333
-Node: The cut command734248
-Node: The sort command735342
-Node: The uniq command736052
-Node: Putting the tools together736757
-Node: History749029
-Node: GNU Free Documentation License749870
-Node: Concept index775021
+Node: Top8517
+Node: Introduction23806
+Node: Common options25821
+Node: Backup options29552
+Node: Block size31511
+Node: Signal specifications37178
+Node: Disambiguating names and IDs39658
+Node: Random sources41294
+Node: Target directory43297
+Node: Trailing slashes46933
+Node: Traversing symlinks47964
+Ref: -option-H48716
+Ref: -option-L48857
+Ref: -option-P48968
+Node: Treating / specially49102
+Node: Special built-in utilities50716
+Node: Exit status51899
+Node: Floating point52766
+Node: Hardware Acceleration54620
+Node: Standards conformance57181
+Node: Multi-call invocation58914
+Node: Output of entire files59853
+Node: cat invocation60584
+Ref: cat-option-A61001
+Ref: cat-option--show-all61010
+Ref: cat-option-b61059
+Ref: cat-option--number-nonblank61068
+Ref: cat-option-e61149
+Ref: cat-option-E61189
+Ref: cat-option--show-ends61198
+Ref: cat-option-n61324
+Ref: cat-option--number61333
+Ref: cat-option-s61451
+Ref: cat-option--squeeze-blank61460
+Ref: cat-option-t61580
+Ref: cat-option-T61620
+Ref: cat-option--show-tabs61629
+Ref: cat-option-u61689
+Ref: cat-option-v61738
+Ref: cat-option--show-nonprinting61747
+Node: tac invocation62579
+Ref: tac-option-b63281
+Ref: tac-option--before63290
+Ref: tac-option-r63403
+Ref: tac-option--regex63412
+Ref: tac-option-s63484
+Ref: tac-option--separator63503
+Node: nl invocation64171
+Ref: nl-option-b65776
+Ref: nl-option--body-numbering65791
+Ref: nl-option-d66449
+Ref: nl-option--section-delimiter66461
+Ref: nl-option-f66882
+Ref: nl-option--footer-numbering66897
+Ref: nl-option-h66971
+Ref: nl-option--header-numbering66986
+Ref: nl-option-i67060
+Ref: nl-option--line-increment67076
+Ref: nl-option-l67201
+Ref: nl-option--join-blank-lines67217
+Ref: nl-option-n67547
+Ref: nl-option--number-format67563
+Ref: nl-option-p67828
+Ref: nl-option--no-renumber67837
+Ref: nl-option-s67924
+Ref: nl-option--number-separator67940
+Ref: nl-option-v68085
+Ref: nl-option--starting-line-number68101
+Ref: nl-option-w68258
+Ref: nl-option--number-width68274
+Node: od invocation68445
+Ref: od-option-A70030
+Ref: od-option--address-radix70045
+Ref: od-option--endian70350
+Ref: od-option-j70681
+Ref: od-option--skip-bytes70696
+Ref: od-option-N71572
+Ref: od-option--read-bytes71587
+Ref: od-option-S71746
+Ref: od-option--strings71761
+Ref: od-option-t72196
+Ref: od-option--format72210
+Ref: od-option-v74416
+Ref: od-option--output-duplicates74425
+Ref: od-option-w74703
+Ref: od-option--width74714
+Ref: od-option-a75185
+Ref: od-option-b75255
+Ref: od-option-c75321
+Ref: od-option-d75460
+Ref: od-option-f75546
+Ref: od-option-i75607
+Ref: od-option-l75674
+Ref: od-option-o75746
+Ref: od-option-s75821
+Ref: od-option-x75898
+Ref: od-option--traditional75979
+Node: base32 invocation76587
+Node: base64 invocation77180
+Ref: base32-option-w78047
+Ref: base32-option--wrap78047
+Ref: basenc-option-w78047
+Ref: basenc-option--wrap78047
+Ref: base64-option-w78047
+Ref: base64-option--wrap78061
+Ref: base32-option-d78283
+Ref: base32-option--decode78283
+Ref: basenc-option-d78283
+Ref: basenc-option--decode78283
+Ref: base64-option-d78283
+Ref: base64-option--decode78292
+Ref: base32-option-i78494
+Ref: base32-option--ignore-garbage78494
+Ref: basenc-option-i78494
+Ref: basenc-option--ignore-garbage78494
+Ref: base64-option-i78494
+Ref: base64-option--ignore-garbage78503
+Node: basenc invocation78752
+Ref: basenc-option--base6479538
+Ref: basenc-option--base64url79773
+Ref: basenc-option--base5880048
+Ref: basenc-option--base3280523
+Ref: basenc-option--base32hex80842
+Ref: basenc-option--base1681146
+Ref: basenc-option--base2lsbf81417
+Ref: basenc-option--base2msbf81593
+Ref: basenc-option--z8581768
+Node: Formatting file contents82942
+Node: fmt invocation83387
+Ref: fmt-option-c84763
+Ref: fmt-option--crown-margin84772
+Ref: fmt-option-t84982
+Ref: fmt-option--tagged-paragraph84991
+Ref: fmt-option-s85247
+Ref: fmt-option--split-only85256
+Ref: fmt-option-u85451
+Ref: fmt-option--uniform-spacing85460
+Ref: fmt-option-WIDTH85601
+Ref: fmt-option-w85614
+Ref: fmt-option--width85629
+Ref: fmt-option-g85752
+Ref: fmt-option--goal85766
+Ref: fmt-option-p85901
+Ref: fmt-option--prefix85917
+Node: pr invocation86360
+Ref: pr-option--pages88148
+Ref: pr-option-COLS88664
+Ref: pr-option-COLUMN88664
+Ref: pr-option--columns88678
+Ref: pr-option-a89609
+Ref: pr-option--across89618
+Ref: pr-option-c89841
+Ref: pr-option--show-control-chars89850
+Ref: pr-option-d90072
+Ref: pr-option--double-space90081
+Ref: pr-option-D90133
+Ref: pr-option--date-format90149
+Ref: pr-option-e91116
+Ref: pr-option--expand-tabs91150
+Ref: pr-option-f91427
+Ref: pr-option-F91436
+Ref: pr-option--form-feed91445
+Ref: pr-option-h91594
+Ref: pr-option--header91610
+Ref: pr-option-i91814
+Ref: pr-option--output-tabs91851
+Ref: pr-option-J92138
+Ref: pr-option--join-lines92147
+Ref: pr-option-l92607
+Ref: pr-option--length92628
+Ref: pr-option-m92905
+Ref: pr-option--merge92914
+Ref: pr-option-n93604
+Ref: pr-option--number-lines93639
+Ref: pr-option-N94934
+Ref: pr-option--first-line-number94955
+Ref: pr-option-o95147
+Ref: pr-option--indent95163
+Ref: pr-option-r95468
+Ref: pr-option--no-file-warnings95477
+Ref: pr-option-s95635
+Ref: pr-option--separator95649
+Ref: pr-option-S96081
+Ref: pr-option--sep-string96098
+Ref: pr-option-t96584
+Ref: pr-option--omit-header96593
+Ref: pr-option-T97116
+Ref: pr-option--omit-pagination97125
+Ref: pr-option-v97256
+Ref: pr-option--show-nonprinting97265
+Ref: pr-option-w97354
+Ref: pr-option--width97374
+Ref: pr-option-W97880
+Ref: pr-option--page-width97900
+Node: fold invocation98783
+Ref: fold-option-b99550
+Ref: fold-option--bytes99559
+Ref: fold-option-c99739
+Ref: fold-option--characters99748
+Ref: fold-option-s99904
+Ref: fold-option--spaces99913
+Ref: fold-option-w100136
+Ref: fold-option--width100151
+Node: Output of parts of files100457
+Node: head invocation100948
+Ref: head-option-c101564
+Ref: head-option--bytes101580
+Ref: head-option-n102388
+Ref: head-option--lines102404
+Ref: head-option-q102629
+Ref: head-option--quiet102638
+Ref: head-option--silent102652
+Ref: head-option-v102704
+Ref: head-option--verbose102713
+Ref: head-option-z102767
+Ref: head-option--zero-terminated102776
+Node: tail invocation103888
+Ref: tail-option-c105229
+Ref: tail-option--bytes105245
+Ref: tail-option--debug106178
+Ref: tail-option-f106291
+Ref: tail-option--follow106300
+Ref: tail-option-F109120
+Ref: tail-option--max-unchanged-stats109342
+Ref: tail-option-n109989
+Ref: tail-option--lines110005
+Ref: tail-option--pid110356
+Ref: tail-option-q111459
+Ref: tail-option--quiet111468
+Ref: tail-option--silent111482
+Ref: tail-option--retry111534
+Ref: tail-option-s112221
+Ref: tail-option--sleep-interval112237
+Ref: tail-option-v112804
+Ref: tail-option--verbose112813
+Ref: tail-option-z112867
+Ref: tail-option--zero-terminated112876
+Node: split invocation115222
+Ref: split-option-l116654
+Ref: split-option--lines116669
+Ref: split-option-b116972
+Ref: split-option--bytes116986
+Ref: split-option-C117690
+Ref: split-option--line-bytes117704
+Ref: split-option--filter118078
+Ref: split-option-n118901
+Ref: split-option--number118917
+Ref: split-option-a120660
+Ref: split-option--suffix-length120676
+Ref: split-option-d121051
+Ref: split-option--numeric-suffixes121060
+Ref: split-option-x121773
+Ref: split-option--hex-suffixes121782
+Ref: split-option--additional-suffix121897
+Ref: split-option-e122023
+Ref: split-option--elide-empty-files122032
+Ref: split-option-t122402
+Ref: split-option--separator122421
+Ref: split-option-u122676
+Ref: split-option--unbuffered122685
+Ref: split-option--verbose122820
+Node: csplit invocation123850
+Ref: csplit-option-f126614
+Ref: csplit-option--prefix126630
+Ref: csplit-option-b126701
+Ref: csplit-option--suffix-format126717
+Ref: csplit-option-n127544
+Ref: csplit-option--digits127560
+Ref: csplit-option-k127688
+Ref: csplit-option--keep-files127697
+Ref: csplit-option--suppress-matched127778
+Ref: csplit-option-z127957
+Ref: csplit-option--elide-empty-files127966
+Ref: csplit-option-s128396
+Ref: csplit-option-q128405
+Ref: csplit-option--silent128414
+Ref: csplit-option--quiet128429
+Node: Summarizing files129323
+Node: wc invocation130090
+Ref: wc-option-c132123
+Ref: wc-option--bytes132132
+Ref: wc-option-m132180
+Ref: wc-option--chars132189
+Ref: wc-option-w132307
+Ref: wc-option--words132316
+Ref: wc-option-l132902
+Ref: wc-option--lines132911
+Ref: wc-option--debug133063
+Ref: wc-option-L133205
+Ref: wc-option--max-line-length133214
+Ref: wc-option--total133423
+Ref: wc-option--files0-from134082
+Node: sum invocation135121
+Ref: sum-option-r135887
+Ref: sum-option-s136079
+Ref: sum-option--sysv136088
+Node: cksum invocation136453
+Node: cksum output modes137600
+Node: cksum general options139583
+Ref: cksum-option-a139767
+Ref: cksum-option--algorithm139781
+Ref: cksum-option--base64140859
+Ref: cksum-option--debug141420
+Ref: cksum-option-l141534
+Ref: cksum-option--length141548
+Ref: cksum-option--raw142010
+Ref: cksum-option--untagged142418
+Node: cksum common options142896
+Ref: cksum-option-b143051
+Ref: cksum-option--binary143060
+Ref: cksum-option-c143769
+Ref: cksum-option--check143778
+Ref: cksum-option--ignore-missing146141
+Ref: cksum-option--quiet146410
+Ref: cksum-option--status146781
+Ref: cksum-option--tag147278
+Ref: cksum-option-t147953
+Ref: cksum-option--text147962
+Ref: cksum-option-w148597
+Ref: cksum-option--warn148606
+Ref: cksum-option--strict148792
+Ref: cksum-option-z148932
+Ref: cksum-option--zero148941
+Node: md5sum invocation149212
+Node: b2sum invocation150835
+Ref: b2sum-option-l151723
+Ref: b2sum-option--length151737
+Node: sha1sum invocation152065
+Node: sha2 utilities153574
+Node: sm3sum invocation154562
+Node: Operating on sorted files155470
+Node: sort invocation156051
+Ref: sort-option-c157911
+Ref: sort-option--check157920
+Ref: sort-option-C158213
+Ref: sort-option-m158468
+Ref: sort-option--merge158477
+Ref: sort-option-b159581
+Ref: sort-option--ignore-leading-blanks159590
+Ref: sort-option-d159967
+Ref: sort-option--dictionary-order159976
+Ref: sort-option-f160259
+Ref: sort-option--ignore-case160268
+Ref: sort-option-g160766
+Ref: sort-option--general-numeric-sort160775
+Ref: sort-option--sort160804
+Ref: sort-option-h161941
+Ref: sort-option--human-numeric-sort161950
+Ref: sort-option-i162971
+Ref: sort-option--ignore-nonprinting162980
+Ref: sort-option-M163210
+Ref: sort-option--month-sort163219
+Ref: sort-option-n163671
+Ref: sort-option--numeric-sort163680
+Ref: sort-option-V164628
+Ref: sort-option--version-sort164637
+Ref: sort-option-r164891
+Ref: sort-option--reverse164900
+Ref: sort-option-R165046
+Ref: sort-option--random-sort165055
+Ref: sort-option--compress-program165776
+Ref: sort-option--files0-from166365
+Ref: sort-option-k167110
+Ref: sort-option--key167131
+Ref: sort-option--debug168539
+Ref: sort-option--batch-size168682
+Ref: sort-option-o169888
+Ref: sort-option--output169909
+Ref: sort-option--random-source170866
+Ref: sort-option-s171043
+Ref: sort-option--stable171052
+Ref: sort-option-S171268
+Ref: sort-option--buffer-size171282
+Ref: sort-option-t172100
+Ref: sort-option--field-separator172119
+Ref: sort-option-T173129
+Ref: sort-option--temporary-directory173146
+Ref: sort-option--parallel173568
+Ref: sort-option-u173882
+Ref: sort-option--unique173891
+Ref: sort-option-z174533
+Ref: sort-option--zero-terminated174542
+Ref: sort invocation-Footnote-1182937
+Node: shuf invocation183536
+Ref: shuf-option-e184142
+Ref: shuf-option--echo184151
+Ref: shuf-option-i184220
+Ref: shuf-option--input-range184235
+Ref: shuf-option-n184457
+Ref: shuf-option--head-count184472
+Ref: shuf-option-o184577
+Ref: shuf-option--output184598
+Ref: shuf-option--random-source184871
+Ref: shuf-option-r185019
+Ref: shuf-option--repeat185028
+Ref: shuf-option-z185384
+Ref: shuf-option--zero-terminated185393
+Node: uniq invocation186729
+Ref: uniq-option-f187797
+Ref: uniq-option--skip-fields187808
+Ref: uniq-option-s188307
+Ref: uniq-option--skip-chars188318
+Ref: uniq-option-c189026
+Ref: uniq-option--count189035
+Ref: uniq-option-i189121
+Ref: uniq-option--ignore-case189130
+Ref: uniq-option-d189205
+Ref: uniq-option--repeated189214
+Ref: uniq-option-D189401
+Ref: uniq-option--all-repeated189410
+Ref: uniq-option--group190829
+Ref: uniq-option-u191805
+Ref: uniq-option--unique191814
+Ref: uniq-option-w192009
+Ref: uniq-option--check-chars192020
+Ref: uniq-option-z192209
+Ref: uniq-option--zero-terminated192218
+Node: comm invocation192819
+Ref: comm-option-1193815
+Ref: comm-option-2193815
+Ref: comm-option-3193815
+Ref: comm-option--check-order194937
+Ref: comm-option--nocheck-order195031
+Ref: comm-option--output-delimiter195140
+Ref: comm-option--total195390
+Ref: comm-option-z196465
+Ref: comm-option--zero-terminated196474
+Node: ptx invocation196915
+Node: General options in ptx199718
+Ref: ptx-option-G199866
+Ref: ptx-option--traditional199875
+Node: Charset selection in ptx200312
+Ref: ptx-option-f201124
+Ref: ptx-option--ignore-case201133
+Node: Input processing in ptx201210
+Ref: ptx-option-b201432
+Ref: ptx-option--break-file201446
+Ref: ptx-option-i202303
+Ref: ptx-option--ignore-file202317
+Ref: ptx-option-o202666
+Ref: ptx-option--only-file202680
+Ref: ptx-option-r203274
+Ref: ptx-option--references203283
+Ref: ptx-option-S204066
+Ref: ptx-option--sentence-regexp204082
+Ref: ptx-option-W206021
+Ref: ptx-option--word-regexp206037
+Node: Output formatting in ptx206744
+Ref: ptx-option-g208055
+Ref: ptx-option--gap-size208071
+Ref: ptx-option-t208192
+Ref: ptx-option--typeset-mode208201
+Ref: ptx-option-w208385
+Ref: ptx-option--width208401
+Ref: ptx-option-A209029
+Ref: ptx-option--auto-reference209038
+Ref: ptx-option-R209511
+Ref: ptx-option--right-side-refs209520
+Ref: ptx-option-F210220
+Ref: ptx-option--flag-truncation210236
+Ref: ptx-option-M211366
+Ref: ptx-option--macro-name211382
+Ref: ptx-option-O211543
+Ref: ptx-option--format211552
+Ref: ptx-option-T212310
+Node: Compatibility in ptx213750
+Node: tsort invocation217127
+Node: tsort background220401
+Node: Operating on fields222099
+Node: cut invocation222455
+Ref: cut-option-b223437
+Ref: cut-option--bytes223456
+Ref: cut-option-c223802
+Ref: cut-option--characters223826
+Ref: cut-option--complement224268
+Ref: cut-option-d224657
+Ref: cut-option--delimiter224676
+Ref: cut-option-f225182
+Ref: cut-option--fields225202
+Ref: cut-option-F226387
+Ref: cut-option-n226626
+Ref: cut-option--no-partial226635
+Ref: cut-option-O226812
+Ref: cut-option--output-delimiter226828
+Ref: cut-option-s227228
+Ref: cut-option--only-delimited227237
+Ref: cut-option-w227532
+Ref: cut-option--whitespace-delimited227541
+Ref: cut-option-z227813
+Ref: cut-option--zero-terminated227822
+Node: paste invocation228348
+Ref: paste-option-s229639
+Ref: paste-option--serial229648
+Ref: paste-option-d229977
+Ref: paste-option--delimiters229997
+Ref: paste-option-z230875
+Ref: paste-option--zero-terminated230884
+Node: join invocation231410
+Node: General options in join232864
+Ref: join-option-a233090
+Ref: join-option--check-order233243
+Ref: join-option--nocheck-order233337
+Ref: join-option-e233448
+Ref: join-option--header233608
+Ref: join-option-i234101
+Ref: join-option--ignore-case234110
+Ref: join-option-1234320
+Ref: join-option-2234393
+Ref: join-option-j234466
+Ref: join-option-o234526
+Ref: join-option-t236064
+Ref: join-option-v236529
+Ref: join-option-z236678
+Ref: join-option--zero-terminated236687
+Node: Sorting files for join238057
+Node: Working with fields239761
+Ref: Working with fields-Footnote-1241337
+Node: Paired and unpaired lines241435
+Node: Header lines244363
+Node: Set operations245268
+Node: Operating on characters246782
+Node: tr invocation247199
+Ref: tr-option-c248141
+Ref: tr-option-C248150
+Ref: tr-option--complement248159
+Ref: tr-option-d248432
+Ref: tr-option--delete248441
+Ref: tr-option-s248509
+Ref: tr-option--squeeze-repeats248518
+Ref: tr-option-t248687
+Ref: tr-option--truncate-set1248696
+Node: Character arrays249051
+Node: Translating255444
+Node: Squeezing and deleting257595
+Node: expand invocation260569
+Ref: expand-option-t261340
+Ref: expand-option--tabs261364
+Ref: expand-option-i262503
+Ref: expand-option--initial262512
+Node: unexpand invocation262731
+Ref: unexpand-option-t263661
+Ref: unexpand-option--tabs263685
+Ref: unexpand-option-a264999
+Ref: unexpand-option--all265008
+Ref: unexpand-option--first-only265161
+Node: Directory listing265334
+Node: ls invocation265826
+Ref: ls invocation-Footnote-1268005
+Node: Which files are listed268247
+Ref: ls-option-a268648
+Ref: ls-option--all268657
+Ref: ls-option-A268741
+Ref: ls-option--almost-all268750
+Ref: ls-option-B268947
+Ref: ls-option--ignore-backups268956
+Ref: ls-option-d269108
+Ref: ls-option--directory269117
+Ref: ls-option-H269482
+Ref: ls-option--dereference-command-line269491
+Ref: ls-option--dereference-command-line-symlink-to-dir269677
+Ref: ls-option--hide270215
+Ref: ls-option-I270836
+Ref: ls-option--ignore270853
+Ref: ls-option-L271468
+Ref: ls-option--dereference271477
+Ref: ls-option-R271781
+Ref: ls-option--recursive271790
+Node: What information is listed271864
+Ref: ls-option--author272166
+Ref: ls-option-D272348
+Ref: ls-option--dired272357
+Ref: ls-option--full-time275676
+Ref: ls-option-g275884
+Ref: ls-option-G275948
+Ref: ls-option--no-group275957
+Ref: ls-option--block-size276149
+Ref: ls-option-h276348
+Ref: ls-option--human-readable276357
+Ref: ls-option-i276659
+Ref: ls-option--inode276668
+Ref: ls-option-l276901
+Ref: ls-option--format276910
+Ref: ls-option-n280810
+Ref: ls-option--numeric-uid-gid280819
+Ref: ls-option-o280979
+Ref: ls-option-s281140
+Ref: ls-option--size281149
+Ref: ls-option--si281879
+Ref: ls-option-Z282198
+Ref: ls-option--context282207
+Node: Sorting the output282381
+Ref: ls-option-c282864
+Ref: ls-option-f283120
+Ref: ls-option--group-directories-first283254
+Ref: ls-option-r283658
+Ref: ls-option--reverse283667
+Ref: ls-option-S283913
+Ref: ls-option--sort283922
+Ref: ls-option-t283980
+Ref: ls-option-u284184
+Ref: ls-option--time284193
+Ref: ls-option-U285038
+Ref: ls-option-v285321
+Ref: ls-option-X285954
+Node: General output formatting286138
+Ref: ls-option-1286757
+Ref: ls-option-C286907
+Ref: ls-option--color287256
+Ref: ls-option-F288569
+Ref: ls-option--classify288578
+Ref: ls-option--file-type289480
+Ref: ls-option--hyperlink289692
+Ref: ls-option--indicator-style290138
+Ref: ls-option-k290878
+Ref: ls-option--kibibytes290887
+Ref: ls-option-m291538
+Ref: ls-option-p291725
+Ref: ls-option-x291807
+Ref: ls-option-T291918
+Ref: ls-option--tabsize291932
+Ref: ls-option-w292967
+Ref: ls-option--width292981
+Ref: ls-option--zero293385
+Node: Formatting file timestamps293841
+Ref: ls-option--time-style294978
+Node: Formatting the file names299434
+Ref: ls-option-b299936
+Ref: ls-option--escape299945
+Ref: ls-option-N300111
+Ref: ls-option--literal300120
+Ref: ls-option-q300379
+Ref: ls-option--hide-control-chars300388
+Ref: ls-option-Q300578
+Ref: ls-option--quote-name300587
+Ref: ls-option--quoting-style300718
+Ref: ls-option--show-control-chars303395
+Node: dir invocation303564
+Node: vdir invocation303985
+Node: dircolors invocation304404
+Ref: dircolors-option-b305569
+Ref: dircolors-option--sh305578
+Ref: dircolors-option--bourne-shell305589
+Ref: dircolors-option-c305766
+Ref: dircolors-option--csh305775
+Ref: dircolors-option--c-shell305787
+Ref: dircolors-option-p305910
+Ref: dircolors-option--print-database305919
+Ref: dircolors-option--print-ls-colors306119
+Node: Basic operations306332
+Node: cp invocation306946
+Ref: cp-option-a309907
+Ref: cp-option--archive309916
+Ref: cp-option--attributes-only310427
+Ref: cp-option-b310684
+Ref: cp-option--backup310693
+Ref: cp-option--copy-contents311373
+Ref: cp-option-d312169
+Ref: cp-option--debug312398
+Ref: cp-option-f312549
+Ref: cp-option--force312558
+Ref: cp-option-i313452
+Ref: cp-option--interactive313461
+Ref: cp-option-H313703
+Ref: cp-option-L313959
+Ref: cp-option--dereference313968
+Ref: cp-option-P314233
+Ref: cp-option--no-dereference314242
+Ref: cp-option--keep-directory-symlink314497
+Ref: cp-option-l314790
+Ref: cp-option--link314799
+Ref: cp-option-n314872
+Ref: cp-option--no-clobber314881
+Ref: cp-option-p315369
+Ref: cp-option--preserve315378
+Ref: cp-option--no-preserve319156
+Ref: cp-option--parents319307
+Ref: cp-option-r319736
+Ref: cp-option-R319745
+Ref: cp-option--recursive319754
+Ref: cp-option--reflink320610
+Ref: cp-option--remove-destination321767
+Ref: cp-option--sparse321904
+Ref: cp-option--strip-trailing-slashes323843
+Ref: cp-option-s323967
+Ref: cp-option--symbolic-link323976
+Ref: cp-option-S324300
+Ref: cp-option--suffix324316
+Ref: cp-option-t324428
+Ref: cp-option--target-directory324447
+Ref: cp-option-T324550
+Ref: cp-option--no-target-directory324559
+Ref: cp-option-u324723
+Ref: cp-option--update324732
+Ref: cp-option-v326575
+Ref: cp-option--verbose326584
+Ref: cp-option-x326653
+Ref: cp-option--one-file-system326662
+Ref: cp-option-Z326844
+Ref: cp-option--context326853
+Node: dd invocation327515
+Ref: dd-optionif329255
+Ref: dd-optionof329317
+Ref: dd-optionibs329454
+Ref: dd-optionobs329586
+Ref: dd-optionbs329720
+Ref: dd-optioncbs330077
+Ref: dd-optionskip330305
+Ref: dd-optioniseek330318
+Ref: dd-optionseek330575
+Ref: dd-optionoseek330588
+Ref: dd-optioncount330860
+Ref: dd-optionstatus331421
+Ref: dd-optionconv332961
+Ref: dd-optioniflag338175
+Ref: dd-optionoflag338320
+Node: install invocation347401
+Ref: install-option-b349069
+Ref: install-option--backup349078
+Ref: install-option-C349213
+Ref: install-option--compare349222
+Ref: install-option-c349867
+Ref: install-option-D349950
+Ref: install-option-d350195
+Ref: install-option--directory350204
+Ref: install-option--debug350433
+Ref: install-option-g350584
+Ref: install-option--group350599
+Ref: install-option-m350804
+Ref: install-option--mode350818
+Ref: install-option-o351467
+Ref: install-option--owner351482
+Ref: install-option--preserve-context351725
+Ref: install-option-p352006
+Ref: install-option--preserve-timestamps352015
+Ref: install-option-s352536
+Ref: install-option--strip352545
+Ref: install-option--strip-program352624
+Ref: install-option-S352692
+Ref: install-option--suffix352708
+Ref: install-option-t352820
+Ref: install-option--target-directory352839
+Ref: install-option-T353022
+Ref: install-option--no-target-directory353031
+Ref: install-option-v353195
+Ref: install-option--verbose353204
+Ref: install-option-Z353273
+Ref: install-option--context353282
+Node: mv invocation353878
+Ref: mv-option-b356458
+Ref: mv-option--backup356467
+Ref: mv-option--debug356602
+Ref: mv-option-f356753
+Ref: mv-option--force356762
+Ref: mv-option-i356960
+Ref: mv-option--interactive356969
+Ref: mv-option-n357254
+Ref: mv-option--no-clobber357263
+Ref: mv-option--no-copy357635
+Ref: mv-option--exchange357810
+Ref: mv-option-u358701
+Ref: mv-option--update358710
+Ref: mv-option-v360256
+Ref: mv-option--verbose360265
+Ref: mv-option--strip-trailing-slashes360333
+Ref: mv-option-S360457
+Ref: mv-option--suffix360473
+Ref: mv-option-t360585
+Ref: mv-option--target-directory360604
+Ref: mv-option-T360707
+Ref: mv-option--no-target-directory360716
+Ref: mv-option-Z360880
+Ref: mv-option--context360889
+Node: rm invocation361200
+Ref: rm-option-d362562
+Ref: rm-option--dir362571
+Ref: rm-option-f362638
+Ref: rm-option--force362647
+Ref: rm-option-i362806
+Ref: rm-option-I363046
+Ref: rm-option--interactive363295
+Ref: rm-option--one-file-system363775
+Ref: rm-option--preserve-root364751
+Ref: rm-option--no-preserve-root365086
+Ref: rm-option-r365313
+Ref: rm-option-R365322
+Ref: rm-option--recursive365331
+Ref: rm-option-v365417
+Ref: rm-option--verbose365426
+Node: shred invocation366099
+Ref: shred-option-f372175
+Ref: shred-option--force372184
+Ref: shred-option-n372265
+Ref: shred-option--iterations372281
+Ref: shred-option--random-source372551
+Ref: shred-option-s372697
+Ref: shred-option--size372712
+Ref: shred-option-u372954
+Ref: shred-option--remove372963
+Ref: shred-option-v373844
+Ref: shred-option--verbose373853
+Ref: shred-option-x374024
+Ref: shred-option--exact374033
+Ref: shred-option-z374603
+Ref: shred-option--zero374612
+Node: Special file types376489
+Node: link invocation378006
+Node: ln invocation379257
+Ref: ln-option-b383519
+Ref: ln-option--backup383528
+Ref: ln-option-d383663
+Ref: ln-option-F383672
+Ref: ln-option--directory383681
+Ref: ln-option-f383888
+Ref: ln-option--force383897
+Ref: ln-option-i383952
+Ref: ln-option--interactive383961
+Ref: ln-option-L384090
+Ref: ln-option--logical384099
+Ref: ln-option-n384306
+Ref: ln-option--no-dereference384315
+Ref: ln-option-P385288
+Ref: ln-option--physical385297
+Ref: ln-option-r385738
+Ref: ln-option--relative385747
+Ref: ln-option-s386648
+Ref: ln-option--symbolic386657
+Ref: ln-option-S386826
+Ref: ln-option--suffix386842
+Ref: ln-option-t386954
+Ref: ln-option--target-directory386973
+Ref: ln-option-T387076
+Ref: ln-option--no-target-directory387085
+Ref: ln-option-v387249
+Ref: ln-option--verbose387258
+Node: mkdir invocation388389
+Ref: mkdir-option-m388925
+Ref: mkdir-option--mode388939
+Ref: mkdir-option-p389809
+Ref: mkdir-option--parents389818
+Ref: mkdir-option-v390788
+Ref: mkdir-option--verbose390797
+Ref: mkdir-option-Z390911
+Ref: mkdir-option--context390920
+Node: mkfifo invocation391434
+Ref: mkfifo-option-m392094
+Ref: mkfifo-option--mode392108
+Ref: mkfifo-option-Z392383
+Ref: mkfifo-option--context392392
+Node: mknod invocation392906
+Ref: mknod-option-m394673
+Ref: mknod-option--mode394687
+Ref: mknod-option-Z394918
+Ref: mknod-option--context394927
+Node: readlink invocation395441
+Ref: readlink-option-f396497
+Ref: readlink-option--canonicalize396506
+Ref: readlink-option-e396758
+Ref: readlink-option--canonicalize-existing396767
+Ref: readlink-option-m397026
+Ref: readlink-option--canonicalize-missing397035
+Ref: readlink-option-n397189
+Ref: readlink-option--no-newline397198
+Ref: readlink-option-q397352
+Ref: readlink-option-s397361
+Ref: readlink-option--quiet397370
+Ref: readlink-option--silent397384
+Ref: readlink-option-v397537
+Ref: readlink-option--verbose397546
+Ref: readlink-option-z397689
+Ref: readlink-option--zero397698
+Node: rmdir invocation398173
+Ref: rmdir-option--ignore-fail-on-non-empty398640
+Ref: rmdir-option-p398740
+Ref: rmdir-option--parents398749
+Ref: rmdir-option-v399174
+Ref: rmdir-option--verbose399183
+Node: unlink invocation399787
+Node: Changing file attributes400775
+Node: chown invocation401593
+Ref: chown-option-c404556
+Ref: chown-option--changes404565
+Ref: chown-option-f404670
+Ref: chown-option--silent404679
+Ref: chown-option--quiet404694
+Ref: chown-option--from404794
+Ref: chown-option--dereference405840
+Ref: chown-option-h406388
+Ref: chown-option--no-dereference406397
+Ref: chown-option--preserve-root406667
+Ref: chown-option--no-preserve-root406864
+Ref: chown-option--reference406996
+Ref: chown-option-v407248
+Ref: chown-option--verbose407257
+Ref: chown-option-R407592
+Ref: chown-option--recursive407601
+Ref: chown-option-H407689
+Ref: chown-option-L407865
+Ref: chown-option-P408401
+Node: chgrp invocation408884
+Ref: chgrp-option-c409771
+Ref: chgrp-option--changes409780
+Ref: chgrp-option-f409881
+Ref: chgrp-option--silent409890
+Ref: chgrp-option--quiet409905
+Ref: chgrp-option--from410001
+Ref: chgrp-option--dereference411047
+Ref: chgrp-option-h411595
+Ref: chgrp-option--no-dereference411604
+Ref: chgrp-option--preserve-root411874
+Ref: chgrp-option--no-preserve-root412071
+Ref: chgrp-option--reference412203
+Ref: chgrp-option-v412429
+Ref: chgrp-option--verbose412438
+Ref: chgrp-option-R412773
+Ref: chgrp-option--recursive412782
+Ref: chgrp-option-H412885
+Ref: chgrp-option-L413061
+Ref: chgrp-option-P413597
+Node: chmod invocation414003
+Ref: chmod-option-c415983
+Ref: chmod-option--changes415992
+Ref: chmod-option--dereference416098
+Ref: chmod-option-h416702
+Ref: chmod-option--no-dereference416711
+Ref: chmod-option-f416902
+Ref: chmod-option--silent416911
+Ref: chmod-option--quiet416926
+Ref: chmod-option--preserve-root417028
+Ref: chmod-option--no-preserve-root417225
+Ref: chmod-option-v417357
+Ref: chmod-option--verbose417366
+Ref: chmod-option--reference417454
+Ref: chmod-option-R417710
+Ref: chmod-option--recursive417719
+Ref: chmod-option-H417809
+Ref: chmod-option-L418068
+Ref: chmod-option-P418604
+Node: touch invocation419237
+Ref: touch-option-a421180
+Ref: touch-option--time421189
+Ref: touch-option-c421311
+Ref: touch-option--no-create421320
+Ref: touch-option-d421397
+Ref: touch-option--date421411
+Ref: touch-option-f421947
+Ref: touch-option-h422023
+Ref: touch-option--no-dereference422032
+Ref: touch-option-m422801
+Ref: touch-option-r422895
+Ref: touch-option--reference422909
+Ref: touch-option-t423479
+Node: File space usage424932
+Node: df invocation425630
+Ref: df-option-a427330
+Ref: df-option--all427339
+Ref: df-option-B427961
+Ref: df-option--block-size427975
+Ref: df-option-h428143
+Ref: df-option--human-readable428152
+Ref: df-option-H428454
+Ref: df-option-i428495
+Ref: df-option--inodes428504
+Ref: df-option-k428737
+Ref: df-option-l428904
+Ref: df-option--local428913
+Ref: df-option--no-sync429029
+Ref: df-option--output429322
+Ref: df-option-P431155
+Ref: df-option--portability431164
+Ref: df-option--si432039
+Ref: df-option--sync432358
+Ref: df-option--total432649
+Ref: df-option-t433285
+Ref: df-option--type433301
+Ref: df-option-T433502
+Ref: df-option--print-type433511
+Ref: df-option-x434421
+Ref: df-option--exclude-type434437
+Ref: df-option-v434665
+Node: du invocation435436
+Ref: du-option-0436334
+Ref: du-option--null436343
+Ref: du-option-a436572
+Ref: du-option--all436581
+Ref: du-option-A436648
+Ref: du-option--apparent-size436657
+Ref: du-option-B437578
+Ref: du-option--block-size437592
+Ref: du-option-b437760
+Ref: du-option--bytes437769
+Ref: du-option-c437841
+Ref: du-option--total437850
+Ref: du-option-D438056
+Ref: du-option--dereference-args438065
+Ref: du-option-d438337
+Ref: du-option--max-depth438352
+Ref: du-option--files0-from438603
+Ref: du-option-H439375
+Ref: du-option-h439441
+Ref: du-option--human-readable439450
+Ref: du-option--inodes439752
+Ref: du-option-k440283
+Ref: du-option-L440450
+Ref: du-option--dereference440459
+Ref: du-option-l440644
+Ref: du-option--count-links440653
+Ref: du-option-m440766
+Ref: du-option-P440938
+Ref: du-option--no-dereference440947
+Ref: du-option-S441094
+Ref: du-option--separate-dirs441103
+Ref: du-option--si441470
+Ref: du-option-s441789
+Ref: du-option--summarize441798
+Ref: du-option-t441862
+Ref: du-option--threshold441876
+Ref: du-option--time443441
+Ref: du-option--time-style444001
+Ref: du-option-X445846
+Ref: du-option--exclude-from445860
+Ref: du-option--exclude446045
+Ref: du-option-x446231
+Ref: du-option--one-file-system446240
+Node: stat invocation447688
+Ref: stat-option-L448553
+Ref: stat-option--dereference448562
+Ref: stat-option-f448801
+Ref: stat-option--file-system448810
+Ref: stat-option--cached449015
+Ref: stat-option-c449598
+Ref: stat-option--format449607
+Ref: stat-option--printf449926
+Ref: stat-option-t450358
+Ref: stat-option--terse450367
+Node: sync invocation458053
+Ref: sync-option-d459342
+Ref: sync-option--data459351
+Ref: sync-option-f459491
+Ref: sync-option--file-system459500
+Node: truncate invocation460219
+Ref: truncate-option-c460843
+Ref: truncate-option--no-create460852
+Ref: truncate-option-o460915
+Ref: truncate-option--io-blocks460924
+Ref: truncate-option-r461014
+Ref: truncate-option--reference461029
+Ref: truncate-option-s461108
+Ref: truncate-option--size461122
+Node: Printing text462271
+Node: echo invocation462645
+Ref: echo-option-n463858
+Ref: echo-option-e463909
+Ref: echo-option-E464860
+Node: printf invocation465885
+Node: yes invocation472563
+Node: Conditions473209
+Node: false invocation473798
+Node: true invocation474793
+Node: test invocation476018
+Node: File type tests478189
+Ref: test-option-b478439
+Ref: test-option-c478510
+Ref: test-option-d478585
+Ref: test-option-f478645
+Ref: test-option-h478708
+Ref: test-option-L478722
+Ref: test-option-p478896
+Ref: test-option-S478957
+Ref: test-option-t479014
+Node: Access permission tests479100
+Ref: test-option-g479348
+Ref: test-option-k479422
+Ref: test-option-r479496
+Ref: test-option-u479566
+Ref: test-option-w479639
+Ref: test-option-x479710
+Ref: test-option-O479833
+Ref: test-option-G479920
+Node: File characteristic tests480008
+Ref: test-option-e480250
+Ref: test-option-s480291
+Ref: test-option-nt480365
+Ref: test-option-ot480505
+Ref: test-option-ef480645
+Ref: test-option-N480786
+Node: String tests480893
+Ref: test-option-z481316
+Ref: test-option-n481376
+Node: Numeric tests481910
+Ref: test-option-eq482241
+Ref: test-option-ne482241
+Ref: test-option-lt482241
+Ref: test-option-le482241
+Ref: test-option-gt482241
+Ref: test-option-ge482241
+Node: Connectives for test482739
+Ref: test-option-a483645
+Ref: test-option-o483790
+Node: expr invocation483887
+Node: String expressions486344
+Node: Numeric expressions489005
+Node: Relations for expr489707
+Node: Examples of expr490930
+Node: Redirection491673
+Node: tee invocation492130
+Ref: tee-option-a493100
+Ref: tee-option--append493109
+Ref: tee-option-i493206
+Ref: tee-option--ignore-interrupts493215
+Ref: tee-option-p493273
+Ref: tee-option--output-error493282
+Node: File name manipulation499323
+Node: basename invocation499892
+Ref: basename-option-a501196
+Ref: basename-option--multiple501205
+Ref: basename-option-s501378
+Ref: basename-option--suffix501394
+Ref: basename-option-z501490
+Ref: basename-option--zero501499
+Node: dirname invocation502095
+Ref: dirname-option-z503375
+Ref: dirname-option--zero503384
+Node: pathchk invocation503906
+Ref: pathchk-option-p504856
+Ref: pathchk-option-P505350
+Ref: pathchk-option--portability505474
+Node: mktemp invocation505712
+Ref: mktemp-option-d509356
+Ref: mktemp-option--directory509365
+Ref: mktemp-option-q509642
+Ref: mktemp-option--quiet509651
+Ref: mktemp-option-u509805
+Ref: mktemp-option--dry-run509814
+Ref: mktemp-option-p510170
+Ref: mktemp-option--tmpdir510183
+Ref: mktemp-option--suffix510605
+Ref: mktemp-option-t511009
+Node: realpath invocation511503
+Ref: realpath-option-E512483
+Ref: realpath-option--canonicalize512492
+Ref: realpath-option-e512749
+Ref: realpath-option--canonicalize-existing512758
+Ref: realpath-option-m512903
+Ref: realpath-option--canonicalize-missing512912
+Ref: realpath-option-L513046
+Ref: realpath-option--logical513055
+Ref: realpath-option-P513217
+Ref: realpath-option--physical513226
+Ref: realpath-option-q513434
+Ref: realpath-option--quiet513443
+Ref: realpath-option--relative-to513518
+Ref: realpath-option--relative-base513708
+Ref: realpath-option-s514089
+Ref: realpath-option--strip514098
+Ref: realpath-option--no-symlinks514112
+Ref: realpath-option-z514389
+Ref: realpath-option--zero514398
+Node: Realpath usage examples514792
+Node: Working context516589
+Node: pwd invocation517227
+Ref: pwd-option-L517558
+Ref: pwd-option--logical517567
+Ref: pwd-option-P517862
+Ref: pwd-option--physical517871
+Node: stty invocation518640
+Ref: stty-option-a519560
+Ref: stty-option--all519569
+Ref: stty-option-F519711
+Ref: stty-option--file519727
+Ref: stty-option-g520200
+Ref: stty-option--save520209
+Node: Control521778
+Node: Input522848
+Node: Output524598
+Node: Local525994
+Node: Combination528074
+Node: Characters530480
+Node: Special532307
+Node: printenv invocation534451
+Ref: printenv-option-0535066
+Ref: printenv-option--null535075
+Node: tty invocation535456
+Ref: tty-option-s535925
+Ref: tty-option--silent535934
+Ref: tty-option--quiet535949
+Node: User information536372
+Node: id invocation537064
+Ref: id-option-a538140
+Ref: id-option-g538215
+Ref: id-option--group538224
+Ref: id-option-G538269
+Ref: id-option--groups538278
+Ref: id-option-n538353
+Ref: id-option--name538362
+Ref: id-option-r538484
+Ref: id-option--real538493
+Ref: id-option-u538616
+Ref: id-option--user538625
+Ref: id-option-Z538668
+Ref: id-option--context538677
+Ref: id-option-z538935
+Ref: id-option--zero538944
+Node: logname invocation539844
+Node: whoami invocation540493
+Node: groups invocation540998
+Node: users invocation542225
+Node: who invocation543397
+Ref: who-option-a544780
+Ref: who-option--all544789
+Ref: who-option-b544851
+Ref: who-option--boot544860
+Ref: who-option-d544924
+Ref: who-option--dead544933
+Ref: who-option-H545003
+Ref: who-option--heading545012
+Ref: who-option-l545067
+Ref: who-option--login545076
+Ref: who-option--lookup545248
+Ref: who-option-m545398
+Ref: who-option-p545437
+Ref: who-option--process545446
+Ref: who-option-q545507
+Ref: who-option--count545516
+Ref: who-option-r545632
+Ref: who-option--runlevel545641
+Ref: who-option-s545739
+Ref: who-option--short545748
+Ref: who-option-t545829
+Ref: who-option--time545838
+Ref: who-option-u545889
+Ref: who-option--users545898
+Ref: who-option-w546136
+Ref: who-option-T546145
+Ref: who-option--mesg546154
+Ref: who-option--message546167
+Ref: who-option--writable546183
+Node: pinky invocation546713
+Ref: pinky-option-l547098
+Ref: pinky-option-b547335
+Ref: pinky-option-h547426
+Ref: pinky-option-p547500
+Ref: pinky-option-s547571
+Ref: pinky-option-f547677
+Ref: pinky-option-w547748
+Ref: pinky-option-i547820
+Ref: pinky-option-q547913
+Ref: pinky-option--lookup548018
+Node: System context548253
+Node: date invocation548912
+Node: Date format specifiers550319
+Node: Time conversion specifiers551085
+Node: Date conversion specifiers553820
+Node: Literal conversion specifiers557615
+Node: Padding and other flags557992
+Node: Calendars561608
+Node: Setting the time563926
+Node: Options for date565064
+Ref: date-option-d565529
+Ref: date-option--date565546
+Ref: date-option--debug566260
+Ref: date-option-f566377
+Ref: date-option--file566395
+Ref: date-option-I566728
+Ref: date-option--iso-8601566747
+Ref: date-option-r567978
+Ref: date-option--reference567992
+Ref: date-option--resolution568124
+Ref: date-option-R568479
+Ref: date-option--rfc-email568488
+Ref: date-option--rfc-3339569126
+Ref: date-option-s570397
+Ref: date-option--set570414
+Ref: date-option-u570536
+Ref: date-option--utc570545
+Ref: date-option--universal570557
+Node: Examples of date570966
+Ref: %s-examples572462
+Node: arch invocation575722
+Node: nproc invocation576275
+Ref: nproc-option--all577125
+Ref: nproc-option--ignore577423
+Node: uname invocation577590
+Ref: uname-option-a578603
+Ref: uname-option--all578612
+Ref: uname-option-i578754
+Ref: uname-option--hardware-platform578763
+Ref: uname-option-m579010
+Ref: uname-option--machine579019
+Ref: uname-option-n579134
+Ref: uname-option--nodename579143
+Ref: uname-option-p579199
+Ref: uname-option--processor579208
+Ref: uname-option-o579450
+Ref: uname-option--operating-system579459
+Ref: uname-option-r579530
+Ref: uname-option--kernel-release579539
+Ref: uname-option-s579594
+Ref: uname-option--kernel-name579603
+Ref: uname-option-v580143
+Ref: uname-option--kernel-version580152
+Node: hostname invocation580292
+Node: hostid invocation581116
+Node: uptime invocation581977
+Node: SELinux context583449
+Node: chcon invocation583818
+Ref: chcon-option--dereference584478
+Ref: chcon-option-h584583
+Ref: chcon-option--no-dereference584592
+Ref: chcon-option--reference584695
+Ref: chcon-option-R584799
+Ref: chcon-option--recursive584808
+Ref: chcon-option--preserve-root584878
+Ref: chcon-option--no-preserve-root585063
+Ref: chcon-option-H585231
+Ref: chcon-option-L585407
+Ref: chcon-option-P585548
+Ref: chcon-option-v585629
+Ref: chcon-option--verbose585638
+Ref: chcon-option-u585706
+Ref: chcon-option--user585720
+Ref: chcon-option-r585790
+Ref: chcon-option--role585804
+Ref: chcon-option-t585874
+Ref: chcon-option--type585888
+Ref: chcon-option-l585958
+Ref: chcon-option--range585973
+Node: runcon invocation586132
+Ref: runcon-option-c587285
+Ref: runcon-option--compute587294
+Ref: runcon-option-u587369
+Ref: runcon-option--user587383
+Ref: runcon-option-r587453
+Ref: runcon-option--role587467
+Ref: runcon-option-t587537
+Ref: runcon-option--type587551
+Ref: runcon-option-l587621
+Ref: runcon-option--range587636
+Node: Modified command invocation587895
+Node: chroot invocation588581
+Ref: chroot-option--groups589620
+Ref: chroot-option--userspec589929
+Ref: chroot-option--skip-chdir590313
+Ref: chroot invocation-Footnote-1592451
+Node: env invocation592968
+Ref: env-option-0596936
+Ref: env-option--null596945
+Ref: env-option-a597174
+Ref: env-option--argv0597187
+Ref: env-option-u597339
+Ref: env-option--unset597353
+Ref: env-option-597456
+Ref: env-option-i597464
+Ref: env-option--ignore-environment597473
+Ref: env-option-C597580
+Ref: env-option--chdir597593
+Ref: env-option--default-signal598288
+Ref: env-option--ignore-signal599331
+Ref: env-option--block-signal600345
+Ref: env-option--list-signal-handling600558
+Ref: env-option-v600677
+Ref: env-option--debug600686
+Ref: env-option-S601053
+Ref: env-option--split-string601069
+Node: nice invocation609958
+Ref: nice-option-n612264
+Ref: nice-option--adjustment612284
+Node: nohup invocation614072
+Node: stdbuf invocation616564
+Ref: stdbuf-option-i617469
+Ref: stdbuf-option--input617483
+Ref: stdbuf-option-o617552
+Ref: stdbuf-option--output617566
+Ref: stdbuf-option-e617637
+Ref: stdbuf-option--error617651
+Node: timeout invocation619529
+Ref: timeout-option-f620109
+Ref: timeout-option--foreground620118
+Ref: timeout-option-k620933
+Ref: timeout-option--kill-after620951
+Ref: timeout-option-p621649
+Ref: timeout-option--preserve-status621658
+Ref: timeout-option-s621911
+Ref: timeout-option--signal621927
+Ref: timeout-option-v622130
+Ref: timeout-option--verbose622139
+Node: Process control624451
+Node: kill invocation624668
+Ref: kill-option-SIGNAL626966
+Ref: kill-option-s626966
+Ref: kill-option--signal626975
+Ref: kill-option-l627049
+Ref: kill-option--list627058
+Ref: kill-option-t627270
+Ref: kill-option--table627279
+Node: Delaying627866
+Node: sleep invocation628057
+Node: Numeric operations629604
+Node: factor invocation629983
+Ref: factor-option-h630457
+Ref: factor-option--exponents630466
+Node: numfmt invocation632490
+Ref: numfmt-option--debug633486
+Ref: numfmt-option-d633586
+Ref: numfmt-option--delimiter633595
+Ref: numfmt-option--field633758
+Ref: numfmt-option--format634111
+Ref: numfmt-option--from634806
+Ref: numfmt-option--from-unit634996
+Ref: numfmt-option--grouping635302
+Ref: numfmt-option--header635552
+Ref: numfmt-option--invalid635638
+Ref: numfmt-option--padding636088
+Ref: numfmt-option--round636421
+Ref: numfmt-option--suffix636637
+Ref: numfmt-option--to636761
+Ref: numfmt-option--to-unit636936
+Ref: numfmt-option--unit-separator637239
+Ref: numfmt-option-z637904
+Ref: numfmt-option--zero-terminated637913
+Node: seq invocation645534
+Ref: seq-option-f646761
+Ref: seq-option--format646777
+Ref: seq-option-s647717
+Ref: seq-option--separator647733
+Ref: seq-option-w647867
+Ref: seq-option--equal-width647876
+Node: File permissions649916
+Node: Mode Structure650603
+Node: Symbolic Modes654260
+Node: Setting Permissions655368
+Node: Copying Permissions658016
+Node: Changing Special Mode Bits658876
+Node: Conditional Executability660748
+Node: Multiple Changes661294
+Node: Umask and Protection662955
+Node: Numeric Modes664090
+Node: Operator Numeric Modes666426
+Node: Directory Setuid and Setgid667472
+Node: File timestamps670317
+Node: Date input formats673596
+Node: General date syntax676078
+Node: Calendar date items679384
+Node: Time of day items681549
+Node: Time zone items683847
+Node: Combined date and time of day items685240
+Node: Day of week items686105
+Node: Relative items in date strings687183
+Node: Pure numbers in date strings690095
+Node: Seconds since the Epoch691078
+Node: Specifying time zone rules692798
+Node: Authors of parse_datetime696395
+Ref: Authors of get_date696580
+Node: Version sort ordering697579
+Node: Version sort overview697894
+Node: Using version sort in GNU Coreutils698900
+Node: Version sort and natural sort700410
+Node: Variations in version sort order701270
+Node: Version sort implementation702036
+Node: Version-sort ordering rules702835
+Node: Version sort is not the same as numeric sort705626
+Node: Version sort punctuation707650
+Node: Punctuation vs letters709271
+Node: The tilde ~710102
+Node: Version sort ignores locale711451
+Node: Differences from Debian version sort712541
+Node: Hyphen-minus and colon713116
+Node: Special priority in GNU Coreutils version sort714739
+Node: Special handling of file extensions715909
+Node: Comparing two strings using Debian's algorithm720970
+Node: Advanced version sort topics722880
+Node: Reporting version sort bugs723164
+Node: Other version/natural sort implementations724355
+Node: Related source code726489
+Node: Opening the software toolbox727245
+Node: Toolbox introduction728004
+Node: I/O redirection730725
+Node: The who command733571
+Node: The cut command734486
+Node: The sort command735580
+Node: The uniq command736290
+Node: Putting the tools together736995
+Node: History749267
+Node: GNU Free Documentation License750108
+Node: Concept index775259
 
 End Tag Table
 

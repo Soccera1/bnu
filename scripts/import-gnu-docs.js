@@ -12,7 +12,7 @@ import {
 import { tmpdir } from "node:os";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { commandNames } from "../src/coreutils.js";
+import { commandNames } from "../src/shared/catalog.js";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const archive = resolve(process.argv[2] ?? join(projectRoot, "coreutils-9.11.tar.xz"));
@@ -117,6 +117,20 @@ function replaceRequired(text, search, replacement, description) {
 
 function adaptManPage(source, name) {
   source = source.replaceAll("documents the GNU version of", "describes the BNU implementation of");
+  if (name === "coreutils.1") {
+    source = replaceRequired(
+      source,
+      "coreutils \\- single binary for coreutils programs",
+      "coreutils \\- dispatch to a BNU command module",
+      "coreutils command summary",
+    );
+    source = replaceRequired(
+      source,
+      "Execute the PROGRAM_NAME built\\-in program with the given PARAMETERS.",
+      "Load and execute the PROGRAM_NAME single\\-call module with the given PARAMETERS.",
+      "coreutils command description",
+    );
+  }
   let text = replaceRequired(
     source,
     /^\.\\" DO NOT MODIFY THIS FILE!.*$/m,
@@ -236,7 +250,7 @@ function adaptTexinfo(source) {
   text = replaceRequired(
     text,
     "* Coreutils: (bnu).       Core GNU (file, text, shell) utilities.",
-    "* BNU: (bnu).             Core file, text, and shell utilities for Bun.\n* BNU invocation: (bnu)Multi-call invocation.  Invoke BNU and its command wrappers.",
+    "* BNU: (bnu).             Core file, text, and shell utilities for Bun.\n* BNU invocation: (bnu)Multi-call invocation.  Invoke single-call commands and compatibility dispatchers.",
     "Info directory entry",
   );
   text = replaceRequired(
@@ -287,8 +301,12 @@ function adaptTexinfo(source) {
   const multiCallStart = text.indexOf("@c This node is named \"Multi-call invocation\"");
   const multiCallEnd = text.indexOf("@node Output of entire files", multiCallStart);
   if (multiCallStart < 0 || multiCallEnd < 0) throw new Error("Could not adapt the multi-call section");
-  const multiCall = `@c This node keeps the upstream name so command nodes remain easy to find.\n@node Multi-call invocation\n@section @command{bnu}: Multi-call program\n\n@pindex bnu\n@pindex coreutils\n@cindex combined\n@cindex calling combined multi-call program\n\nBNU is normally invoked through its top-level dispatcher.  Synopsis:\n\n@example\nbnu @var{command} [@var{argument}]@dots{}\n@end example\n\nRun @samp{bnu --help} to list available commands.  A command can also be\nselected by invoking a generated command-name wrapper, for example\n@samp{cat @var{file}} after adding the wrapper directory to @env{PATH}.\n\nFor compatibility with the GNU Coreutils multi-call interface, BNU also\nprovides:\n\n@example\ncoreutils @option{--coreutils-prog=@var{program}} [@var{argument}]@dots{}\n@end example\n\nThe repository command @samp{bun run link-commands -- @var{directory}} creates\nthe wrappers.  Running from a source checkout requires the Bun runtime.\n\n`;
+  const multiCall = `@c This node keeps the upstream name so command nodes remain easy to find.\n@node Multi-call invocation\n@section Invoking BNU commands\n\n@pindex bnu\n@pindex coreutils\n@cindex single-call command\n@cindex calling combined multi-call program\n\nEach BNU utility has an independently runnable single-call module.  From a\nsource checkout, invoke one with Bun:\n\n@example\nbun ./src/commands/@var{command}.js [@var{argument}]@dots{}\n@end example\n\nThe repository command @samp{bun run link-commands -- @var{directory}} creates\ncommand-name wrappers that invoke those modules directly.  After deliberately\nadding that directory to @env{PATH}, the usual form is:\n\n@example\n@var{command} [@var{argument}]@dots{}\n@end example\n\nThe @command{bnu} multi-call launcher remains available for compatibility and\ncommand discovery:\n\n@example\nbnu @var{command} [@var{argument}]@dots{}\nbnu @option{--help}\n@end example\n\nFor compatibility with the GNU Coreutils multi-call interface, BNU also\nprovides:\n\n@example\ncoreutils @option{--coreutils-prog=@var{program}} [@var{argument}]@dots{}\n@end example\n\nThe source entries, generated wrappers, and compatibility launchers require the\nBun runtime.\n\n`;
   text = `${text.slice(0, multiCallStart)}${multiCall}${text.slice(multiCallEnd)}`;
+  text = text.replaceAll(
+    "* Multi-call invocation::        Multi-call program invocation",
+    "* Multi-call invocation::        Single-call commands and compatibility dispatch",
+  );
 
   text = replaceRequired(
     text,
@@ -317,13 +335,13 @@ function adaptTexinfo(source) {
   text = replaceRequired(
     text,
     "This version of @command{false} is implemented as a C program, and is thus\nmore secure and faster than a shell script implementation, and may safely\nbe used as a dummy shell for the purpose of disabling accounts.",
-    "BNU implements @command{false} in its Bun multi-call program.  Do not use\nthe source-checkout launcher as a login shell.",
+    "BNU implements @command{false} as a Bun single-call command module.  Do not\nuse the source-checkout entry as a login shell.",
     "false implementation note",
   );
   text = replaceRequired(
     text,
     "This version of @command{true} is implemented as a C program, and is thus\nmore secure and faster than a shell script implementation, and may safely\nbe used as a dummy shell for the purpose of disabling accounts.",
-    "BNU implements @command{true} in its Bun multi-call program.  Do not use\nthe source-checkout launcher as a login shell.",
+    "BNU implements @command{true} as a Bun single-call command module.  Do not\nuse the source-checkout entry as a login shell.",
     "true implementation note",
   );
   text = replaceRequired(
