@@ -6,6 +6,7 @@
     "bnu": "./bin/bnu.js"
   },
   "scripts": {
+    "docs:import": "bun scripts/import-gnu-docs.js coreutils-9.11.tar.xz",
     "link-commands": "bun scripts/link-commands.js",
     "test": "bun scripts/run-bun-tests-bounded.js",
     "test:gnu": "bun scripts/run-gnu-tests.js",

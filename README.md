@@ -46,6 +46,20 @@ take precedence over the system coreutils.
 The top-level `--help` output lists the available commands. Use
 `COMMAND --help` for a command's accepted options.
 
+## Manuals
+
+BNU includes section-1 manual pages and an Info manual adapted from GNU
+Coreutils 9.11, with BNU-specific invocation, diagnostic, and extension notes.
+Read them directly from a checkout with:
+
+```sh
+man -l man/cat.1
+info -f doc/bnu.info
+```
+
+The manual sources, licensing, adaptations, and refresh procedure are described
+in [BNU manual provenance](doc/README.md).
+
 ## Compatibility
 
 BNU keeps the familiar GNU diagnostic as the first line of an error, then adds
@@ -109,6 +123,8 @@ matrix are documented in [Testing](docs/testing.md).
 
 - `bin/bnu.js` — multi-call entry point
 - `src/coreutils.js` — command implementations
+- `man/` — adapted section-1 manual pages
+- `doc/` — adapted Texinfo sources and compiled Info manual
 - `tests/` — local Bun tests
 - `scripts/` — test harnesses, wrapper generation, and VM tooling
 - `docs/` — testing and compatibility documentation

@@ -1,0 +1,67 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH CHROOT "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+chroot \- run command or interactive shell with special root directory
+.SH SYNOPSIS
+.B chroot
+[\fI\,OPTION\/\fR]... \fI\,NEWROOT \/\fR[\fI\,COMMAND \/\fR[\fI\,ARG\/\fR]...]
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Run COMMAND with root directory set to NEWROOT.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#chroot--groups'\fB\-\-groups=G_LIST\fP\X'tty: link'
+specify supplementary groups as g1,g2,..,gN
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#chroot--userspec'\fB\-\-userspec=USER:GROUP\fP\X'tty: link'
+specify user and group (ID or name) to use
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#chroot--skip-chdir'\fB\-\-skip\-chdir\fP\X'tty: link'
+do not change working directory to '/'
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/chroot#chroot--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/chroot#chroot--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.PP
+If no command is given, run '"$SHELL" \fB\-i\fR' (default: '/bin/sh \fB\-i\fR').
+.SS "Exit status:"
+.TP
+125
+if the chroot command itself fails
+.TP
+126
+if COMMAND is found but cannot be invoked
+.TP
+127
+if COMMAND cannot be found
+.TP
+\-
+the exit status of COMMAND otherwise
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Roland McGrath.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBchroot\fP(2)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/chroot>
+.br
+BNU documentation is available locally via: info \(aq(bnu) chroot invocation\(aq

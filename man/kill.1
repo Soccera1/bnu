@@ -1,0 +1,68 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH KILL "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+kill \- send signals to processes, or list signals
+.SH SYNOPSIS
+.B kill
+[\fI\,-s SIGNAL | -SIGNAL\/\fR] \fI\,PID\/\fR...
+.br
+.B kill
+\fI\,-l \/\fR[\fI\,SIGNAL\/\fR]...
+.br
+.B kill
+\fI\,-t \/\fR[\fI\,SIGNAL\/\fR]...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Send signals to processes, or list signals.
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#kill-s'\fB\-s, \-\-signal=\,SIGNAL\/, \-SIGNAL\fP\X'tty: link'
+specify the name or number of the signal to be sent
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#kill-l'\fB\-l, \-\-list\fP\X'tty: link'
+list signal names, or convert signal names to/from numbers
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#kill-t'\fB\-t, \-\-table\fP\X'tty: link'
+print a table of signal information
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/kill#kill--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/kill#kill--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.PP
+SIGNAL may be a signal name like 'HUP', or a signal number like '1',
+or the exit status of a process terminated by a signal.
+PID is an integer; if negative it identifies a process group.
+.PP
+Your shell may have its own version of kill, which usually supersedes
+the version described here.  Please refer to your shell's documentation
+for details about the options it supports.
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Paul Eggert.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBkill\fP(2)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/kill>
+.br
+BNU documentation is available locally via: info \(aq(bnu) kill invocation\(aq

@@ -1,0 +1,68 @@
+.TH BNU "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+bnu \- run a BNU core utility
+.SH SYNOPSIS
+.B bnu
+\fI\,COMMAND \/\fR[\fI\,ARG\fR]...
+.br
+.B bnu
+[\fB\-\-help\fR|\fB\-\-version\fR]
+.SH DESCRIPTION
+BNU is an independent implementation of the GNU Coreutils 9.11
+command\-line interface for the Bun runtime.
+.PP
+The first operand selects a utility.  The remaining operands are passed to
+that utility.  Run
+.B bnu \-\-help
+to list the implemented commands, or run
+.I COMMAND
+.B \-\-help
+to see command-specific help.
+.PP
+Utilities may also be invoked through command-name wrappers generated with:
+.PP
+.RS
+bun run link\-commands \-\- DIRECTORY
+.RE
+.PP
+For compatibility with the GNU Coreutils multi-call interface, the
+.B coreutils
+command accepts
+.BR \-\-coreutils\-prog= PROGRAM_NAME .
+.SH OPTIONS
+.TP
+.B \-\-help
+display the usage and implemented command list, then exit
+.TP
+.B \-\-version
+output BNU version information, then exit
+.SH ENVIRONMENT
+.TP
+.B GNULY_CORRECT
+When set to a truthy value such as
+.BR 1 ,
+emit GNU-compatible diagnostics without BNU's additional
+.B Hint:
+lines.  An empty value,
+.BR 0 ,
+or any capitalization of
+.B false
+leaves friendly hints enabled.  This changes diagnostic wording, not command
+semantics.
+.SH FILES
+.TP
+.I bin/bnu.js
+multi-call entry point in a source checkout
+.TP
+.I src/coreutils.js
+command implementations in a source checkout
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.SH COPYRIGHT
+BNU is distributed under the GNU General Public License version 3.  See the
+.I LICENSE
+file in the source distribution.
+.SH "SEE ALSO"
+.BR coreutils (1)
+.PP
+The complete adapted manual is available locally via: info \(aqbnu\(aq

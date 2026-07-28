@@ -1,0 +1,83 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH COMM "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+comm \- compare two sorted files line by line
+.SH SYNOPSIS
+.B comm
+[\fI\,OPTION\/\fR]... \fI\,FILE1 FILE2\/\fR
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Compare sorted files FILE1 and FILE2 line by line.
+.PP
+When FILE1 or FILE2 (not both) is \-, read standard input.
+.PP
+With no options, produce three\-column output.  Column one contains
+lines unique to FILE1, column two contains lines unique to FILE2,
+and column three contains lines common to both files.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#comm-1'\fB\-1\fP\X'tty: link'
+suppress column 1 (lines unique to FILE1)
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#comm-2'\fB\-2\fP\X'tty: link'
+suppress column 2 (lines unique to FILE2)
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#comm-3'\fB\-3\fP\X'tty: link'
+suppress column 3 (lines that appear in both files)
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#comm--check-order'\fB\-\-check\-order\fP\X'tty: link'
+check that the input is correctly sorted,
+even if all input lines are pairable
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#comm--nocheck-order'\fB\-\-nocheck\-order\fP\X'tty: link'
+do not check that the input is correctly sorted
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#comm--output-delimiter'\fB\-\-output\-delimiter=STR\fP\X'tty: link'
+separate columns with STR
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#comm--total'\fB\-\-total\fP\X'tty: link'
+output a summary
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#comm-z'\fB\-z, \-\-zero\-terminated\fP\X'tty: link'
+line delimiter is NUL, not newline
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/comm#comm--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/comm#comm--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.PP
+Comparisons honor the rules specified by 'LC_COLLATE'.
+.SH EXAMPLES
+.TP
+comm \-12 file1 file2
+Print only lines present in both file1 and file2.
+.TP
+comm \-3 file1 file2
+Print lines in file1 not in file2, and vice versa.
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Richard M. Stallman and David MacKenzie.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBjoin\fP(1), \fBuniq\fP(1)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/comm>
+.br
+BNU documentation is available locally via: info \(aq(bnu) comm invocation\(aq

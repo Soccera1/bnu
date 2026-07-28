@@ -1,0 +1,62 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH BASE64 "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+base64 \- base64 encode/decode data and print to standard output
+.SH SYNOPSIS
+.B base64
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Base64 encode or decode FILE, or standard input, to standard output.
+.PP
+With no FILE, or when FILE is \-, read standard input.
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#base64-d'\fB\-d, \-\-decode\fP\X'tty: link'
+decode data
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#base64-i'\fB\-i, \-\-ignore\-garbage\fP\X'tty: link'
+when decoding, ignore non\-alphabet characters
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#base64-w'\fB\-w, \-\-wrap=\,COLS\fP\X'tty: link'\/\fR
+wrap encoded lines after COLS character (default 76).
+Use 0 to disable line wrapping
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/base64#base64--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/base64#base64--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.PP
+The data are encoded as described for the base64 alphabet in RFC 4648.
+When decoding, the input may contain newlines in addition to the bytes of
+the formal base64 alphabet.  Use \fB\-\-ignore\-garbage\fR to attempt to recover
+from any other non\-alphabet bytes in the encoded stream.
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Simon Josefsson.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBbasenc\fP(1)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/base64>
+.br
+BNU documentation is available locally via: info \(aq(bnu) base64 invocation\(aq
