@@ -81,7 +81,7 @@ bun run test:gnu -- --strict tests/misc/echo.sh
 | `--timeout VALUE` | Set the per-test timeout; the default is 300 seconds. |
 | `--max-output SIZE` | Set the retained output limit; the default is 1 MiB. |
 | `--rss-limit SIZE` | Set the process-tree RSS limit; the default is 1536 MiB. |
-| `--memory-limit SIZE` | Set the per-process address-space limit; the default is 3 GiB. |
+| `--memory-limit SIZE` | Set the per-process address-space limit; the default is 4 GiB. RSS remains capped separately. |
 | `--tarball PATH` | Use a different GNU coreutils source tarball. |
 
 Known terminal-dependent tests receive a pseudo-terminal automatically.

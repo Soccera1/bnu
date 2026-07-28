@@ -5,7 +5,8 @@ import { pathToFileURL } from "node:url";
 
 const here = dirname(realpathSync(Bun.argv[1]));
 globalThis[Symbol.for("bnu.cli")] = true;
-const { commandNames, main } = await import(pathToFileURL(join(here, "../src/coreutils.js")).href);
+const { commandNames } = await import(pathToFileURL(join(here, "../src/shared/catalog.js")).href);
+const { main } = await import(pathToFileURL(join(here, "../src/shared/runtime.js")).href);
 let invokedPath = Bun.argv[1];
 try {
   if (process.env._ && realpathSync(process.env._) === realpathSync(Bun.argv[1])) invokedPath = process.env._;

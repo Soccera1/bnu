@@ -1,14 +1,26 @@
 # BNU
 
 BNU is an independent implementation of GNU coreutils for
-[Bun](https://bun.sh/). It runs as a multi-call command: the first argument
-selects the utility.
+[Bun](https://bun.sh/). Every utility has its own single-call source entry:
+
+```sh
+bun ./src/commands/echo.js hello
+bun ./src/commands/sort.js file.txt
+bun ./src/commands/cp.js source destination
+```
+
+The `bnu` multi-call launcher remains as a compatibility and discovery surface:
 
 ```sh
 bun ./bin/bnu.js echo hello
-bun ./bin/bnu.js sort file.txt
-bun ./bin/bnu.js cp source destination
+bun ./bin/bnu.js --help
 ```
+
+Command modules contain their command-specific implementation, not just a call
+through to a combined implementation file. Helpers used by more than one
+command are defined once in the family modules under `src/shared/` and imported by each
+consumer. This keeps shared code deduplicated and lets Bun cache/JIT the same
+module instance across commands loaded in one process.
 
 Linux is the primary tested platform. BNU is not built from GNU coreutils
 source and does not provide its internal C interfaces.
@@ -22,8 +34,8 @@ or security modules.
 No dependency installation is needed for the basic CLI:
 
 ```sh
+bun ./src/commands/echo.js --help
 bun ./bin/bnu.js --help
-bun ./bin/bnu.js COMMAND --help
 ```
 
 The GNU compatibility harness also needs the coreutils 9.11 source tarball,
@@ -32,7 +44,8 @@ the download command.
 
 ## Command wrappers
 
-The CLI can generate command-name wrappers for use in a separate directory:
+The CLI can generate command-name wrappers for the single-call entries in a
+separate directory:
 
 ```sh
 bun run link-commands -- ./dist/bin
@@ -121,8 +134,15 @@ matrix are documented in [Testing](docs/testing.md).
 
 ## Repository layout
 
-- `bin/bnu.js` — multi-call entry point
-- `src/coreutils.js` — command implementations
+- `src/commands/` — one independently runnable entry per command
+- `src/shared/catalog.js` — command discovery and lazy module loading
+- `src/shared/command.js` — shared single-call entry behavior
+- `src/shared/runtime.js` — multi-call dispatch shared by all commands
+- `src/shared/{diagnostics,help,help-options}.js` — diagnostics and command help data/rendering
+- `src/shared/{listing,copy,time,hash,install,ownership,paths,head-tail,tabs,test-expression}.js` — focused, single-copy command-family modules
+- `src/shared/{common,filesystem,text,checksum,process,system}.js` — smaller cross-family primitives
+- `src/coreutils.js` — compatibility export for API consumers
+- `bin/bnu.js` — compatibility multi-call launcher
 - `man/` — adapted section-1 manual pages
 - `doc/` — adapted Texinfo sources and compiled Info manual
 - `tests/` — local Bun tests

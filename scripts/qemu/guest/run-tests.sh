@@ -16,7 +16,7 @@ chmod -R a+rX "$work"
 common=(
   "$work/bun" "$work/scripts/run-gnu-tests.js"
   --tarball "$work/coreutils-9.11.tar.xz"
-  --very-expensive --timeout 300s --rss-limit 1024MiB --memory-limit 3GiB
+  --very-expensive --timeout 300s --rss-limit 1024MiB --memory-limit 4GiB
 )
 case $mode in
   nonroot)

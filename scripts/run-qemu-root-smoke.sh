@@ -43,7 +43,7 @@ fi
 mkdir -p "$root/opt/bnu/bin" "$root/opt/bnu/src" "$root/usr/bin"
 cp "$bun" "$root/usr/bin/bun"
 cp "$repo/bin/bnu.js" "$root/opt/bnu/bin/bnu.js"
-cp "$repo/src/coreutils.js" "$root/opt/bnu/src/coreutils.js"
+cp -R "$repo/src/." "$root/opt/bnu/src/"
 
 ldd "$bun" | awk '/=> \/[^ ]+/ { print $3 } /^\// { print $1 }' | while IFS= read -r library; do
   test -n "$library" || continue
