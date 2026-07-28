@@ -1,0 +1,95 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH TIMEOUT "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+timeout \- run a command with a time limit
+.SH SYNOPSIS
+.B timeout
+[\fI\,OPTION\/\fR]... \fI\,DURATION COMMAND \/\fR[\fI\,ARG\/\fR]...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Start COMMAND, and kill it if still running after DURATION.
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#timeout-f'\fB\-f, \-\-foreground\fP\X'tty: link'
+when not running timeout directly from a shell prompt,
+allow COMMAND to read from the TTY and get TTY signals;
+in this mode, children of COMMAND will not be timed out
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#timeout-k'\fB\-k, \-\-kill\-after=\,DURATION\fP\X'tty: link'\/\fR
+also send a KILL signal if COMMAND is still running
+this long after the initial signal was sent
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#timeout-p'\fB\-p, \-\-preserve\-status\fP\X'tty: link'
+exit with the same status as COMMAND,
+even when the command times out
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#timeout-s'\fB\-s, \-\-signal=\,SIGNAL\fP\X'tty: link'\/\fR
+specify the signal to be sent on timeout;
+SIGNAL may be a name like 'HUP' or a number;
+see 'kill \fB\-l\fR' for a list of signals
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#timeout-v'\fB\-v, \-\-verbose\fP\X'tty: link'
+diagnose to standard error any signal sent upon timeout
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/timeout#timeout--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/timeout#timeout--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.PP
+DURATION is a floating point number with an optional suffix:
+\&'s' for seconds (the default), 'm' for minutes, 'h' for hours or 'd' for days.
+A duration of 0 disables the associated timeout.
+.PP
+Upon timeout, send the TERM signal to COMMAND, if no other SIGNAL specified.
+The TERM signal kills any process that does not block or catch that signal.
+It may be necessary to use the KILL signal, since this signal can't be caught.
+.SS "Exit status:"
+.TP
+124
+if COMMAND times out, and \fB\-\-preserve\-status\fR is not specified
+.TP
+125
+if the timeout command itself fails
+.TP
+126
+if COMMAND is found but cannot be invoked
+.TP
+127
+if COMMAND cannot be found
+.TP
+137
+if COMMAND (or timeout itself) is sent the KILL (9) signal (128+9)
+.TP
+\-
+the exit status of COMMAND otherwise
+.SH BUGS
+Some platforms don't currently support timeouts beyond the year 2038.
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Padraig Brady.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBkill\fP(1)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/timeout>
+.br
+BNU documentation is available locally via: info \(aq(bnu) timeout invocation\(aq

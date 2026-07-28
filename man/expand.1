@@ -1,0 +1,61 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH EXPAND "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+expand \- convert tabs to spaces
+.SH SYNOPSIS
+.B expand
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Convert tabs in each FILE to spaces, writing to standard output.
+.PP
+With no FILE, or when FILE is \-, read standard input.
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#expand-i'\fB\-i, \-\-initial\fP\X'tty: link'
+do not convert tabs after non blanks
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#expand-t'\fB\-t, \-\-tabs=\,N\fP\X'tty: link'\/\fR
+have tabs N characters apart, not 8
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#expand-t'\fB\-t, \-\-tabs=\,LIST\fP\X'tty: link'\/\fR
+use comma separated list of tab positions.
+The last specified position can be prefixed with '/'
+to specify a tab size to use after the last
+explicitly specified tab stop.  Also a prefix of '+'
+can be used to align remaining tab stops relative to
+the last specified tab stop instead of the first column
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/expand#expand--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/expand#expand--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by David MacKenzie.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBunexpand\fP(1)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/expand>
+.br
+BNU documentation is available locally via: info \(aq(bnu) expand invocation\(aq

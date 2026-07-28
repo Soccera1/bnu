@@ -1,0 +1,55 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH SYNC "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+sync \- Synchronize cached writes to persistent storage
+.SH SYNOPSIS
+.B sync
+[\fI\,OPTION\/\fR] [\fI\,FILE\/\fR]...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Synchronize cached writes to persistent storage
+.PP
+If one or more files are specified, sync only them,
+or their containing file systems.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#sync-d'\fB\-d, \-\-data\fP\X'tty: link'
+sync only file data, no unneeded metadata
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#sync-f'\fB\-f, \-\-file\-system\fP\X'tty: link'
+sync the file systems that contain the files
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/sync#sync--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/sync#sync--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.SH BUGS
+Persistence guarantees vary per system.
+See the system calls below for more details.
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Jim Meyering and Giuseppe Scrivano.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBfdatasync\fP(2), \fBfsync\fP(2), \fBsync\fP(2), \fBsyncfs\fP(2)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/sync>
+.br
+BNU documentation is available locally via: info \(aq(bnu) sync invocation\(aq

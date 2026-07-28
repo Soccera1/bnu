@@ -1,0 +1,71 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH BASENAME "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+basename \- strip directory and suffix from filenames
+.SH SYNOPSIS
+.B basename
+\fI\,NAME \/\fR[\fI\,SUFFIX\/\fR]
+.br
+.B basename
+\fI\,OPTION\/\fR... \fI\,NAME\/\fR...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Print NAME with any leading directory components removed.
+If specified, also remove a trailing SUFFIX.
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#basename-a'\fB\-a, \-\-multiple\fP\X'tty: link'
+support multiple arguments and treat each as a NAME
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#basename-s'\fB\-s, \-\-suffix=\,SUFFIX\fP\X'tty: link'\/\fR
+remove a trailing SUFFIX; implies \fB\-a\fR
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#basename-z'\fB\-z, \-\-zero\fP\X'tty: link'
+end each output line with NUL, not newline
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/basename#basename--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/basename#basename--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.SH EXAMPLES
+.TP
+basename /usr/bin/sort
+\-> "sort"
+.TP
+basename include/stdio.h .h
+\-> "stdio"
+.TP
+basename \-s .h include/stdio.h
+\-> "stdio"
+.TP
+basename \-a any/str1 any/str2
+\-> "str1" followed by "str2"
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by David MacKenzie.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBdirname\fP(1), \fBreadlink\fP(1)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/basename>
+.br
+BNU documentation is available locally via: info \(aq(bnu) basename invocation\(aq

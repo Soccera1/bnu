@@ -1,0 +1,44 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH USERS "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+users \- print the user names of users currently logged in to the current host
+.SH SYNOPSIS
+.B users
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Output who is currently logged in according to FILE.
+If FILE is not specified, use \fI\,/var/run/utmp\/\fP.  \fI\,/var/log/wtmp\/\fP as FILE is common.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/users#users--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/users#users--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Joseph Arceneaux and David MacKenzie.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBgetent\fP(1), \fBwho\fP(1)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/users>
+.br
+BNU documentation is available locally via: info \(aq(bnu) users invocation\(aq

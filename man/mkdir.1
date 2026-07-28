@@ -1,0 +1,63 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH MKDIR "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+mkdir \- make directories
+.SH SYNOPSIS
+.B mkdir
+[\fI\,OPTION\/\fR]... \fI\,DIRECTORY\/\fR...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Create the DIRECTORY(ies), if they do not already exist.
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#mkdir-m'\fB\-m, \-\-mode=\,MODE\fP\X'tty: link'\/\fR
+set file mode (as in chmod), not a=rwx \- umask
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#mkdir-p'\fB\-p, \-\-parents\fP\X'tty: link'
+no error if existing, make parent directories as needed,
+with their file modes unaffected by any \fB\-m\fR option
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#mkdir-v'\fB\-v, \-\-verbose\fP\X'tty: link'
+print a message for each created directory
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#mkdir-Z'\fB\-Z\fP\X'tty: link'
+set SELinux security context of each created directory
+to the default type
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#mkdir--context'\fB\-\-context[=CTX]\fP\X'tty: link'
+like \fB\-Z\fR, or if CTX is specified then set the
+SELinux or SMACK security context to CTX
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/mkdir#mkdir--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/mkdir#mkdir--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by David MacKenzie.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBmkdir\fP(2)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/mkdir>
+.br
+BNU documentation is available locally via: info \(aq(bnu) mkdir invocation\(aq

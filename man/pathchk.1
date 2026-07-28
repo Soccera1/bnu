@@ -1,0 +1,49 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH PATHCHK "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+pathchk \- check whether file names are valid or portable
+.SH SYNOPSIS
+.B pathchk
+[\fI\,OPTION\/\fR]... \fI\,NAME\/\fR...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Diagnose invalid or non\-portable file names.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#pathchk-p'\fB\-p\fP\X'tty: link'
+check for most POSIX systems
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#pathchk-P'\fB\-P\fP\X'tty: link'
+check for empty names and leading "\-"
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#pathchk--portability'\fB\-\-portability\fP\X'tty: link'
+check for all POSIX systems (equivalent to \fB\-p\fR \fB\-P\fR)
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/pathchk#pathchk--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/pathchk#pathchk--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Paul Eggert, David MacKenzie, and Jim Meyering.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+Upstream documentation <https://www.gnu.org/software/coreutils/pathchk>
+.br
+BNU documentation is available locally via: info \(aq(bnu) pathchk invocation\(aq

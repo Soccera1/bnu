@@ -1,0 +1,86 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH SHA224SUM "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+sha224sum \- compute and check SHA224 message digest
+.SH SYNOPSIS
+.B sha224sum
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Print or check SHA224 (224\-bit) checksums.
+Legacy interface to the cksum utility.
+.PP
+With no FILE, or when FILE is \-, read standard input.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum-b'\fB\-b, \-\-binary\fP\X'tty: link'
+read in binary mode
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum-c'\fB\-c, \-\-check\fP\X'tty: link'
+read checksums from the FILEs and check them
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum--tag'\fB\-\-tag\fP\X'tty: link'
+create a BSD\-style checksum
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum-t'\fB\-t, \-\-text\fP\X'tty: link'
+read in text mode (default)
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum-z'\fB\-z, \-\-zero\fP\X'tty: link'
+end each output line with NUL, not newline,
+and disable file name escaping
+.SS "The following five options are useful only when verifying checksums:"
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum--ignore-missing'\fB\-\-ignore\-missing\fP\X'tty: link'
+don't fail or report status for missing files
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum--quiet'\fB\-\-quiet\fP\X'tty: link'
+don't print OK for each successfully verified file
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum--status'\fB\-\-status\fP\X'tty: link'
+don't output anything, status code shows success
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum--strict'\fB\-\-strict\fP\X'tty: link'
+exit non\-zero for improperly formatted checksum lines
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#cksum-w'\fB\-w, \-\-warn\fP\X'tty: link'
+warn about improperly formatted checksum lines
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/cksum#cksum--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/cksum#cksum--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.PP
+The sums are computed as described in RFC 3874.
+When checking, the input should be a former output of this program.
+The default mode is to print a line with: checksum, a space,
+a character indicating input mode ('*' for binary, ' ' for text
+or where binary is insignificant), and name for each FILE.
+.PP
+There is no difference between binary mode and text mode on GNU systems.
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Ulrich Drepper, Scott Miller, and David Madore.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBcksum\fP(1)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/sha224sum>
+.br
+BNU documentation is available locally via: info \(aq(bnu) sha2 utilities\(aq

@@ -1,0 +1,67 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH NICE "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+nice \- run a program with modified scheduling priority
+.SH SYNOPSIS
+.B nice
+[\fI\,OPTION\/\fR] [\fI\,COMMAND \/\fR[\fI\,ARG\/\fR]...]
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Run COMMAND with an adjusted niceness, which affects process scheduling.
+With no COMMAND, print the current niceness.  Niceness values range from
+\fB\-20\fR (most favorable to the process) to 19 (least favorable to the process).
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#nice-n'\fB\-n, \-\-adjustment=\,N\fP\X'tty: link'\/\fR
+add integer N to the niceness (default 10)
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/nice#nice--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/nice#nice--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.PP
+Your shell may have its own version of nice, which usually supersedes
+the version described here.  Please refer to your shell's documentation
+for details about the options it supports.
+.SS "Exit status:"
+.TP
+125
+if the nice command itself fails
+.TP
+126
+if COMMAND is found but cannot be invoked
+.TP
+127
+if COMMAND cannot be found
+.TP
+\-
+the exit status of COMMAND otherwise
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by David MacKenzie.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBnice\fP(2), \fBrenice\fP(1)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/nice>
+.br
+BNU documentation is available locally via: info \(aq(bnu) nice invocation\(aq

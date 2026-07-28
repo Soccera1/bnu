@@ -1,0 +1,58 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH TAC "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+tac \- concatenate and print files in reverse
+.SH SYNOPSIS
+.B tac
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Write each FILE to standard output, last line first.
+.PP
+With no FILE, or when FILE is \-, read standard input.
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#tac-b'\fB\-b, \-\-before\fP\X'tty: link'
+attach the separator before instead of after
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#tac-r'\fB\-r, \-\-regex\fP\X'tty: link'
+interpret the separator as a regular expression
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#tac-s'\fB\-s, \-\-separator=\,STRING\fP\X'tty: link'\/\fR
+use STRING as the separator instead of newline
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/tac#tac--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/tac#tac--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.PP
+Non\-seekable input is buffered to $TMPDIR, defaulting to \fI\,/tmp\/\fP.
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Jay Lepreau and David MacKenzie.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+\fBcat\fP(1), \fBrev\fP(1)
+.PP
+.br
+Upstream documentation <https://www.gnu.org/software/coreutils/tac>
+.br
+BNU documentation is available locally via: info \(aq(bnu) tac invocation\(aq

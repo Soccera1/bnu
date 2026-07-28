@@ -1,0 +1,71 @@
+.\" Adapted for BNU from the GNU Coreutils 9.11 manual page; see doc/README.md.
+.TH SHUF "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.SH NAME
+shuf \- generate random permutations
+.SH SYNOPSIS
+.B shuf
+[\fI\,OPTION\/\fR]... [\fI\,FILE\/\fR]
+.br
+.B shuf
+\fI\,-e \/\fR[\fI\,OPTION\/\fR]... [\fI\,ARG\/\fR]...
+.br
+.B shuf
+\fI\,-i LO-HI \/\fR[\fI\,OPTION\/\fR]...
+.SH DESCRIPTION
+.\" This page is derived from GNU Coreutils documentation.
+This page documents BNU, an independent Bun implementation compatible with
+GNU Coreutils 9.11.
+.PP
+Write a random permutation of the input lines to standard output.
+.PP
+With no FILE, or when FILE is \-, read standard input.
+.PP
+Mandatory arguments to long options are mandatory for short options too.
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#shuf-e'\fB\-e, \-\-echo\fP\X'tty: link'
+treat each ARG as an input line
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#shuf-i'\fB\-i, \-\-input\-range=\,LO\-HI\fP\X'tty: link'\/\fR
+treat each number LO through HI as an input line
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#shuf-n'\fB\-n, \-\-head\-count=\,COUNT\fP\X'tty: link'\/\fR
+output at most COUNT lines
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#shuf-o'\fB\-o, \-\-output=\,FILE\fP\X'tty: link'\/\fR
+write result to FILE instead of standard output
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#shuf--random-source'\fB\-\-random\-source=FILE\fP\X'tty: link'
+get random bytes from FILE
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#shuf-r'\fB\-r, \-\-repeat\fP\X'tty: link'
+output lines can be repeated
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/manual/coreutils.html#shuf-z'\fB\-z, \-\-zero\-terminated\fP\X'tty: link'
+line delimiter is NUL, not newline
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/shuf#shuf--help'\fB\-\-help\fP\X'tty: link'
+display this help and exit
+.TP
+\X'tty: link https://www.gnu.org/software/coreutils/shuf#shuf--version'\fB\-\-version\fP\X'tty: link'
+output version information and exit
+.SH AUTHORS
+Upstream GNU Coreutils documentation authors:
+Written by Paul Eggert.
+.br
+Adapted for BNU; the BNU implementation is independent.
+.SH "REPORTING BUGS"
+Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
+.br
+For upstream GNU Coreutils, see <https://www.gnu.org/software/coreutils/>.
+.SH COPYRIGHT
+Copyright \(co 2026 Free Software Foundation, Inc.
+.br
+This manual page was adapted for BNU in 2026.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+Upstream documentation <https://www.gnu.org/software/coreutils/shuf>
+.br
+BNU documentation is available locally via: info \(aq(bnu) shuf invocation\(aq
