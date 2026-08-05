@@ -1,9 +1,10 @@
 {
-  "name": "bnu",
+  "name": "bnu-coreutils",
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "bnu": "./dist/bin/npm.js"
+    "bnu": "dist/bin/npm.js",
+    "bnu-coreutils": "dist/bin/npm.js"
   },
   "files": [
     "dist/"
