@@ -2,6 +2,10 @@
   "name": "bnu-coreutils",
   "version": "0.1.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Soccera1/bnu.git"
+  },
   "bin": {
     "bnu": "dist/bin/npm.js",
     "bnu-coreutils": "dist/bin/npm.js"
