@@ -1,0 +1,77 @@
+name: Publish to npm
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Set up Node for npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Build optimized package
+        run: bun run build
+
+      - name: Choose daily version
+        id: release
+        shell: bash
+        run: |
+          version="$(node --input-type=module <<'NODE'
+          import { readFile } from "node:fs/promises";
+
+          const packageJson = JSON.parse(await readFile("package.json", "utf8"));
+          const date = new Date().toISOString().slice(0, 10).replaceAll("-", "");
+          const escapedName = packageJson.name.replace("/", "%2f");
+          const response = await fetch(`https://registry.npmjs.org/${escapedName}`);
+
+          let versions = [];
+          if (response.status !== 404) {
+            if (!response.ok) {
+              throw new Error(`npm registry returned ${response.status} ${response.statusText}`);
+            }
+            const metadata = await response.json();
+            versions = Object.keys(metadata.versions ?? {});
+          }
+
+          const pattern = new RegExp(`^${date}\\.0\\.(\\d+)$`);
+          const previous = versions
+            .map((version) => pattern.exec(version)?.[1])
+            .filter((increment) => increment !== undefined)
+            .map(Number);
+          const increment = previous.length === 0 ? 0 : Math.max(...previous) + 1;
+
+          process.stdout.write(`${date}.0.${increment}`);
+          NODE
+          )"
+
+          npm pkg set version="$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Verify package contents
+        run: npm pack --dry-run
+
+      - name: Publish ${{ steps.release.outputs.version }}
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

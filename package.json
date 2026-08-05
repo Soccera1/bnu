@@ -3,9 +3,13 @@
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "bnu": "./bin/bnu.js"
+    "bnu": "./dist/bin/npm.js"
   },
+  "files": [
+    "dist/"
+  ],
   "scripts": {
+    "build": "bun scripts/build.js",
     "docs:import": "bun scripts/import-gnu-docs.js coreutils-9.11.tar.xz",
     "link-commands": "bun scripts/link-commands.js",
     "test": "bun scripts/run-bun-tests-bounded.js",
@@ -13,6 +17,9 @@
     "qemu:setup": "scripts/setup-qemu-environments.sh",
     "test:qemu": "scripts/run-gnu-qemu-matrix.sh",
     "test:all": "scripts/run-all-tests.sh"
+  },
+  "dependencies": {
+    "bun": "1.3.14"
   },
   "devDependencies": {
     "bun-types": "latest"
