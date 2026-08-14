@@ -1,4 +1,4 @@
-.TH BNU "1" "2026-07-28" "BNU 9.11" "BNU Commands"
+.TH BNU "1" "2026-08-14" "BNU 9.11" "BNU Commands"
 .SH NAME
 bnu \- run a BNU core utility
 .SH SYNOPSIS
@@ -35,6 +35,31 @@ For compatibility with the GNU Coreutils multi-call interface, the
 .B coreutils
 command accepts
 .BR \-\-coreutils\-prog= PROGRAM_NAME .
+.SH "PLATFORM REQUIREMENTS"
+BNU targets Bun on Linux; ordinary ECMAScript support is not sufficient.  All
+commands use Bun extensions and Node-compatible APIs.  glibc Linux is the
+tested baseline.
+.PP
+Every command except
+.B echo
+eagerly loads Bun's
+.B bun:ffi
+module and
+.BR libc.so.6 ,
+including for its
+.B \-\-help
+and
+.B \-\-version
+paths.  The filename does not by itself require the loaded implementation to
+be glibc: another Linux libc exposed under that name can work if it supplies
+the complete symbol, calling-convention, layout, and behavior contract.
+Command-specific behavior can additionally require Linux
+.BR /proc ,
+.BR /sys ,
+fixed native ABI layouts, inotify, ACL or extended-attribute tools, SELinux or
+SMACK, external programs, filesystem support, or elevated privileges.  See
+.I docs/runtime-portability.md
+in the source distribution for the command and option matrix.
 .SH OPTIONS
 .TP
 .B \-\-help
@@ -71,6 +96,9 @@ shared single-call entry behavior
 .TP
 .I src/shared/runtime.js
 compatibility multi-call dispatch
+.TP
+.I docs/runtime-portability.md
+runtime, libc, ABI, kernel, helper-program, and privilege requirements
 .SH "REPORTING BUGS"
 Report BNU bugs at <https://github.com/Soccera1/bnu/issues>.
 .SH COPYRIGHT

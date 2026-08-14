@@ -27,11 +27,24 @@ source and does not provide its internal C interfaces.
 
 ## Requirements
 
-Running BNU from this repository requires Bun. Some commands also rely on
-operating-system facilities such as Linux extended attributes, ACLs, inotify,
-or security modules.
+Running BNU from this repository requires Bun and its Node compatibility APIs.
+BNU is not runtime-neutral JavaScript: all commands except `echo` currently
+load Bun's native FFI and a library resolved as `libc.so.6` at module
+initialization. This applies even to those commands' `--help` and `--version`
+paths. glibc Linux is the tested baseline, but the FFI calls do not all
+intrinsically require glibc: another Linux libc can potentially work when it is
+available under that name and supplies the complete symbol and ABI contract.
+Other command behavior can additionally require Linux `/proc` or `/sys`, fixed
+native ABI layouts, extended attributes, ACLs, inotify, security modules,
+external helper programs, or elevated privileges.
 
-No dependency installation is needed for the basic CLI:
+See [Runtime and platform requirements](docs/runtime-portability.md) for the
+load-time boundary and a command/option compatibility matrix. Ordinary
+ECMAScript support, or a Node/Deno-compatible API surface without Bun FFI, is
+not sufficient.
+
+No dependency installation is needed for the basic CLI on a supported Linux
+host with a compatible libc:
 
 ```sh
 bun ./src/commands/echo.js --help
