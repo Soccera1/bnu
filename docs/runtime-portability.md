@@ -32,14 +32,14 @@ and starts Bun.
 
 ### Bun FFI and `libc.so.6`
 
-Every command except `echo` imports `src/shared/common.js`, directly or through
+Every original Coreutils command except `echo` imports `src/shared/common.js`, directly or through
 a shared command-family module. That module eagerly imports `bun:ffi` and calls:
 
 ```js
 dlopen("libc.so.6", { /* the complete BNU libc symbol table */ })
 ```
 
-Consequently, all commands other than `echo` have these hard startup
+Consequently, those Coreutils commands have these hard startup
 requirements, including when invoked with only `--help` or `--version`:
 
 - Bun's `bun:ffi` module (`dlopen`, `linkSymbols`, pointers, native reads, and
@@ -64,7 +64,14 @@ The exceptions are narrowly scoped:
 | `bun src/commands/echo.js ...` | No | Bun, Node-compatible `process` and `node:fs`, and the shared CLI modules |
 | `bun bin/bnu.js echo ...` | No | Same as above, plus the multi-call launcher's Node-compatible path/filesystem APIs |
 | `bun bin/bnu.js --help` or `--version` | No | Bun and the launcher's/shared CLI APIs |
-| Any other command, including its help/version path | Yes | Bun FFI, a compatible library resolved as `libc.so.6`, and the requirements below when the corresponding behavior is used |
+| Any other original Coreutils command, including its help/version path | Yes | Bun FFI, a compatible library resolved as `libc.so.6`, and the requirements below when the corresponding behavior is used |
+
+The added text, diff and archive families also import the shared libc module.
+The binutils readers and wget use a smaller Node/Bun API surface; `as` and
+disassembly load libLLVM on demand, C++ demangling loads the C++ ABI library,
+and `grep -P` loads PCRE2. See [Extended utilities](extended-utilities.md) for
+the command-specific dependencies. ELF/PE/Mach-O target support describes
+object-file processing, not supported host operating systems.
 
 Moving or lazily loading the native table would change this boundary. Until
 then, a command-specific entry that happens not to call a libc function still

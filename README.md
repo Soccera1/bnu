@@ -1,12 +1,15 @@
 # BNU
 
-BNU is an independent implementation of GNU coreutils for
-[Bun](https://bun.sh/). Every utility has its own single-call source entry:
+BNU is an independent implementation of GNU-style command-line utilities for
+[Bun](https://bun.sh/): Coreutils, binutils, grep, sed, awk, diff, patch, tar,
+gzip, cpio and wget. Every utility has its own single-call source entry:
 
 ```sh
 bun ./src/commands/echo.js hello
 bun ./src/commands/sort.js file.txt
 bun ./src/commands/cp.js source destination
+bun ./src/commands/grep.js -rn TODO src
+bun ./src/commands/tar.js -czf source.tar.gz src
 ```
 
 The `bnu` multi-call launcher remains as a compatibility and discovery surface:
@@ -28,7 +31,7 @@ source and does not provide its internal C interfaces.
 ## Requirements
 
 Running BNU from this repository requires Bun and its Node compatibility APIs.
-BNU is not runtime-neutral JavaScript: all commands except `echo` currently
+BNU is not runtime-neutral JavaScript: the original Coreutils commands except `echo`
 load Bun's native FFI and a library resolved as `libc.so.6` at module
 initialization. This applies even to those commands' `--help` and `--version`
 paths. glibc Linux is the tested baseline, but the FFI calls do not all
@@ -43,13 +46,19 @@ load-time boundary and a command/option compatibility matrix. Ordinary
 ECMAScript support, or a Node/Deno-compatible API surface without Bun FFI, is
 not sufficient.
 
-No dependency installation is needed for the basic CLI on a supported Linux
-host with a compatible libc:
+No dependency installation is needed for the basic Coreutils CLI on a supported
+Linux host with a compatible libc:
 
 ```sh
 bun ./src/commands/echo.js --help
 bun ./bin/bnu.js --help
 ```
+
+The added command families and their supported options are documented in
+[Extended utilities](docs/extended-utilities.md). Binutils handles ELF, PE/COFF
+and Mach-O targets. Assembly/disassembly needs a shared LLVM library; C++
+demangling needs a C++ ABI library, and `grep -P` needs PCRE2. Cross-platform
+object-file support does not change the Linux host runtime baseline.
 
 The GNU compatibility harness uses the Coreutils 9.11 source tarball tracked
 through Git LFS. See [Testing](docs/testing.md#gnu-command-tests) for details.
@@ -104,8 +113,8 @@ wording and leaves friendly hints enabled.
 This switch affects diagnostic wording only; it does not change command
 semantics. It is enabled automatically by BNU's GNU compatibility test harness.
 
-The compatibility target is the observable command-line behavior of GNU
-Coreutils 9.11. The upstream package contains 733 command-test scripts. The
+For the original Coreutils commands, the compatibility target is the observable
+command-line behavior of GNU Coreutils 9.11. The upstream package contains 733 command-test scripts. The
 last complete host/QEMU matrix, recorded before the July 2026 single-call
 source refactor, passed 727 of them; the other six could not start the Bun
 runtime in the environment constructed by the test. The refactored command

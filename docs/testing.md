@@ -16,8 +16,24 @@ bun run test
 ```
 
 Each test runs in a fresh process. The runner defaults to a 1 GiB aggregate
-process-tree RSS limit, a 3 GiB per-process address-space limit, and one
+process-tree RSS limit, a 4 GiB per-process address-space limit, and one
 `factor` worker.
+
+The runner discovers all `tests/*.test.js` files, including the extended
+text/archive/binutils/wget suites. Their interoperability tests require the
+corresponding GNU commands, GCC, Clang and LLVM tools. Cross-format tests cover
+ELF, PE/COFF and Mach-O on x86-64 and ARM64; only Linux executables are run on
+this host. See [Extended utilities](extended-utilities.md) for supported scope.
+
+Select individual files while retaining the same process limits:
+
+```sh
+bun run test -- tests/text-tools.test.js tests/archive-tools.test.js
+```
+
+To preserve per-case isolation, use unique top-level `test("literal name", ...)`
+registrations. The runner rejects dynamic or duplicate registrations instead
+of silently omitting cases.
 
 The defaults can be changed for a controlled test run:
 

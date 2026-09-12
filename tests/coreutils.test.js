@@ -3409,7 +3409,11 @@ test("every utility exposes an independently runnable single-call module", async
     "filesystem.js", "hash.js", "head-tail.js", "help-options.js", "help.js", "install.js",
     "listing.js", "ownership.js", "paths.js", "process.js", "runtime.js", "system.js", "tabs.js",
     "test-expression.js", "text.js", "time.js",
-  ]);
+    "archive.js", "awk-parser.js", "awk-runtime.js", "cpio-format.js", "diff-tools.js",
+    "dwarf.js", "extended-help.js", "gzip.js", "llvm.js", "object-files.js",
+    "object-linker.js", "object-linker-formats.js", "object-relocations.js", "object-transform.js", "sed-program.js",
+    "printf.js", "tar-format.js", "text-tools.js", "utility.js",
+  ].sort());
   const sharedModuleSizes = await Promise.all(sharedModules.map(async (name) => ({
     name,
     lines: (await readFile(join(import.meta.dir, `../src/shared/${name}`), "utf8")).split("\n").length - 1,

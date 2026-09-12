@@ -2,7 +2,7 @@ import { commandNames, loadCommand } from "./catalog.js";
 import { InvocationError, UsageError, VERSION, commandUsageHint, emittedDiagnosticHints, fail, gnulyCorrectDiagnostics, stderr, stdout } from "./diagnostics.js";
 import { showGenericHelp } from "./help.js";
 
-export const USAGE_STATUS_2 = new Set(["dir", "ls", "printenv", "sort", "tty", "vdir"]);
+export const USAGE_STATUS_2 = new Set(["awk", "cmp", "diff", "diff3", "dir", "grep", "ls", "patch", "printenv", "sdiff", "sed", "sort", "tty", "vdir"]);
 
 export const OUTPUT_ERROR_STATUS = new Map([
   ["[", 2],

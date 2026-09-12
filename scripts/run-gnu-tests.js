@@ -3,7 +3,9 @@ import { access, chmod, mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { commandNames } from "../src/shared/catalog.js";
+// Keep the Coreutils harness's reference grep/sed/diff/etc. on the host PATH.
+// The extended command families have separate interoperability tests.
+import { coreutilsCommandNames as commandNames } from "../src/shared/catalog.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);

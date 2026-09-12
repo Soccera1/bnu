@@ -1,4 +1,4 @@
-export const commandNames = Object.freeze([
+export const coreutilsCommandNames = Object.freeze([
   "[", "arch", "b2sum", "base32", "base64", "basename", "basenc", "cat",
   "chcon", "chgrp", "chmod", "chown", "chroot", "cksum", "comm", "coreutils",
   "cp", "csplit", "cut", "date", "dd", "df", "dir", "dircolors", "dirname", "du",
@@ -13,6 +13,15 @@ export const commandNames = Object.freeze([
   "truncate", "tsort", "tty", "uname", "unexpand", "uniq", "unlink", "uptime",
   "users", "vdir", "wc", "who", "whoami", "yes",
 ]);
+
+export const extendedCommandNames = Object.freeze([
+  "addr2line", "ar", "as", "awk", "c++filt", "cmp", "cpio", "diff", "diff3",
+  "elfedit", "grep", "gunzip", "gzip", "ld", "nm", "objcopy", "objdump",
+  "patch", "ranlib", "readelf", "sdiff", "sed", "size", "strings", "strip",
+  "tar", "wget", "zcat",
+].sort());
+
+export const commandNames = Object.freeze([...coreutilsCommandNames, ...extendedCommandNames].sort());
 
 const commandSet = new Set(commandNames);
 

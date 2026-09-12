@@ -1,7 +1,9 @@
 import { stdout } from "./diagnostics.js";
 import { COMMAND_HELP_OPTIONS } from "./help-options.js";
+import { EXTENDED_HELP } from "./extended-help.js";
 
 export const SPECIAL_HELP = {
+  ...EXTENDED_HELP,
   arch: {
     usage: "Usage: arch [OPTION]...",
     description: "Print machine architecture.",
